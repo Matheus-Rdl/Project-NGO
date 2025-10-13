@@ -1,0 +1,11 @@
+.listUser td {
+  transition: 0.3s;
+}
+
+.listUser td:hover {
+  background-color: rgb(156, 155, 155, 0.5);
+}
+
+.listUserActive {
+  background-color: #9c9b9b;
+}

@@ -1,0 +1,23 @@
+{
+    "name" : "MIGUEL RODRIGUES DE LIMA",
+    "date_nasc" : "06/02/2016",
+    "cpf" : "50838223850",
+    "rg" : "634767653",
+    "gender" : 1,
+    "civil_status" : 1,
+    "street" : "RUA ANDRÉ DIAS",
+    "number" : "80",
+    "complement" : "VIELA JOSEMAR",
+    "cep" : "05584030",
+    "district": "JARDIM BOA VISTA",
+    "education": 2,
+    "courses": [1],
+    "email" : "teteu_rl@hotmail.com",
+    "ddd" : "11",
+    "phone" : "976565368",
+    "free_period" : [1, 3],
+    "registration_date" : "12/09/2024",
+    "mother_name" : "JOCILENE RODRIGUES DA SILVA",
+    "color" : 8,
+    "physically_disabled" : 0 
+}

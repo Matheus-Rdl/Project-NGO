@@ -1,0 +1,41 @@
+
+.title {
+  padding: 1em 0 .5em 0;
+  color: #696969;
+  font-size: x-large;
+}
+
+.cardListBox{
+  display: flex;
+  gap: .5em;
+}
+
+.peopleManagementForm{
+  margin-block: 1.5em;
+}
+
+.peopleManagementForm .formCard{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.peopleManagementForm .formGroup{
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.peopleManagementForm .formGroup label{
+  font-weight: bold;
+}
+
+.peopleManagementForm .formGroup input{
+  width: auto;
+  min-width: 100px;
+  background-color: rgb(156, 155, 155, 0.3);
+  border: 1px solid gray;
+  border-radius: .3em;
+  padding: .7em 2em .7em .5em;
+  font-size: medium;
+}

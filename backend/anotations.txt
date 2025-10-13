@@ -1,0 +1,40 @@
+
+user_gender
+1 - Masculino
+2 - Feminino
+3 - Outro
+4 - Prefiro não informar 
+
+user_civil_status
+1 - Solteiro(a)
+2 - Casado(a)
+3 - Divorciado(a)
+4 - Viúvo(a)
+5 - Separado(a)
+6 - União estável
+
+user_education
+1 - Sem instrução
+2 - Fundamental incompleto
+3 - Fundamental completo
+4 - Médio incompleto
+5 - Médio completo
+6 - Superior incompleto
+7 - Superior completo
+8 - Pós-graduação
+9 - Mestrado
+10 - Doutorado
+11 - Pós-doutorado
+
+user_free_periodo
+    Período    | Horário aproximado
+1 - Matutino   | 6h00 – 12h00       
+2 - Vespertino | 12h00 – 18h00      
+3 - Noturno    | 18h00 – 23h00  
+
+user_type
+1 - Aluno
+2 - Responsável
+3 - Funcionário
+4 - Voluntário
+
