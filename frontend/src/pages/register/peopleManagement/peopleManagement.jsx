@@ -13,7 +13,7 @@ export default function PeopleManagement() {
   const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
   const userSelected = usersList.find((user) => user._id === userActive);
 
-  //leva uma mensagem para o services, a função getAvailablePlates
+  //leva uma mensagem para o services, a função getUsers
   useEffect(() => {
     if (refetchUsers) {
       getUsers();

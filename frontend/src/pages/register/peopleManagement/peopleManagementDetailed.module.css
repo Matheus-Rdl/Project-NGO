@@ -30,7 +30,7 @@
   font-weight: bold;
 }
 
-.peopleManagementForm .formGroup input{
+.peopleManagementForm .formGroup input, .peopleManagementForm .formGroup select{
   width: auto;
   min-width: 100px;
   background-color: rgb(156, 155, 155, 0.3);
@@ -38,4 +38,10 @@
   border-radius: .3em;
   padding: .7em 2em .7em .5em;
   font-size: medium;
+}
+
+.peopleManagementForm .formGroup input:focus, .peopleManagementForm .formGroup select:focus {
+  border-color: black;
+  box-shadow: 1px 1px 2px black;
+  background-color: rgb(156, 155, 155, 0.5);
 }

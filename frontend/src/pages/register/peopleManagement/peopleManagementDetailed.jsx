@@ -10,10 +10,13 @@ import {
   formatRG,
   formatProperNoun,
 } from "../../../utils/formatters";
+import { selectOptions } from "../../../utils/userSelectOptions"
+import usersServices from "../../../services/usersServices";
 
 export default function PeopleManagementDetailed() {
   const location = useLocation();
   const [listActive, setListActive] = useState("Cadastrais");
+  const { getUserNextMat, refetchUsers, userNextMat } = usersServices();
   const { userId, userData, mode } = location.state || {};
   const navigate = useNavigate();
 
@@ -21,6 +24,16 @@ export default function PeopleManagementDetailed() {
   const isEditMode = mode === "alterar";
   const isAddMode = mode === "inserir";
 
+  // Leva uma mensagem para o services, a função getUserNextMat caso seja para adicionar usuário
+  if (isAddMode) {
+    useEffect(() => {
+      if (refetchUsers) {
+        getUserNextMat();
+      }
+    }, [refetchUsers]);
+  }
+
+  // Lista dos menus do cadastro de usuários
   const listItems = [
     "Cadastrais",
     "Funcionais",
@@ -40,9 +53,14 @@ export default function PeopleManagementDetailed() {
     }
   }, [isAddMode, userData]);
 
+  //FUNÇõES
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: typeof value === "string" ? value.toUpperCase() : value,
+    }));
   };
 
   {
@@ -86,7 +104,6 @@ export default function PeopleManagementDetailed() {
 
       <div>
         <form className={styles.peopleManagementForm}>
-
           {listActive === "Cadastrais" && (
             <div className={styles.formCard}>
               <div className={styles.formGroup}>
@@ -95,7 +112,7 @@ export default function PeopleManagementDetailed() {
                   id="mat"
                   name="mat"
                   type="text"
-                  value={formData.mat || ""}
+                  value={isAddMode ? userNextMat : formData.mat || ""}
                   onChange={handleChange}
                   disabled={isViewMode || isEditMode || isAddMode}
                   required
@@ -108,7 +125,7 @@ export default function PeopleManagementDetailed() {
                   id="name"
                   name="name"
                   type="text"
-                  value={formatName(formData.name) || ""}
+                  value={formData.name || ""}
                   onChange={handleChange}
                   disabled={isViewMode}
                   required
@@ -121,7 +138,7 @@ export default function PeopleManagementDetailed() {
                   id="mother_name"
                   name="mother_name"
                   type="text"
-                  value={formatName(formData.mother_name) || ""}
+                  value={formData.mother_name || ""}
                   onChange={handleChange}
                   disabled={isViewMode}
                   required
@@ -134,7 +151,7 @@ export default function PeopleManagementDetailed() {
                   id="father_name"
                   name="father_name"
                   type="text"
-                  value={formatName(formData.father_name) || ""}
+                  value={formData.father_name || ""}
                   onChange={handleChange}
                   disabled={isViewMode}
                 />
@@ -168,28 +185,56 @@ export default function PeopleManagementDetailed() {
 
               <div className={styles.formGroup}>
                 <label htmlFor="gender">Sexo:</label>
-                <input
-                  id="gender"
-                  name="gender"
-                  type="text"
-                  value={formData.gender || ""}
-                  onChange={handleChange}
-                  disabled={isViewMode}
-                  required
-                />
+                {isViewMode ? (
+                  <input
+                    type="text"
+                    disabled
+                    value={selectOptions.gender[formData.gender] || ""}
+                  />
+                ) : (
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender || ""}
+                    onChange={handleChange}
+                    disabled={isViewMode}
+                    required
+                  >
+                    <option value="">Selecione...</option>
+                    {Object.entries(selectOptions.gender).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div className={styles.formGroup}>
                 <label htmlFor="civil_status">Estado Civil:</label>
-                <input
-                  id="civil_status"
-                  name="civil_status"
-                  type="text"
-                  value={formData.civil_status || ""}
-                  onChange={handleChange}
-                  disabled={isViewMode}
-                  required
-                />
+                {isViewMode ? (
+                  <input
+                    type="text"
+                    disabled
+                    value={selectOptions.civil_status[formData.civil_status] || ""}
+                  />
+                ) : (
+                  <select
+                    id="civil_status"
+                    name="civil_status"
+                    value={formData.civil_status || ""}
+                    onChange={handleChange}
+                    disabled={isViewMode}
+                    required
+                  >
+                    <option value="">Selecione...</option>
+                    {Object.entries(selectOptions.civil_status).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -246,15 +291,29 @@ export default function PeopleManagementDetailed() {
 
               <div className={styles.formGroup}>
                 <label htmlFor="color">Raça / Cor da pele:</label>
-                <input
-                  id="color"
-                  name="color"
-                  type="text"
-                  value={formData.color || ""}
-                  onChange={handleChange}
-                  disabled={isViewMode}
-                  required
-                />
+                {isViewMode ? (
+                  <input
+                    type="text"
+                    disabled
+                    value={selectOptions.color[formData.color] || ""}
+                  />
+                ) : (
+                  <select
+                    id="color"
+                    name="color"
+                    value={formData.color || ""}
+                    onChange={handleChange}
+                    disabled={isViewMode}
+                    required
+                  >
+                    <option value="">Selecione...</option>
+                    {Object.entries(selectOptions.color).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -303,16 +362,30 @@ export default function PeopleManagementDetailed() {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="education">Educação:</label>
-                <input
-                  id="education"
-                  name="education"
-                  type="text"
-                  value={formData.education || ""}
-                  onChange={handleChange}
-                  disabled={isViewMode}
-                  required
-                />
+                <label htmlFor="education">Escolaridade:</label>
+                {isViewMode ? (
+                  <input
+                    type="text"
+                    disabled
+                    value={selectOptions.education[formData.education] || ""}
+                  />
+                ) : (
+                  <select
+                    id="education"
+                    name="education"
+                    value={formData.education || ""}
+                    onChange={handleChange}
+                    disabled={isViewMode}
+                    required
+                  >
+                    <option value="">Selecione...</option>
+                    {Object.entries(selectOptions.education).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -364,7 +437,7 @@ export default function PeopleManagementDetailed() {
                   id="cpf"
                   name="cpf"
                   type="text"
-                  value={formatCPF(formData.cpf) || ""}
+                  value={formData.cpf || ""}
                   onChange={handleChange}
                   disabled={isViewMode}
                   required
@@ -377,7 +450,7 @@ export default function PeopleManagementDetailed() {
                   id="rg"
                   name="rg"
                   type="text"
-                  value={formatRG(formData.rg) || ""}
+                  value={formData.rg || ""}
                   onChange={handleChange}
                   disabled={isViewMode}
                   required
@@ -557,7 +630,6 @@ export default function PeopleManagementDetailed() {
               <h1>Funcionais</h1>
             </div>
           )}
-
         </form>
       </div>
     </div>

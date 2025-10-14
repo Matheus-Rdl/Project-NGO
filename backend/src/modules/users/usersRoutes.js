@@ -11,6 +11,11 @@ usersRouter.get('/', async(req, res) =>{
     res.status(statusCode).send({success, statusCode, body})
 })
 
+usersRouter.get('/nextMat', async(req, res) => {
+    const { success, statusCode, body } = await usersControllers.getNextUserMat()
+
+    res.status(statusCode).send({success, statusCode, body})
+})
 
 usersRouter.post('/', async(req, res) => {
     const { success, statusCode, body } = await usersControllers.addUser(req.body)
