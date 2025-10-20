@@ -16,12 +16,12 @@
 
 .peopleManagementForm .formCard{
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 1em;
 }
 
 .peopleManagementForm .formGroup{
-  width: 500px;
   display: flex;
   flex-direction: column;
 }
@@ -30,9 +30,10 @@
   font-weight: bold;
 }
 
-.peopleManagementForm .formGroup input, .peopleManagementForm .formGroup select{
-  width: auto;
-  min-width: 100px;
+.peopleManagementForm .formGroup input, .peopleManagementForm .formGroup select, .peopleManagementForm .formGroup .multiSelect{
+  width: fit-content;
+  max-width: 100%;
+  min-width: 300px;
   background-color: rgb(156, 155, 155, 0.3);
   border: 1px solid gray;
   border-radius: .3em;

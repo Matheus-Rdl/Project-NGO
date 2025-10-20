@@ -35,7 +35,7 @@ export default function usersServices() {
       });
   };
 
-    const getUserNextMat = (userId) => {
+    const getUserNextMat = () => {
 
     fetch(`${url}/nextMat`, {
       method: "GET",

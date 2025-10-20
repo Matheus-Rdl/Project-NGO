@@ -10,16 +10,16 @@ export default function List({ data, ativo, onClick, page }) {
           className={ativo ? `${styles.listUserActive}` : `${styles.listUser}`}
           onClick={onClick}
         >
-          <td>{data.mat}</td>
-          <td>{formatName(data.name)}</td>
-          <td>{formatCPF(data.cpf)}</td>
-          <td>{formatRG(data.rg)}</td>
-          <td>{formatDate(data.registration_date)}</td>
-          <td>{formatDate(data.date_nasc)}</td>
-          <td>{data.email}</td>
-          <td>{formatProperNoun(data.district)}</td>
-          <td>{formatProperNoun(data.street)}</td>
-          <td>{formatName(data.mother_name)}</td>
+          <td>{data.user_mat}</td>
+          <td>{formatName(data.user_name)}</td>
+          <td>{formatCPF(data.user_cpf)}</td>
+          <td>{formatRG(data.user_rg)}</td>
+          <td>{formatDate(data.user_registration_date)}</td>
+          <td>{formatDate(data.user_date_nasc)}</td>
+          <td>{data.user_email}</td>
+          <td>{formatProperNoun(data.user_district)}</td>
+          <td>{formatProperNoun(data.user_street)}</td>
+          <td>{formatName(data.user_mother_name)}</td>
         </tr>
       ) : page === "Classes" ? (
         <tr>

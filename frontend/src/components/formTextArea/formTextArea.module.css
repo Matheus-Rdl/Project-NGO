@@ -1,0 +1,25 @@
+.formGroup{
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label{
+  font-weight: bold;
+}
+
+.formGroup input, .formGroup select{
+  width: auto;
+  min-width: 100px;
+  background-color: rgb(156, 155, 155, 0.3);
+  border: 1px solid gray;
+  border-radius: .3em;
+  padding: .7em 2em .7em .5em;
+  font-size: medium;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  border-color: black;
+  box-shadow: 1px 1px 2px black;
+  background-color: rgb(156, 155, 155, 0.5);
+}

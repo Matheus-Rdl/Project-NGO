@@ -15,13 +15,13 @@ export default class UsersDataAccess {
       .collection(collectionName)
       .aggregate([
         {
-          $match: { mat: { $exists: true } },
+          $match: { user_mat: { $exists: true } },
         },
         {
-          $addFields: { matNumber: { $toInt: "$mat" } },
+          $addFields: { userMatNumber: { $toInt: "$user_mat" } },
         },
         {
-          $sort: { matNumber: -1 },
+          $sort: { userMatNumber: -1 },
         },
         {
           $limit: 1,
@@ -31,8 +31,8 @@ export default class UsersDataAccess {
 
     let nextMat = "000001";
 
-    if (lastUser.length > 0 && lastUser[0].mat) {
-      const lastMatNumber = parseInt(lastUser[0].mat, 10);
+    if (lastUser.length > 0 && lastUser[0].user_mat) {
+      const lastMatNumber = parseInt(lastUser[0].user_mat, 10);
       const newMatNumber = lastMatNumber + 1;
       nextMat = String(newMatNumber).padStart(6, "0");
     }
