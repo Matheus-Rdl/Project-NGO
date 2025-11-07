@@ -25,7 +25,14 @@ export default function Home() {
           </>
         )}
         {activeScreen === "financeiro" && <h1>Financeiro</h1>}
-        {activeScreen === "cursos" && <h1>Cursos</h1>}
+        {activeScreen === "cursos" && (
+          <>
+            <h1>Cursos</h1>
+            <Link to={"/CourseManagement"}>
+              <h2>&bull; Gerenciar Cursos</h2>
+            </Link>
+          </>
+        )}
         {activeScreen === "relatorios" && <h1>Relatórios</h1>}
         {activeScreen === "configuracoes" && <h1>Configurações</h1>}
       </div>

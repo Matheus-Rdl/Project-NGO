@@ -8,16 +8,37 @@ export function formatCPF(cpf) {
     .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 }
 
-// Função para formatar RG 
 export function formatRG(rg) {
   if (!rg) return "";
+  // Remove tudo que não seja número ou letra
+  rg = rg.toUpperCase().replace(/[^0-9A-Z]/g, "");
 
-  return rg
-    .replace(/\D/g, "")               
-    .replace(/(\d{2})(\d)/, "$1.$2")  
-    .replace(/(\d{3})(\d)/, "$1.$2")   
-    .replace(/(\d{3})(\d{1})$/, "$1-$2"); 
+  const numbers = rg.slice(0, -1); // tudo menos o último caractere
+  const lastDigit = rg.slice(-1); // último caractere
+
+  let formattedNumbers = "";
+
+  // Formata com pontos dependendo do tamanho
+  switch (numbers.length) {
+    case 6:
+      formattedNumbers = numbers.replace(/(\d{2})(\d{3})(\d{1})/, "$1.$2.$3");
+      break;
+    case 7:
+      formattedNumbers = numbers.replace(/(\d{1})(\d{3})(\d{3})/, "$1.$2.$3");
+      break;
+    case 8:
+      formattedNumbers = numbers.replace(/(\d{2})(\d{3})(\d{3})/, "$1.$2.$3");
+      break;
+    case 9:
+      formattedNumbers = numbers.replace(/(\d{3})(\d{3})(\d{3})/, "$1.$2.$3");
+      break;
+    default:
+      formattedNumbers = numbers; // não formata se tamanho inesperado
+  }
+
+  return `${formattedNumbers}-${lastDigit}`;
 }
+
 
 //Formatar datas vindo do mongoDB
 export function formatDate(dateString) {

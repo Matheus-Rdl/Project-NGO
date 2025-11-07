@@ -1,57 +1,195 @@
 import styles from "./formTextArea.module.css";
 import { selectOptions } from "../../utils/userSelectOptions";
+import Select from "react-select";
 
 export default function FormTextArea({
-  label,
-  id,
-  name,
-  type,
   field,
-  input,
+  addMode,
+  viewMode,
+  handleChange,
   data,
-  view,
-  onChange,
+  currentMode,
+  nextMat,
+  errors,
+  dateRegister,
 }) {
-  console.log(input);
-  console.log(view);
+
+  // Função segura para obter as opções
+  const getSelectOptions = (fieldName) => {
+    return selectOptions?.[fieldName] || {};
+  };
+
+  // Função segura para obter o valor formatado
+  const getFormattedValue = (fieldName, value) => {
+    if (!fieldName || value === undefined || value === null) return "";
+    const options = getSelectOptions(fieldName);
+    return options?.[value] || value || "";
+  };
+
+  // Verifica se o campo está habilitado
+  const isFieldEnabled = field.mode?.includes(currentMode);
+
+  // Define a largura com base no tamanho máximo do campo
+  const getFieldWidth = (maxLength, isViewMode) => {
+    if (isViewMode) return "500px";
+    if (!maxLength) return "auto"; // tamanho padrão se não tiver maxLength
+    if (maxLength < 10) return "150px";
+    if (maxLength <= 20) return "300px";
+    if (maxLength <= 40) return "500px";
+    if (maxLength <= 80) return "450px";
+    return "500px"; // para casos muito grandes
+  };
 
   return (
-    <div className={styles.formGroup}>
-      {input === 1 && (
-        <>
-          <label htmlFor={id}>{label}:</label>
-          <input
-            id={id}
-            name={name}
-            type={type}
-            value={data?.[field] || ""}
-            disabled={view}
-            onChange={onChange}
-            required
-          />
-        </>
+    <>
+      {field.input === 1 && (
+        <div
+          className={`${styles.formGroup} ${
+            errors[field.field] ? styles.errorGroup : ""
+          }`}
+          style={{ width: getFieldWidth(field.maxLength) }}
+        >
+          <div className={styles.formGroup}>
+            <label htmlFor={field.field}>{field.title}</label>
+            <input
+              id={field.field}
+              name={field.field}
+              type={field.type}
+              value={
+                addMode && field.field === "user_mat"
+                  ? nextMat
+                  : addMode && field.field === "user_registration_date"
+                  ? dateRegister
+                  : data?.[field.field] || ""
+              }
+              onChange={handleChange}
+              disabled={!isFieldEnabled}
+              className={
+                errors[field.field] ? styles.errorInput : styles.formInput
+              }
+            />
+
+            {errors[field.field] && (
+              <span className={styles.errorMessage}>{errors[field.field]}</span>
+            )}
+          </div>
+        </div>
       )}
 
-      {input === 2 && (
-        <>
-          <label htmlFor={id}>{label}:</label>
-          <select
-            id={id}
-            name={name}
-            value={data?.[field] || ""}
-            onChange={onChange}
-            disabled={view}
-            required
-          >
-            <option value="">Selecione...</option>
-            {Object.entries(selectOptions[id]).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </>
+      {field.input === 2 && (
+        <div
+          className={`${styles.formGroup} ${
+            errors[field.field] ? styles.errorGroup : ""
+          }`}
+        >
+          <div className={styles.formGroup}>
+            <label htmlFor={field.field}>{field?.title}</label>
+            {viewMode ? (
+              <input
+                type="text"
+                disabled
+                value={getFormattedValue(field?.field, data?.[field?.field])}
+                className={styles.formInput}
+              />
+            ) : (
+              <select
+                id={field.field}
+                name={field.field}
+                value={data?.[field.field] || ""}
+                onChange={handleChange}
+                disabled={!isFieldEnabled}
+                className={
+                  errors[field.field] ? styles.errorInput : styles.formSelect
+                }
+              >
+                <option value="">Selecione uma opção</option>
+                {Object.entries(getSelectOptions(field?.field)).map(
+                  ([key, value]) => (
+                    <option key={key} value={key}>
+                      {value}
+                    </option>
+                  )
+                )}
+              </select>
+            )}
+            {errors[field.field] && (
+              <span className={styles.errorMessage}>{errors[field.field]}</span>
+            )}
+          </div>
+        </div>
       )}
-    </div>
+
+      {field.input === 3 && (
+        <div
+          className={`${styles.formGroup3} ${
+            errors[field.field] ? styles.errorGroup : ""
+          }`}
+          style={{ width: getFieldWidth(field.maxLength, viewMode) }}
+        >
+          <label htmlFor={field.field}>{field?.title}</label>
+          {viewMode ? (
+            <input
+              type="text"
+              disabled
+              value={
+                Array.isArray(data?.[field.field])
+                  ? data[field.field]
+                      .map((id) => getFormattedValue(field.field, id))
+                      .join("  |  ")
+                  : getFormattedValue(field.field, data?.[field.field])
+              }
+              className={styles.formInput}
+            />
+          ) : (
+            <Select
+              className={styles.multiSelect}
+              id={field.field}
+              name={field.field}
+              isMulti
+              value={
+                Array.isArray(data?.[field.field])
+                  ? data[field.field]
+                    .sort((a, b) => a - b)
+                    .map((id) => ({
+                      value: String(id),
+                      label: getFormattedValue(field.field, id),
+                    }))
+                  : []
+              }
+              onChange={(selectedOptions) => {
+                const values = selectedOptions
+                  ? selectedOptions.map((option) => Number(option.value))
+                  : [];
+
+                // Cria um evento sintético para o handleChange
+                const syntheticEvent = {
+                  target: {
+                    name: field.field,
+                    value: values,
+                    type: "select-multiple",
+                  },
+                };
+
+                handleChange(syntheticEvent);
+              }}
+              options={Object.entries(getSelectOptions(field.field))
+                .sort(([a], [b]) => Number(a) - Number(b))
+                .map(
+                ([value, label]) => ({
+                  value: String(value),
+                  label,
+                })
+              )}
+              isDisabled={!isFieldEnabled}
+              placeholder="Selecione uma ou mais opções..."
+              classNamePrefix="react-select"
+            />
+          )}
+          {errors[field.field] && (
+            <span className={styles.errorMessage}>{errors[field.field]}</span>
+          )}
+        </div>
+      )}
+    </>
   );
 }

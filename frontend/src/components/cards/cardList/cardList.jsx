@@ -1,6 +1,6 @@
-import styles from "./cardListUser.module.css";
+import styles from "./cardList.module.css";
 
-export default function CardListUser({ text, active, onClick, setActiveScreen }) {
+export default function CardList({ text, active, onClick, setActiveScreen }) {
 
   return (
     <div

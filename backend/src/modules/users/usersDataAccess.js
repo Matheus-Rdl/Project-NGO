@@ -4,12 +4,15 @@ import { ObjectId } from "mongodb";
 const collectionName = "users";
 
 export default class UsersDataAccess {
+
+  //Pega todos os usuários da base
   async getUsers() {
     const result = await Mongo.db.collection(collectionName).find({}).toArray();
 
     return result;
   }
 
+  //Pega proxima matricula que será utulizada no sistema
   async getNextUserMat() {
     const lastUser = await Mongo.db
       .collection(collectionName)
@@ -40,14 +43,25 @@ export default class UsersDataAccess {
     return nextMat;
   }
 
+  //Adiciona um usuário no sistema
   async addUser(userData) {
+    
+    const normalizedData = {};
+    for (const key in userData) {
+      normalizedData[key] =
+        typeof userData[key] === "string"
+          ? userData[key].toUpperCase()
+          : userData[key];
+    }
+
     const result = await Mongo.db
       .collection(collectionName)
-      .insertOne(userData);
+      .insertOne(normalizedData);
 
     return result;
   }
 
+  //Deleta um usuário
   async deleteUser(userId) {
     const result = await Mongo.db
       .collection(collectionName)
@@ -56,10 +70,23 @@ export default class UsersDataAccess {
     return result;
   }
 
+  //Atualiza dados do usuário
   async updateUser(userId, userData) {
+
+    const normalizedData = {};
+    for (const key in userData) {
+      normalizedData[key] =
+        typeof userData[key] === "string"
+          ? userData[key].toUpperCase()
+          : userData[key];
+    }
+
     const result = Mongo.db
       .collection(collectionName)
-      .findOneAndUpdate({ _id: new ObjectId(userId) }, { $set: userData });
+      .findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        { $set: normalizedData }
+      );
 
     return result;
   }

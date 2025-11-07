@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardUser from "../../../components/cards/cardUser/cardUser";
 import List from "../../../components/list/list";
 import styles from "./peopleManagement.module.css";
@@ -11,7 +11,22 @@ export default function PeopleManagement() {
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
   const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
-  const userSelected = usersList.find((user) => user._id === userActive);
+  //const userSelected = usersList.find((user) => user._id === userActive);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  const toggleMenu = () => setOpen((prev) => !prev);
+
+  // Fecha o menu se clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   //leva uma mensagem para o services, a função getUsers
   useEffect(() => {
@@ -49,7 +64,7 @@ export default function PeopleManagement() {
           state={{
             userId: userActive,
             userData: usersList.find((u) => u._id === userActive),
-            mode: "inserir",
+            currentMode: "A",
           }}
         >
           <button>Inserir</button>
@@ -60,7 +75,7 @@ export default function PeopleManagement() {
           state={{
             userId: userActive,
             userData: usersList.find((u) => u._id === userActive),
-            mode: "visualizar",
+            currentMode: "V",
           }}
         >
           <button disabled={userActive === null}>
@@ -74,13 +89,24 @@ export default function PeopleManagement() {
           state={{
             userId: userActive,
             userData: usersList.find((u) => u._id === userActive),
-            mode: "alterar",
+            currentMode: "E",
           }}
         >
           <button disabled={userActive === null}>Alterar</button>
         </Link>
 
-        <button>Outras Opções</button>
+        <div ref={menuRef}>
+          <button disabled={userActive === null} onClick={toggleMenu}>
+            Outras opções ▼
+          </button>
+
+          {open && (
+            <ul className={styles.otherOptionBtns}>
+              <li>Atividades</li>
+              <li>Ausencias</li>
+            </ul>
+          )}
+        </div>
       </div>
 
       <div className={styles.cardList}>
@@ -89,6 +115,7 @@ export default function PeopleManagement() {
             <tr>
               <td>Matrícula</td>
               <td>Nome</td>
+              <td>Tipo de usuário</td>
               <td>CPF</td>
               <td>RG</td>
               <td>Data Admissão</td>

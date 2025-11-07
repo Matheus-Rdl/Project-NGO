@@ -1,12 +1,12 @@
 export const selectOptions = {
-  gender: {
+  user_gender: {
     1: "1 - Masculino",
     2: "2 - Feminino",
     3: "3 - Outro",
     4: "4 - Prefiro não informar",
   },
 
-  civil_status: {
+  user_civil_status: {
     1: "1 - Solteiro(a)",
     2: "2 - Casado(a)",
     3: "3 - Divorciado(a)",
@@ -15,7 +15,7 @@ export const selectOptions = {
     6: "6 - União estável",
   },
 
-  education: {
+  user_education: {
     1: "1 - Sem instrução",
     2: "2 - Fundamental incompleto",
     3: "3 - Fundamental completo",
@@ -30,6 +30,15 @@ export const selectOptions = {
   },
 
   color: {
+    1: "1 - Branca",
+    2: "2 - Preta",
+    3: "3 - Parda",
+    4: "4 - Amarela / Asiática",
+    5: "5 - Indígena",
+    6: "6 - Prefiro não informar",
+  },
+
+  user_color: {
     1: "1 - Branca",
     2: "2 - Preta",
     3: "3 - Parda",
@@ -61,17 +70,12 @@ export const selectOptions = {
     4: "4 - Fotografia",
   },
 
-  physically_disabled: {
+  user_physically_disabled: {
     1: "1 - Sim",
     2: "2 - Não",
   },
 
-  type_physically_disabled: {
-    1: "1 - Sim",
-    2: "2 - Não",
-  },
-
-  type_physically_disabled: {
+  user_type_physically_disabled: {
     1: "1 - Não é portador de deficiencia",
     2: "2 - Fisica",
     3: "3 - Auditiva",
@@ -79,5 +83,16 @@ export const selectOptions = {
     5: "5 - Intelectual(Mental)",
     6: "6 - Multipla",
     7: "7 - Reabilitado",
+  },
+
+  course_type: {
+    1: "1 - Inglês",
+    2: "2 - Espanhol",
+    3: "3 - Fotografia",
+  },
+
+  course_active: {
+    1: "1 - Sim",
+    2: "2 - Não",
   },
 };

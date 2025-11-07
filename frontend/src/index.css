@@ -37,6 +37,7 @@ main {
   min-height: 100vh;
 }
 
+
 .main {
   display: flex;
   flex-direction: column;
@@ -59,12 +60,17 @@ main {
   width: fit-content;
   color: rgb(0, 167, 0);
   padding: 0 0 .5em 1em;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.main h2:hover {
+    transform: scale(1.1);
 }
 
 .main-page {
   padding: 65px 1em 0 1em;
 }
-
 
 .arrowBack {
   font-size: 32px;
