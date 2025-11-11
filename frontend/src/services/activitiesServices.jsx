@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-export default function coursesServices() {
-  const [coursesLoading, setCoursesLoading] = useState(false);
-  const [refetchCourses, setRefetchCourses] = useState(true);
-  const [coursesList, setCoursesList] = useState([]);
-  const [courseNextMat, setCourseNextMat] = useState([]);
+export default function activitiesServices() {
+  const [activitiesLoading, setActivitiesLoading] = useState(false);
+  const [refetchActivities, setRefetchActivities] = useState(true);
+  const [activitiesList, setActivitiesList] = useState([]);
+  const [activityNextMat, setActivityNextMat] = useState([]);
 
-  const url = "http://localhost:3000/courses";
+  const url = "http://localhost:3000/activities";
 
-  const addCourse = (courseData) => {
+  const addActivity = (activityData) => {
 
     fetch(`${url}`, {
       method: "POST",
@@ -16,7 +16,7 @@ export default function coursesServices() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(courseData),
+      body: JSON.stringify(activityData),
     })
       .then((response) => response.json())
       .then((result) => {
@@ -33,8 +33,8 @@ export default function coursesServices() {
       });
   };
 
-  const getCourses = () => {
-    setCoursesLoading(true);
+  const getActivities = () => {
+    setActivitiesLoading(true);
 
     fetch(`${url}`, {
       method: "GET",
@@ -46,7 +46,7 @@ export default function coursesServices() {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          setCoursesList(result.body);
+          setActivitiesList(result.body);
         } else {
           //console.log(result);
         }
@@ -55,12 +55,12 @@ export default function coursesServices() {
         //console.log(error);
       })
       .finally(() => {
-        setCoursesLoading(false);
-        setRefetchCourses(false);
+        setActivitiesLoading(false);
+        setRefetchActivities(false);
       });
   };
 
-  const getCourseNextMat = () => {
+  const getActivityNextMat = () => {
 
     fetch(`${url}/nextMat`, {
       method: "GET",
@@ -72,7 +72,7 @@ export default function coursesServices() {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          setCourseNextMat(result.body);
+          setActivityNextMat(result.body);
         } else {
           //console.log(result);
         }
@@ -81,23 +81,23 @@ export default function coursesServices() {
         //console.log(error);
       })
       .finally(() => {
-        setCoursesLoading(false);
-        setRefetchCourses(false);
+        setActivitiesLoading(false);
+        setRefetchActivities(false);
       });
   };
 
-  const updateCourse = (courseId, courseData) => {
+  const updateActivity = (activityId, activityData) => {
 
-    console.log(courseData)
-    console.log(JSON.stringify(courseData))
+    console.log(activityData)
+    console.log(JSON.stringify(activityData))
 
-    fetch(`${url}/${courseId}`, {
+    fetch(`${url}/${activityId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body : JSON.stringify(courseData)
+      body : JSON.stringify(activityData)
     })
       .then((response) => response.json())
       .then((result) => {
@@ -113,5 +113,5 @@ export default function coursesServices() {
       });
   };
 
-  return { addCourse, getCourses, getCourseNextMat, updateCourse, coursesLoading, refetchCourses, coursesList, courseNextMat };
+  return { addActivity, getActivities, getActivityNextMat, updateActivity, activitiesLoading, refetchActivities, activitiesList, activityNextMat };
 }

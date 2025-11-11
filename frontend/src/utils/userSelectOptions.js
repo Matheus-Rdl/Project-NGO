@@ -63,7 +63,7 @@ export const selectOptions = {
     4: "4 - Noite",
   },
 
-  user_courses: {
+  user_activities: {
     1: "1 - Nenhum",
     2: "2 - Inglês",
     3: "3 - Espanhol",
@@ -85,13 +85,13 @@ export const selectOptions = {
     7: "7 - Reabilitado",
   },
 
-  course_type: {
+  activity_type: {
     1: "1 - Inglês",
     2: "2 - Espanhol",
     3: "3 - Fotografia",
   },
 
-  course_active: {
+  activity_active: {
     1: "1 - Sim",
     2: "2 - Não",
   },

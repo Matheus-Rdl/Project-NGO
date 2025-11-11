@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import CardUser from "../../../components/cards/cardUser/cardUser";
 import List from "../../../components/list/list";
-import styles from "./peopleManagement.module.css";
+import styles from "../styles/peopleManagement.module.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import Loading from "../../loading/page";
+import Loading from "../../../components/loading/page";
 import usersServices from "../../../services/usersServices";
 
 export default function PeopleManagement() {
@@ -103,7 +103,6 @@ export default function PeopleManagement() {
           {open && (
             <ul className={styles.otherOptionBtns}>
               <li>Atividades</li>
-              <li>Ausencias</li>
             </ul>
           )}
         </div>
@@ -133,7 +132,7 @@ export default function PeopleManagement() {
                 data={data}
                 ativo={userActive === data._id}
                 onClick={() => setuserActive(data._id)}
-                page={"PeopleManagement"}
+                page={"peopleManagement"}
               />
             ))}
           </tbody>

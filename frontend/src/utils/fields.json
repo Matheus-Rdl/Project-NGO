@@ -307,9 +307,9 @@
       "required": true
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Código curso",
-      "field": "course_mat",
+      "field": "activity_mat",
       "type": "number",
       "order": 1,
       "input": 1,
@@ -320,9 +320,9 @@
       "maxLength": 6
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Nome da turma",
-      "field": "course_title",
+      "field": "activity_title",
       "type": "text",
       "order": 2,
       "input": 1,
@@ -333,9 +333,9 @@
       "maxLength": 30
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Descrissão da turma",
-      "field": "course_description",
+      "field": "activity_description",
       "type": "text",
       "order": 3,
       "input": 4,
@@ -346,9 +346,9 @@
       "maxLength": 150
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Tipo do curso",
-      "field": "course_type",
+      "field": "activity_type",
       "order": 4,
       "input": 2,
       "folder": 1,
@@ -356,9 +356,9 @@
       "required": true
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Horário de inicio",
-      "field": "course_time_start",
+      "field": "activity_time_start",
       "type": "time",
       "order": 5,
       "input": 1,
@@ -367,9 +367,9 @@
       "required": true
     },
     {
-      "collection": "courses",
+      "collection": "activities",
       "title": "Horário de encerramento",
-      "field": "course_time_end",
+      "field": "activity_time_end",
       "type": "time",
       "order": 6,
       "input": 1,
@@ -378,12 +378,12 @@
       "required": true
     },
     {
-      "collection": "courses",
-      "title": "Curso em progresso?",
-      "field": "course_active",
+      "collection": "activities",
+      "title": "Atividade em progresso?",
+      "field": "activity_active",
       "type": "time",
       "order": 7,
-      "input": 1,
+      "input": 2,
       "folder": 1,
       "mode": "EA",
       "required": true

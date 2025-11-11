@@ -1,30 +1,43 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "./courseManagementDetailed.module.css";
-import fieldsServices from "../../../services/fieldsServices";
-import { useEffect, useState } from "react";
-import CardList from "../../../components/cards/cardList/cardList";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
-import { validateField } from "../../../utils/fieldValidators";
+import styles from "../styles/peopleManagementDetailed.module.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import coursesServices from "../../../services/coursesServices";
+import CardList from "../../../components/cards/cardList/cardList";
+import { useEffect, useState } from "react";
+import {
+  formatCPF,
+  formatDate,
+  formatName,
+  formatRG,
+  formatProperNoun,
+} from "../../../utils/formatters";
+import { fields } from "../../../utils/fields";
+import { selectOptions } from "../../../utils/userSelectOptions";
+import usersServices from "../../../services/usersServices";
+import TextArea from "../../../components/formTextArea/formTextArea";
+import FormTextArea from "../../../components/formTextArea/formTextArea";
+import Select from "react-select";
+import { getCurrentDate } from "../../../utils/dateFunctions";
 import { Snackbar, Alert } from "@mui/material";
+import fieldsServices from "../../../services/fieldsServices";
+import { validateField } from "../../../utils/fieldValidators";
 
-export default function CourseManagementDetailed() {
+export default function PeopleManagementDetailed() {
   const [formData, setFormData] = useState({});
-  const [listActive, setListActive] = useState(1);
   const [errors, setErrors] = useState({});
-
   const navigate = useNavigate();
   const location = useLocation();
-  const { courseId, courseData, currentMode } = location.state || {};
+  const { userId, userData, currentMode } = location.state || {};
+
+  //Lista de menus
+  const [listActive, setListActive] = useState(1 /*"Cadastrais"*/);
+
+  //Utils
+  const formattedDate = getCurrentDate();
+
+  //Services
+  const { addUser, getUserNextMat, updateUser, refetchUsers, userNextMat } =
+    usersServices();
   const { getFieldsByTitle, fieldsList } = fieldsServices();
-  const {
-    addCourse,
-    getCourseNextMat,
-    updateCourse,
-    refetchCourses,
-    courseNextMat,
-  } = coursesServices();
 
   //SnackBar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -35,18 +48,28 @@ export default function CourseManagementDetailed() {
   const isEditMode = currentMode === "E";
   const isAddMode = currentMode === "A";
 
+  // Lista dos menus do cadastro de usuários
   const listItems = {
     1: "Cadastrais",
-    2: "Alunos",
+    2: "Funcionais",
+    3: "Documentos",
+    4: "Endereço",
+    5: "Contatos",
+    6: "Outros",
   };
+
+  // PeopleManagementDetailed.js
 
   const initializeFormData = () => {
     const initialData = {};
 
     fieldsList.forEach((field) => {
       switch (field.field) {
-        case "course_mat":
-          initialData[field.field] = courseNextMat || "";
+        case "user_mat":
+          initialData[field.field] = userNextMat || "";
+          break;
+        case "user_registration_date":
+          initialData[field.field] = formattedDate || "";
           break;
         default:
           // Inicializa com string vazia para garantir que o campo exista
@@ -57,25 +80,38 @@ export default function CourseManagementDetailed() {
     return initialData;
   };
 
+  // No useEffect
   useEffect(() => {
-    getFieldsByTitle("courses");
-  }, []);
-
-  if (isAddMode) {
-    useEffect(() => {
-      if (refetchCourses) {
-        getCourseNextMat();
-      }
-    }, [refetchCourses]);
-  }
-
-  useEffect(() => {
-    if (!isAddMode && courseData) {
-      setFormData({ ...courseData });
+    if (!isAddMode && userData) {
+      setFormData({ ...userData });
     } else if (isAddMode) {
       setFormData(initializeFormData());
     }
-  }, [isAddMode, courseData, courseNextMat, fieldsList]);
+  }, [isAddMode, userData, userNextMat, formattedDate, fieldsList]);
+
+  // Leva uma mensagem para o services, a função getUserNextMat caso seja para adicionar usuário
+  if (isAddMode) {
+    useEffect(() => {
+      if (refetchUsers) {
+        getUserNextMat();
+      }
+    }, [refetchUsers]);
+  }
+
+  useEffect(() => {
+    getFieldsByTitle("users");
+  }, []);
+
+  //FUNÇõES
+  /* COLOCA PARA MAIUSCULO, É MELHOR COLOCAR EM MAIUSCULO NA JHORA QUE ENVIAR O FORMULÁRIO
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: typeof value === "string" ? value.toUpperCase() : value,
+    }));
+  };
+  */
 
   //Valida os campos
   const validateFields = (fieldsList, formData) => {
@@ -109,12 +145,34 @@ export default function CourseManagementDetailed() {
     }));
   };
 
+  /*
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  */
+
+  /*
+    const [mat, setMat] = useState("");
+  
+    useEffect(() => {
+      if (!isAddMode && userData) {
+        setMat(userData.mat|| "");
+      }
+    }, [isAddMode, userData]);
+  */
+
   //Função para voltar a tela
   const handleBack = (e) => {
     e.preventDefault();
     navigate(-1);
   };
 
+  //CRUD
+  //Função finalizando o formulário, inserir
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
@@ -147,10 +205,11 @@ export default function CourseManagementDetailed() {
         completeFormData[field.field] = "";
       }
     });
+
     // Verifica se vai atualizar ou adicionar
     if (currentMode === "A") {
       setErrors({});
-      addCourse(completeFormData);
+      addUser(completeFormData);
       showSnackbar("Usuário adicionado com sucesso!", "success");
       setTimeout(() => navigate(-1), 1500);
     } else {
@@ -166,10 +225,19 @@ export default function CourseManagementDetailed() {
       if (!updateData || Object.keys(updateData).length === 0) {
         showSnackbar("Nenhum dado foi atualizado", "error");
       } else {
-        updateCourse(formData._id, updateData);
-        showSnackbar("Curso atualizado com sucesso!", "success");
+        updateUser(formData._id, updateData);
+        showSnackbar("Usuário atualizado com sucesso!", "success");
         setTimeout(() => navigate(-1), 1500);
       }
+
+      /* OPÇÃO MAIS MODERNA ESTUDAR!!!!
+        const updateData = Object.entries(formData).reduce((acc, [key, value]) => {
+          if (value !== userData[key]) {
+            acc[key] = value; // adiciona a propriedade que mudou
+          }
+          return acc;
+        }, {});
+      */
     }
   };
 
@@ -177,9 +245,9 @@ export default function CourseManagementDetailed() {
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
       <h1 className={styles.title}>
-        {isViewMode && "Gerenciar Cursos - Visualizar"}
-        {isAddMode && "Gerenciar Cursos - Inserir"}
-        {isEditMode && "Gerenciar Cursos - Alterar"}
+        {isViewMode && "Gestão de pessoas - Visualizar"}
+        {isAddMode && "Gestão de pessoas - Inserir"}
+        {isEditMode && "Gestão de pessoas - Alterar"}
       </h1>
 
       <div className={styles.cardListBox}>
@@ -230,8 +298,9 @@ export default function CourseManagementDetailed() {
                   handleChange={handleChange}
                   data={formData}
                   currentMode={currentMode}
+                  nextMat={userNextMat}
                   errors={errors}
-                  nextMat={courseNextMat}
+                  dateRegister={formattedDate}
                 />
               </div>
             ))}

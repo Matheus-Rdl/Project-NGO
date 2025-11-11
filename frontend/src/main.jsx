@@ -3,13 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from './pages/home/home.jsx'
-import PeopleManagement from './pages/register/peopleManagement/PeopleManagement.jsx'
-import Settings from './pages/settings/settings.jsx'
-import Economic from './pages/economic/economic.jsx'
-import PeopleManagementDetailed from './pages/register/peopleManagement/peopleManagementDetailed.jsx'
-import CourseManagement from './pages/courses/courseManagement/courseManagement.jsx'
-import CourseManagementDetailed from './pages/courses/courseManagement/courseManagementDetailed.jsx'
+import Home from './home/home.jsx'
+import PeopleManagement from './features/register/pages/peopleManagement.jsx'
+import PeopleManagementDetailed from './features/register/pages/peopleManagementDetailed.jsx'
+import ActivityManagement from './features/activities/pages/activityManagement.jsx'
+import ActivityManagementDetailed from './features/activities/pages/activityManagementDetailed.jsx'
+import ActivityManagementUsers from './features/activities/pages/activityManagementUsers.jsx'
 
 const pages = createBrowserRouter([
   {
@@ -23,13 +22,14 @@ const pages = createBrowserRouter([
       {path: '/PeopleManagement/view', element: <PeopleManagementDetailed/>},
       {path: '/PeopleManagement/alter', element: <PeopleManagementDetailed/>},
 
-      {path: '/CourseManagement', element: <CourseManagement/>},
-      {path: '/CourseManagement/add', element: <CourseManagementDetailed/>},
-      {path: '/CourseManagement/view', element: <CourseManagementDetailed/>},
-      {path: '/CourseManagement/alter', element: <CourseManagementDetailed/>},
+      {path: '/ActivityManagement', element: <ActivityManagement/>},
+      {path: '/ActivityManagement/add', element: <ActivityManagementDetailed/>},
+      {path: '/ActivityManagement/view', element: <ActivityManagementDetailed/>},
+      {path: '/ActivityManagement/alter', element: <ActivityManagementDetailed/>},
+      {path: '/ActivityManagementUsers', element: <ActivityManagementUsers/>},
 
-      {path: '/settings', element: <Settings/>},
-      {path: '/economic', element: <Economic/>}
+      {/*path: '/settings', element: <Settings/>*/},
+      {/*path: '/economic', element: <Economic/>*/}
     ]
   }
 ])

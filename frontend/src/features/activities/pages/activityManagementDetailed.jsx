@@ -1,43 +1,30 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "./peopleManagementDetailed.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import CardList from "../../../components/cards/cardList/cardList";
-import { useEffect, useState } from "react";
-import {
-  formatCPF,
-  formatDate,
-  formatName,
-  formatRG,
-  formatProperNoun,
-} from "../../../utils/formatters";
-import { fields } from "../../../utils/fields";
-import { selectOptions } from "../../../utils/userSelectOptions";
-import usersServices from "../../../services/usersServices";
-import TextArea from "../../../components/formTextArea/formTextArea";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
-import Select from "react-select";
-import { getCurrentDate } from "../../../utils/dateFunctions";
-import { Snackbar, Alert } from "@mui/material";
+import styles from "../styles/activityManagementDetailed.module.css";
 import fieldsServices from "../../../services/fieldsServices";
+import { useEffect, useState } from "react";
+import CardList from "../../../components/cards/cardList/cardList";
+import FormTextArea from "../../../components/formTextArea/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import activitiesServices from "../../../services/activitiesServices";
+import { Snackbar, Alert } from "@mui/material";
 
-export default function PeopleManagementDetailed() {
+export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});
+  const [listActive, setListActive] = useState(1);
   const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
   const location = useLocation();
-  const { userId, userData, currentMode } = location.state || {};
-
-  //Lista de menus
-  const [listActive, setListActive] = useState(1 /*"Cadastrais"*/);
-
-  //Utils
-  const formattedDate = getCurrentDate();
-
-  //Services
-  const { addUser, getUserNextMat, updateUser, refetchUsers, userNextMat } =
-    usersServices();
+  const { activityId, activityData, currentMode } = location.state || {};
   const { getFieldsByTitle, fieldsList } = fieldsServices();
+  const {
+    addActivity,
+    getActivityNextMat,
+    updateActivity,
+    refetchActivities,
+    activityNextMat,
+  } = activitiesServices();
 
   //SnackBar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -48,28 +35,17 @@ export default function PeopleManagementDetailed() {
   const isEditMode = currentMode === "E";
   const isAddMode = currentMode === "A";
 
-  // Lista dos menus do cadastro de usuários
   const listItems = {
     1: "Cadastrais",
-    2: "Funcionais",
-    3: "Documentos",
-    4: "Endereço",
-    5: "Contatos",
-    6: "Outros",
   };
-
-  // PeopleManagementDetailed.js
 
   const initializeFormData = () => {
     const initialData = {};
 
     fieldsList.forEach((field) => {
       switch (field.field) {
-        case "user_mat":
-          initialData[field.field] = userNextMat || "";
-          break;
-        case "user_registration_date":
-          initialData[field.field] = formattedDate || "";
+        case "activity_mat":
+          initialData[field.field] = activityNextMat || "";
           break;
         default:
           // Inicializa com string vazia para garantir que o campo exista
@@ -80,38 +56,25 @@ export default function PeopleManagementDetailed() {
     return initialData;
   };
 
-  // No useEffect
   useEffect(() => {
-    if (!isAddMode && userData) {
-      setFormData({ ...userData });
-    } else if (isAddMode) {
-      setFormData(initializeFormData());
-    }
-  }, [isAddMode, userData, userNextMat, formattedDate, fieldsList]);
+    getFieldsByTitle("activities");
+  }, []);
 
-  // Leva uma mensagem para o services, a função getUserNextMat caso seja para adicionar usuário
   if (isAddMode) {
     useEffect(() => {
-      if (refetchUsers) {
-        getUserNextMat();
+      if (refetchActivities) {
+        getActivityNextMat();
       }
-    }, [refetchUsers]);
+    }, [refetchActivities]);
   }
 
   useEffect(() => {
-    getFieldsByTitle("users");
-  }, []);
-
-  //FUNÇõES
-  /* COLOCA PARA MAIUSCULO, É MELHOR COLOCAR EM MAIUSCULO NA JHORA QUE ENVIAR O FORMULÁRIO
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: typeof value === "string" ? value.toUpperCase() : value,
-    }));
-  };
-  */
+    if (!isAddMode && activityData) {
+      setFormData({ ...activityData });
+    } else if (isAddMode) {
+      setFormData(initializeFormData());
+    }
+  }, [isAddMode, activityData, activityNextMat, fieldsList]);
 
   //Valida os campos
   const validateFields = (fieldsList, formData) => {
@@ -145,34 +108,12 @@ export default function PeopleManagementDetailed() {
     }));
   };
 
-  /*
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  */
-
-  /*
-    const [mat, setMat] = useState("");
-  
-    useEffect(() => {
-      if (!isAddMode && userData) {
-        setMat(userData.mat|| "");
-      }
-    }, [isAddMode, userData]);
-  */
-
   //Função para voltar a tela
   const handleBack = (e) => {
     e.preventDefault();
     navigate(-1);
   };
 
-  //CRUD
-  //Função finalizando o formulário, inserir
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
@@ -206,17 +147,19 @@ export default function PeopleManagementDetailed() {
       }
     });
 
+    console.log(currentMode)
+
     // Verifica se vai atualizar ou adicionar
     if (currentMode === "A") {
       setErrors({});
-      addUser(completeFormData);
+      addActivity(completeFormData);
       showSnackbar("Usuário adicionado com sucesso!", "success");
       setTimeout(() => navigate(-1), 1500);
     } else {
       setErrors({});
       let updateData = {};
       for (const key in formData) {
-        if (!(formData[key] === userData[key])) {
+        if (!(formData[key] === activityData[key])) {
           updateData[key] = formData[key];
         }
       }
@@ -225,19 +168,10 @@ export default function PeopleManagementDetailed() {
       if (!updateData || Object.keys(updateData).length === 0) {
         showSnackbar("Nenhum dado foi atualizado", "error");
       } else {
-        updateUser(formData._id, updateData);
-        showSnackbar("Usuário atualizado com sucesso!", "success");
+        updateActivity(formData._id, updateData);
+        showSnackbar("Activity atualizado com sucesso!", "success");
         setTimeout(() => navigate(-1), 1500);
       }
-
-      /* OPÇÃO MAIS MODERNA ESTUDAR!!!!
-        const updateData = Object.entries(formData).reduce((acc, [key, value]) => {
-          if (value !== userData[key]) {
-            acc[key] = value; // adiciona a propriedade que mudou
-          }
-          return acc;
-        }, {});
-      */
     }
   };
 
@@ -245,9 +179,9 @@ export default function PeopleManagementDetailed() {
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
       <h1 className={styles.title}>
-        {isViewMode && "Gestão de pessoas - Visualizar"}
-        {isAddMode && "Gestão de pessoas - Inserir"}
-        {isEditMode && "Gestão de pessoas - Alterar"}
+        {isViewMode && "Gerenciar Atividades - Visualizar"}
+        {isAddMode && "Gerenciar Atividades - Inserir"}
+        {isEditMode && "Gerenciar Atividades - Alterar"}
       </h1>
 
       <div className={styles.cardListBox}>
@@ -298,9 +232,8 @@ export default function PeopleManagementDetailed() {
                   handleChange={handleChange}
                   data={formData}
                   currentMode={currentMode}
-                  nextMat={userNextMat}
                   errors={errors}
-                  dateRegister={formattedDate}
+                  nextMat={activityNextMat}
                 />
               </div>
             ))}

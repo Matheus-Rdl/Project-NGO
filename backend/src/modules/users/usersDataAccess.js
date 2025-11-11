@@ -43,9 +43,19 @@ export default class UsersDataAccess {
     return nextMat;
   }
 
+  async getUsersByActivity(activityMat) {
+    const result = await Mongo.db
+      .collection(collectionName)
+      .find({ user_activities: { $in: [activityMat] } }) 
+      //{ projection: { user_mat: 1, user_name: 1, user_activities: 1 } })
+      .toArray();
+
+    return result;
+  }
+
   //Adiciona um usuário no sistema
   async addUser(userData) {
-    
+
     const normalizedData = {};
     for (const key in userData) {
       normalizedData[key] =

@@ -24,6 +24,16 @@ export default class UsersControllers {
     }
   }
 
+  async getUsersByActivity(activityMat) {
+    try {
+      const users = await this.dataAccess.getUsersByActivity(activityMat);
+      return ok(users);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
+
   async addUser(userData) {
     try {
       const result = await this.dataAccess.addUser(userData);

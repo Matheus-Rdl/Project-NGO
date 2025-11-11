@@ -4,7 +4,7 @@ import { config } from "dotenv"; // Import dotenv to load environment variables
 import { Mongo } from "./database/mongo.js"; // Import custom MongoDB connection module
 import usersRouter from "./modules/users/usersRoutes.js";
 import fieldsRouter from "./modules/fields/fieldsRoutes.js";
-import coursesRouter from "./modules/courses/coursesRoutes.js";
+import activitiesRouter from "./modules/activities/activitiesRoutes.js";
 
 config(); // Load environment variables from .env into process.env
 
@@ -42,7 +42,7 @@ async function main() {
   // Routes
   app.use("/users", usersRouter);
   app.use("/fields", fieldsRouter);
-  app.use("/courses", coursesRouter);
+  app.use("/activities", activitiesRouter);
 
   // Start the server and listen on the defined port
   app.listen(port, () => {

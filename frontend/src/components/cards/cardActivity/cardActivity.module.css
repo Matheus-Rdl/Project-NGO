@@ -1,0 +1,20 @@
+.cardBox{
+  width: 47.5%;
+  border-radius: 8px;
+  border: 3px solid green;
+  padding: .5em 1em 1em 1em;
+}
+
+
+.cardContent h1 {
+  font-size: 20px;
+  padding-bottom: 1px;
+  color: #696969;
+  margin: 0px;
+}
+
+.cardContent {
+  font-size: 16px;
+  margin: 0;
+  color: #696969;
+}

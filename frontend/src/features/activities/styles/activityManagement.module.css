@@ -1,0 +1,77 @@
+.title {
+  padding: 1em 0 .5em 0;
+  color: #696969;
+  font-size: x-large;
+}
+
+.otherOptionBtns {
+  background-color: rgb(158, 227, 55);
+  list-style: none;
+  position: absolute;
+  padding: .5em 1em .5em .8em;
+  border-radius: .5em;
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+}
+
+.otherOptionBtns li {
+  cursor: pointer;
+  padding: .2em 1em .2em .5em;
+  border-radius: .2em;
+}
+
+.otherOptionBtns li:hover {
+  background-color: rgb(140, 202, 47);
+}
+
+.cardList {
+  width: auto;
+  height: auto;
+  margin-top: 16px;
+  border-radius: 6px;
+  border: 1px solid gray;
+  background-color: rgb(156, 155, 155, 0.5);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.cardList table {
+  cursor: default;
+  width: max-content;
+  min-width: 100%;
+}
+
+.cardList table tr td {
+  padding: .7em 2em .7em .5em;
+}
+
+.cardList table thead tr td {
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: rgb(173, 255, 47, 0.8);
+}
+
+.cardList table tr td {
+  border: 1px solid gray;
+}
+
+.cardButtons {
+  display: flex;
+  margin: 16px 0 0 0;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cardButtons button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid green;
+  background-color: greenyellow;
+  cursor: pointer;
+}
+
+.cardButtons button:hover {
+  transform: scale(0.95);
+  background-color: rgb(158, 227, 55);
+}

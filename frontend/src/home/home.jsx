@@ -1,4 +1,4 @@
-import NavBar from "../../components/navbar/navbar";
+import NavBar from "../components/navbar/navbar";
 import { useState } from "react";
 import styles from "./home.module.css";
 import { Link } from "react-router-dom";
@@ -25,11 +25,11 @@ export default function Home() {
           </>
         )}
         {activeScreen === "financeiro" && <h1>Financeiro</h1>}
-        {activeScreen === "cursos" && (
+        {activeScreen === "atividades" && (
           <>
-            <h1>Cursos</h1>
-            <Link to={"/CourseManagement"}>
-              <h2>&bull; Gerenciar Cursos</h2>
+            <h1>Atividades</h1>
+            <Link to={"/ActivityManagement"}>
+              <h2>&bull; Gerenciar Atividades</h2>
             </Link>
           </>
         )}

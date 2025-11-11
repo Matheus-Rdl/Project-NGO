@@ -19,7 +19,7 @@ export default function NavBar({ setActiveScreen }) {
     { label: "Pesquisar", icon: <IoMdSearch />, screen: null },
     { label: "Início", icon: <BiHome />, screen: "home" },
     { label: "Cadastros", icon: <PiUsersThree />, screen: "cadastros" },
-    { label: "Cursos", icon: <LiaGraduationCapSolid />, screen: "cursos" },
+    { label: "Atividades", icon: <LiaGraduationCapSolid />, screen: "atividades" },
     { label: "Relatórios", icon: <LuNewspaper />, screen: "relatorios" },
     { label: "Financeiro", icon: <PiMoneyWavy />, screen: "financeiro" },
     { label: "Configurações", icon: <IoSettingsOutline />, screen: "configuracoes" },

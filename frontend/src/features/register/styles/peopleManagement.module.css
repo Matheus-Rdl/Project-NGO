@@ -1,5 +1,3 @@
-
-
 .title {
   padding: 1em 0 .5em 0;
   color: #696969;
@@ -32,7 +30,7 @@
   background-color: rgb(158, 227, 55);
 }
 
-.otherOptionBtns{
+.otherOptionBtns {
   background-color: rgb(158, 227, 55);
   list-style: none;
   position: absolute;
@@ -43,13 +41,13 @@
   flex-direction: column;
 }
 
-.otherOptionBtns li{
+.otherOptionBtns li {
   cursor: pointer;
   padding: .2em 1em .2em .5em;
   border-radius: .2em;
 }
-.otherOptionBtns li:hover{
-  
+
+.otherOptionBtns li:hover {
   background-color: rgb(140, 202, 47);
 }
 

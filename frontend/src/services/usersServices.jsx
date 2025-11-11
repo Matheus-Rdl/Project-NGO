@@ -5,6 +5,7 @@ export default function usersServices() {
   const [refetchUsers, setRefetchUsers] = useState(true);
   const [usersList, setUsersList] = useState([]);
   const [userNextMat, setUserNextMat] = useState([]);
+  const [userListActivies, setListUserActivies] = useState([]);
 
   const url = "http://localhost:3000/users";
 
@@ -86,6 +87,32 @@ export default function usersServices() {
       });
   };
 
+  const getUsersByActivity = (activityMat) => {
+
+    fetch(`${url}/activity/${activityMat}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          setListUserActivies(result.body);
+        } else {
+          //console.log(result);
+        }
+      })
+      .catch((error) => {
+        //console.log(error);
+      })
+      .finally(() => {
+        setUsersLoading(false);
+        setRefetchUsers(false);
+      });
+  };
+
   const updateUser = (userId, userData) => {
 
     console.log(userData)
@@ -113,5 +140,5 @@ export default function usersServices() {
       });
   };
 
-  return { addUser, getUsers, getUserNextMat, updateUser, usersLoading, refetchUsers, usersList, userNextMat };
+  return { addUser, getUsers, getUserNextMat, getUsersByActivity, updateUser, usersLoading, refetchUsers, usersList, userNextMat, userListActivies };
 }

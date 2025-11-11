@@ -23,7 +23,8 @@ export default function List({ data, ativo, onClick, page }) {
 
   return (
     <>
-      {page === "PeopleManagement" ? (
+      {page === "peopleManagement" ? (
+
         <tr
           className={ativo ? `${styles.listActive}` : `${styles.list}`}
           onClick={onClick}
@@ -37,25 +38,40 @@ export default function List({ data, ativo, onClick, page }) {
           </td>
           <td>{formatCPF(data.user_cpf)}</td>
           <td>{formatRG(data.user_rg)}</td>
-          <td>{formatDate(data.user_registration_date)}</td>
-          <td>{formatDate(data.user_date_nasc)}</td>
+          <td>{data.user_registration_date}</td>
+          <td>{data.user_date_nasc}</td>
           <td>{formatProperNoun(data.user_email)}</td>
           <td>{formatProperNoun(data.user_district)}</td>
           <td>{formatProperNoun(data.user_street)}</td>
           <td>{formatName(data.user_mother_name)}</td>
         </tr>
-      ) : page === "CourseManagement" ? (
+
+      ) : page === "activityManagement" ? (
+
         <tr
           className={ativo ? `${styles.listActive}` : `${styles.list}`}
           onClick={onClick}
         >
-          <td>{data.course_mat}</td>
-          <td>{data.course_title}</td>
-          <td>{getFormattedValue("course_type", data.course_type)}</td>
-          <td>{data.course_time_start}</td>
-          <td>{data.course_time_end}</td>
+          <td>{data.activity_mat}</td>
+          <td>{formatProperNoun(data.activity_title)}</td>
+          <td>{getFormattedValue("activity_type", data.activity_type)}</td>
+          <td>{data.activity_time_start}</td>
+          <td>{data.activity_time_end}</td>
           <td>100</td>
         </tr>
+
+      ) : page === "activityManagementUsers" ? (
+
+        <tr
+          className={ativo ? `${styles.listActive}` : `${styles.list}`}
+          onClick={onClick}
+        >
+          <td>{data.user_mat}</td>
+          <td>{formatName(data.user_name)}</td>
+          <td>{data.user_registration_date}</td>
+          <td>{data.user_date_nasc}</td>
+        </tr>
+
       ) : (
         <>Desconhecido</>
       )}

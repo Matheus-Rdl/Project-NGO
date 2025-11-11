@@ -4,8 +4,13 @@
   font-size: x-large;
 }
 
+.subtitle{
+  color: #696969;
+  font-size: large;
+}
+
 .cardList {
-  width: auto;
+  width: 50%;
   height: auto;
   margin-top: 16px;
   border-radius: 6px;
@@ -33,24 +38,4 @@
 
 .cardList table tr td {
   border: 1px solid gray;
-}
-
-.cardButtons {
-  display: flex;
-  margin: 16px 0 0 0;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.cardButtons button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid green;
-  background-color: greenyellow;
-  cursor: pointer;
-}
-
-.cardButtons button:hover {
-  transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
 }
