@@ -6,6 +6,8 @@ const hasMinLength = (value, min) => String(value).trim().length >= min;
 const hasMaxLength = (value, max) => String(value).trim().length <= max;
 
 const isAlpha = (value) => /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(value.trim());
+//const isAlphaFree = (value) => /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s()\/\-,.]+$/.test(value.trim());
+const isAlphaFree = (value) => /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,\-\/()]+$/.test(value.trim());
 const isNumeric = (value) => /^\d+$/.test(value);
 const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 const isDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value.trim()); // formato YYYY-MM-DD
@@ -21,11 +23,18 @@ export function validateField(field, value) {
     return errors; // nem continua se estiver vazio
   }
 
+  console.log(field.type, field.title);
   // 🔹 Tipo
   switch (field.type) {
     case "text":
       if (value && !isAlpha(value)) errors.push("Deve conter apenas letras");
       break;
+
+    case "textfree":
+      if (value && !isAlphaFree(value))
+        errors.push("Caracteres inválidos");
+      break;
+
 
     case "number":
       if (value && !isNumeric(value)) errors.push("Deve conter apenas números");
@@ -46,13 +55,13 @@ export function validateField(field, value) {
     case "cpf":
       if (value && !isNumeric(value)) errors.push("Deve conter apenas números");
 
-        // Verifica se tem exatamente 11 dígitos
-        /*
-        if (!/^\d{11}$/.test(numericCPF)) {
-          errors.push("CPF deve conter exatamente 11 números");
-        }
-        */
-      
+      // Verifica se tem exatamente 11 dígitos
+      /*
+      if (!/^\d{11}$/.test(numericCPF)) {
+        errors.push("CPF deve conter exatamente 11 números");
+      }
+      */
+
       break;
 
     default:

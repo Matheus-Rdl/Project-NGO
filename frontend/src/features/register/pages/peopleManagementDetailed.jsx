@@ -137,12 +137,34 @@ export default function PeopleManagementDetailed() {
   };
 
   // Verifica a mudança dos inputs
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    if (name === "user_cep" && value.length === 8) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${value}/json/`);
+        const dataCep = await res.json();
+
+        if (!dataCep.erro) {
+          setFormData((prev) => ({
+            ...prev,
+            user_street: dataCep.logradouro || "",
+            user_district: dataCep.bairro || "",
+            user_country: dataCep.localidade || "",
+            user_state: dataCep.uf || "",
+          }));
+        } else {
+          console.warn("CEP inválido!");
+        }
+      } catch (err) {
+        console.warn("Erro ao consultar CEP: ", err);
+      }
+    }
   };
 
   /*
