@@ -17,6 +17,7 @@ export default function CardActivity({ data }) {
   return (
     <div className={styles.cardBox}>
       <div className={styles.cardContent}>
+        <p>Nome:</p>
         <h1>{data.activity_title}</h1>
         <p>Quantidade de usuários: <strong>100</strong></p>
         <p>Inicio: <strong>{data.activity_time_start}</strong> - Fim <strong>{data.activity_time_end}</strong></p>

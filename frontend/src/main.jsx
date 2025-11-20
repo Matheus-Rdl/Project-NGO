@@ -9,6 +9,7 @@ import PeopleManagementDetailed from './features/register/pages/peopleManagement
 import ActivityManagement from './features/activities/pages/activityManagement.jsx'
 import ActivityManagementDetailed from './features/activities/pages/activityManagementDetailed.jsx'
 import ActivityManagementUsers from './features/activities/pages/activityManagementUsers.jsx'
+import PeopleManagementActivities from './features/register/pages/peopleManagementActivities.jsx'
 
 const pages = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const pages = createBrowserRouter([
       {path: '/PeopleManagement/add', element: <PeopleManagementDetailed/>},
       {path: '/PeopleManagement/view', element: <PeopleManagementDetailed/>},
       {path: '/PeopleManagement/alter', element: <PeopleManagementDetailed/>},
+      {path: '/PeopleManagementActivities', element: <PeopleManagementActivities/>},
 
       {path: '/ActivityManagement', element: <ActivityManagement/>},
       {path: '/ActivityManagement/add', element: <ActivityManagementDetailed/>},

@@ -10,6 +10,15 @@ export default class ActivitiesDataAccess {
     return result;
   }
 
+  async getActivitiesByMat(activitiesMats) {
+    const result = await Mongo.db
+    .collection(collectionName)
+    .find({activity_mat: {$in: activitiesMats} })
+    .toArray();
+
+    return result;
+  }
+
   async getNextActivityMat() {
     const lastActivity = await Mongo.db
       .collection(collectionName)

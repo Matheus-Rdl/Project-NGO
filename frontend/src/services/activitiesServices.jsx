@@ -4,6 +4,7 @@ export default function activitiesServices() {
   const [activitiesLoading, setActivitiesLoading] = useState(false);
   const [refetchActivities, setRefetchActivities] = useState(true);
   const [activitiesList, setActivitiesList] = useState([]);
+  const [userActivitiesList, setUserActivitiesList] = useState([]);
   const [activityNextMat, setActivityNextMat] = useState([]);
 
   const url = "http://localhost:3000/activities";
@@ -47,6 +48,34 @@ export default function activitiesServices() {
       .then((result) => {
         if (result.success) {
           setActivitiesList(result.body);
+        } else {
+          //console.log(result);
+        }
+      })
+      .catch((error) => {
+        //console.log(error);
+      })
+      .finally(() => {
+        setActivitiesLoading(false);
+        setRefetchActivities(false);
+      });
+  };
+
+  const getActivitiesByMat = (activities) => {
+    setActivitiesLoading(true);
+
+    fetch(`${url}/activitiesByMat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ user_activities: activities }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          setUserActivitiesList(result.body);
         } else {
           //console.log(result);
         }
@@ -113,5 +142,5 @@ export default function activitiesServices() {
       });
   };
 
-  return { addActivity, getActivities, getActivityNextMat, updateActivity, activitiesLoading, refetchActivities, activitiesList, activityNextMat };
+  return { addActivity, getActivities, getActivitiesByMat, getActivityNextMat, updateActivity, activitiesLoading, refetchActivities, userActivitiesList, activitiesList, activityNextMat };
 }

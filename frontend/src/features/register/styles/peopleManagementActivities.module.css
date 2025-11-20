@@ -1,0 +1,34 @@
+.pageContainer{
+  display: flex;
+}
+
+.pageContainerContentActivities{
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.activitiesBox{
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.activitiesBox:hover{
+  transform: scale(1.01);
+  background-color: rgb(105, 105, 105, 0.2);
+}
+
+.title {
+  padding: 1em 0 .5em 0;
+  color: #696969;
+  font-size: x-large;
+}
+
+.pageContainerContent{
+  width: 50%;
+}
+
+.pageContainerActivityManagementUserActivity{
+  width: 50%;
+  margin: -65px -1em 0 1em;
+}

@@ -1,3 +1,16 @@
+.pageContainer{
+  display: flex;
+}
+
+.pageContainerContent{
+  width: 50%;
+}
+
+.pageContainerActivityManagementUserActivity{
+  width: 50%;
+  margin: -65px -1em 0 1em;
+}
+
 .title {
   padding: 1em 0 .5em 0;
   color: #696969;
@@ -10,7 +23,6 @@
 }
 
 .cardList {
-  width: 50%;
   height: auto;
   margin-top: 16px;
   border-radius: 6px;

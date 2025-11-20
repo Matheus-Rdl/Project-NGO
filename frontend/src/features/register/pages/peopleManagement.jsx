@@ -102,7 +102,14 @@ export default function PeopleManagement() {
 
           {open && (
             <ul className={styles.otherOptionBtns}>
-              <li>Atividades</li>
+              <Link
+                to={"/PeopleManagementActivities"}
+                state={{
+                  userData: usersList.find((u) => u._id === userActive)
+                }}
+              >
+                <li>Atividades</li>
+              </Link>
             </ul>
           )}
         </div>

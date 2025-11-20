@@ -1,12 +1,10 @@
 .cardBox{
-  width: 47.5%;
   border-radius: 8px;
   border: 3px solid green;
   padding: .5em 1em 1em 1em;
 }
 
-
-.cardContent h1 {
+.cardContent h1{
   font-size: 20px;
   padding-bottom: 1px;
   color: #696969;

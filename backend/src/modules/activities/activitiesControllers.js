@@ -15,6 +15,17 @@ export default class ActivitiesControllers {
     }
   }
 
+  async getActivitiesByMat(activitiesMats) {
+    try {
+      const result = await this.dataAccess.getActivitiesByMat(
+        activitiesMats
+      );
+      return ok(result);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
   async getNextActivityMat() {
     try {
       const nextMat = await this.dataAccess.getNextActivityMat();
@@ -44,7 +55,10 @@ export default class ActivitiesControllers {
 
   async updateActivity(activityId, activityData) {
     try {
-      const result = await this.dataAccess.updateActivity(activityId, activityData);
+      const result = await this.dataAccess.updateActivity(
+        activityId,
+        activityData
+      );
       return ok(result);
     } catch (error) {
       return serverError(error);
