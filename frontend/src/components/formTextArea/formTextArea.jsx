@@ -58,8 +58,8 @@ export default function FormTextArea({
               value={
                 addMode && field.field === "user_mat"
                   ? nextMat
-                  : addMode && field.field === "user_registration_date"
-                  ? dateRegister
+                  //: addMode && field.field === "user_registration_date"
+                  //? dateRegister
                   : data?.[field.field] || ""
               }
               onChange={handleChange}
@@ -88,7 +88,7 @@ export default function FormTextArea({
               <input
                 type="text"
                 disabled
-                value={getFormattedValue(field?.field, data?.[field?.field])}
+                value={getFormattedValue(field?.field, data?.[field?.field]).slice(3)}
                 className={styles.formInput}
               />
             ) : (
@@ -134,7 +134,7 @@ export default function FormTextArea({
               value={
                 Array.isArray(data?.[field.field])
                   ? data[field.field]
-                      .map((id) => getFormattedValue(field.field, id))
+                      .map((id) => getFormattedValue(field.field, id).slice(3))
                       .join("  |  ")
                   : getFormattedValue(field.field, data?.[field.field])
               }

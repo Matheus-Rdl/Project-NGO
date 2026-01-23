@@ -127,6 +127,16 @@
     },
     {
       "collection": "users",
+      "title": "Situação",
+      "field": "user_situation",
+      "order": 2,
+      "input": 2,
+      "folder": 2,
+      "mode": "EA",
+      "required": true
+    },
+    {
+      "collection": "users",
       "title": "Atividades",
       "field": "user_activities",
       "order": 0,
@@ -305,6 +315,67 @@
       "folder": 6,
       "mode": "EA",
       "required": true
+    },
+    {
+      "collection": "users",
+      "title": "Menor de idade ?",
+      "field": "user_minor",
+      "order": 6,
+      "input": 2,
+      "folder": 2,
+      "mode": "EA",
+      "required": true
+    },
+    {
+      "collection": "users",
+      "title": "Nome do responsável",
+      "field": "user_minor_name",
+      "type": "text",
+      "order": 7,
+      "input": 1,
+      "folder": 2,
+      "mode": "EA",
+      "required": true,
+      "minLength": 3,
+      "maxLength": 80,
+      "dependsOn" : {
+        "field" : "user_minor",
+        "value" : "1"
+      }
+    },
+    {
+      "collection": "users",
+      "title": "RG do responsável",
+      "field": "user_minor_rg",
+      "type": "rg",
+      "order": 8,
+      "input": 1,
+      "folder": 2,
+      "mode": "EA",
+      "required": true,
+      "minLength": 7,
+      "maxLength": 10,
+      "dependsOn" : {
+        "field" : "user_minor",
+        "value" : "1"
+      }
+    },
+    {
+      "collection": "users",
+      "title": "CPF do responsável",
+      "field": "user_minor_cpf",
+      "type": "cpf",
+      "order": 9,
+      "input": 1,
+      "folder": 2,
+      "mode": "EA",
+      "required": true,
+      "minLength": 11,
+      "maxLength": 11,
+      "dependsOn" : {
+        "field" : "user_minor",
+        "value" : "1"
+      }
     },
     {
       "collection": "activities",

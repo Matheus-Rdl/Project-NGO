@@ -47,6 +47,13 @@ export const selectOptions = {
     6: "6 - Prefiro não informar",
   },
 
+  user_situation: {
+    1: "1 - Ativado",
+    2: "2 - Afastado",
+    3: "3 - Pré-matricula",
+    4: "4 - Ausente"
+  }, 
+
   user_type: {
     1: "1 - Administrador",
     2: "2 - Funcionário",
@@ -85,6 +92,11 @@ export const selectOptions = {
     7: "7 - Reabilitado",
   },
 
+  user_minor: {
+    1: "1 - Sim",
+    2: "2 - Não",
+  },
+
   activity_type: {
     1: "1 - Inglês",
     2: "2 - Espanhol",
@@ -94,5 +106,15 @@ export const selectOptions = {
   activity_active: {
     1: "1 - Sim",
     2: "2 - Não",
+  },
+
+  activity_days: {
+    1: "1 - Domingo",
+    2: "2 - Segunda",
+    3: "3 - Terça",
+    4: "4 - Quarta",
+    5: "5 - Quinta",
+    6: "6 - Sexta",
+    7: "7 - Sabádo",
   },
 };

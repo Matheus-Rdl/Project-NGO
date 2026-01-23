@@ -7,7 +7,7 @@ export default class FieldsDataAccess {
 
   //Pega todos os usuários da base
   async getFields() {
-    const result = await Mongo.db.collection(collectionName).find({}).toArray();
+    const result = await Mongo.db.collection(collectionName).find({}).sort({ order: 1 }).toArray();
 
     return result;
   }

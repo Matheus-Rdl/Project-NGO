@@ -68,9 +68,9 @@ export default function PeopleManagementDetailed() {
         case "user_mat":
           initialData[field.field] = userNextMat || "";
           break;
-        case "user_registration_date":
-          initialData[field.field] = formattedDate || "";
-          break;
+        //case "user_registration_date":
+        //initialData[field.field] = formattedDate || "";
+        //break;
         default:
           // Inicializa com string vazia para garantir que o campo exista
           initialData[field.field] = "";
@@ -102,6 +102,24 @@ export default function PeopleManagementDetailed() {
     getFieldsByTitle("users");
   }, []);
 
+  useEffect(() => {
+  // valor que representa "SIM"
+  const YES_VALUE = "1"; // ajuste se for "S", true, etc.
+
+  if (formData.user_physically_disabled !== YES_VALUE) {
+    setFormData((prev) => {
+      // se já estiver vazio, não faz nada
+      if (!prev.user_type_physically_disabled) return prev;
+
+      return {
+        ...prev,
+        user_type_physically_disabled: "",
+      };
+    });
+  }
+}, [formData.user_physically_disabled]);
+
+
   //FUNÇõES
   /* COLOCA PARA MAIUSCULO, É MELHOR COLOCAR EM MAIUSCULO NA JHORA QUE ENVIAR O FORMULÁRIO
   const handleChange = (e) => {
@@ -117,7 +135,17 @@ export default function PeopleManagementDetailed() {
   const validateFields = (fieldsList, formData) => {
     const newErrors = {};
 
+    
     fieldsList.forEach((field) => {
+      
+      if (field.dependsOn) {
+        const { field: dependsField, value } = field.dependsOn;
+  
+        if (formData[dependsField] !== value) {
+          return; // 🔥 não valida este campo
+        }
+      }
+
       const value = formData[field.field];
       const errors = validateField(field, value);
 
@@ -304,28 +332,41 @@ export default function PeopleManagementDetailed() {
           />
           {/* -------------------------------------------------------- */}
           <div className={styles.formCard}>
-            {fieldsList.map((field) => (
-              <div
-                key={field._id}
-                className={
-                  field.folder === listActive
-                    ? `${styles.formField}`
-                    : `${styles.formFieldHidden}`
+            {fieldsList.map((field) => {
+
+              // ✅ REGRA DE DEPENDÊNCIA (GENÉRICA)
+              if (field.dependsOn) {
+                const { field: dependsField, value } = field.dependsOn;
+
+                if (formData[dependsField] !== value) {
+                  return null; // 🔥 não renderiza o campo
                 }
-              >
-                <FormTextArea
-                  field={field}
-                  addMode={isAddMode}
-                  viewMode={isViewMode}
-                  handleChange={handleChange}
-                  data={formData}
-                  currentMode={currentMode}
-                  nextMat={userNextMat}
-                  errors={errors}
-                  dateRegister={formattedDate}
-                />
-              </div>
-            ))}
+              }
+
+              return (
+                <div
+                  key={field._id}
+                  className={
+                    field.folder === listActive
+                      ? styles.formField
+                      : styles.formFieldHidden
+                  }
+                >
+                  <FormTextArea
+                    field={field}
+                    addMode={isAddMode}
+                    viewMode={isViewMode}
+                    handleChange={handleChange}
+                    data={formData}
+                    currentMode={currentMode}
+                    nextMat={userNextMat}
+                    errors={errors}
+                    dateRegister={formattedDate}
+                  />
+                </div>
+              );
+            })}
+
 
             <div className={styles.btnForm}>
               <button onClick={handleBack}>Cancelar</button>

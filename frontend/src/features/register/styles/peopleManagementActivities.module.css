@@ -2,6 +2,20 @@
   display: flex;
 }
 
+.pageContainer button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  border: 1px solid green;
+  background-color: greenyellow;
+  cursor: pointer;
+}
+
+.pageContainer button:hover {
+  transform: scale(0.95);
+  background-color: rgb(158, 227, 55);
+}
+
 .pageContainerContentActivities{
   display: flex;
   flex-direction: column;

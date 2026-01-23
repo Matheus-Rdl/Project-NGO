@@ -169,7 +169,7 @@ export default function ActivityManagementDetailed() {
         showSnackbar("Nenhum dado foi atualizado", "error");
       } else {
         updateActivity(formData._id, updateData);
-        showSnackbar("Activity atualizado com sucesso!", "success");
+        showSnackbar("Atividade atualizado com sucesso!", "success");
         setTimeout(() => navigate(-1), 1500);
       }
     }

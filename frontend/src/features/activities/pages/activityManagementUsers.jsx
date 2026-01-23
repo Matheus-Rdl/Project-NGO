@@ -32,7 +32,7 @@ export default function ActivityManagementUsers() {
       <div className={styles.pageContainerContent}>
         <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
         <h1 className={styles.title}>
-          Usuários {formatProperNoun(activityData.activity_title)}
+          {formatProperNoun(activityData.activity_title)}
         </h1>
         <h2 className={styles.subtitle}>Informações da atividade:</h2>
         <CardActivity data={activityData} />

@@ -29,18 +29,18 @@ export default function List({ data, ativo, onClick, page }) {
           className={ativo ? `${styles.listActive}` : `${styles.list}`}
           onClick={onClick}
         >
+          <td>{getFormattedValue("user_situation", data.user_situation).slice(3)}</td>
           <td>{data.user_mat}</td>
           <td>{formatName(data.user_name)}</td>
           <td>
             {data.user_type
-              .map((id) => getFormattedValue("user_type", id))
+              .map((id) => getFormattedValue("user_type", id).slice(3))
               .join(" | ")}
           </td>
           <td>{formatCPF(data.user_cpf)}</td>
           <td>{formatRG(data.user_rg)}</td>
           <td>{data.user_registration_date}</td>
           <td>{data.user_date_nasc}</td>
-          <td>{formatProperNoun(data.user_email)}</td>
           <td>{formatProperNoun(data.user_district)}</td>
           <td>{formatProperNoun(data.user_street)}</td>
           <td>{formatName(data.user_mother_name)}</td>

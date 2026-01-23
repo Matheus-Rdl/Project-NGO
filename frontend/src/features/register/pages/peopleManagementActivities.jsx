@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/peopleManagementActivities.module.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import ActivityManagementUserActivity from "../../activities/pages/activityManagementUserActivity";
@@ -29,6 +29,9 @@ export default function PeopleManagementActivities() {
       <div className={styles.pageContainerContent}>
         <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
         <h1 className={styles.title}>Atividades do usuário</h1>
+
+        <button>Adicionar Atividade</button>
+
         <div className={styles.pageContainerContentActivities}>
           {userActivitiesList.map((activity) => (
             <div className={styles.activitiesBox}>

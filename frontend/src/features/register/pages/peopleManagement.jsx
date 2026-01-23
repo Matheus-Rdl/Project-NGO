@@ -119,6 +119,7 @@ export default function PeopleManagement() {
         <table>
           <thead>
             <tr>
+              <td>Situação</td>
               <td>Matrícula</td>
               <td>Nome</td>
               <td>Tipo de usuário</td>
@@ -126,7 +127,6 @@ export default function PeopleManagement() {
               <td>RG</td>
               <td>Data Admissão</td>
               <td>Data Nasc.</td>
-              <td>Email</td>
               <td>Bairro</td>
               <td>Rua</td>
               <td>Nome da mãe</td>

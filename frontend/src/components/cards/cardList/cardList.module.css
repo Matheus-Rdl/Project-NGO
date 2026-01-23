@@ -5,6 +5,8 @@
   box-shadow: 1px 1px 3px rgb(0, 0, 0, 0.75);
   padding: .5em 2.5em;
   transition: 0.3s;
+  margin-block: .5em;
+  margin-inline: .1em;
   cursor: pointer;
 }
 

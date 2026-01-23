@@ -101,7 +101,7 @@ export default function usersServices() {
         if (result.success) {
           setListUserActivies(result.body);
         } else {
-          //console.log(result);
+          console.log(result);
         }
       })
       .catch((error) => {
@@ -124,7 +124,7 @@ export default function usersServices() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body : JSON.stringify(userData)
+      body: JSON.stringify(userData)
     })
       .then((response) => response.json())
       .then((result) => {
