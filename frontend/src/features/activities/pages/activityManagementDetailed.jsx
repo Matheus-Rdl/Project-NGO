@@ -147,8 +147,6 @@ export default function ActivityManagementDetailed() {
       }
     });
 
-    console.log(currentMode)
-
     // Verifica se vai atualizar ou adicionar
     if (currentMode === "A") {
       setErrors({});

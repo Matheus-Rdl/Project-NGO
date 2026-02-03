@@ -6,6 +6,7 @@ export default function activitiesServices() {
   const [activitiesList, setActivitiesList] = useState([]);
   const [userActivitiesList, setUserActivitiesList] = useState([]);
   const [activityNextMat, setActivityNextMat] = useState([]);
+  const [activityTypeList, setActivityTypeList] = useState([]);
 
   const url = "http://localhost:3000/activities";
 
@@ -89,6 +90,34 @@ export default function activitiesServices() {
       });
   };
 
+  const getActivitiesByType = (type) => {
+    setActivitiesLoading(true);
+
+    fetch(`${url}/activitiesByType`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ activity_type: type }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          setActivityTypeList(result.body);
+        } else {
+          //console.log(result);
+        }
+      })
+      .catch((error) => {
+        //console.log(error);
+      })
+      .finally(() => {
+        setActivitiesLoading(false);
+        setRefetchActivities(false);
+      });
+  };
+
   const getActivityNextMat = () => {
 
     fetch(`${url}/nextMat`, {
@@ -126,7 +155,7 @@ export default function activitiesServices() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body : JSON.stringify(activityData)
+      body: JSON.stringify(activityData)
     })
       .then((response) => response.json())
       .then((result) => {
@@ -142,5 +171,18 @@ export default function activitiesServices() {
       });
   };
 
-  return { addActivity, getActivities, getActivitiesByMat, getActivityNextMat, updateActivity, activitiesLoading, refetchActivities, userActivitiesList, activitiesList, activityNextMat };
+  return {
+    addActivity,
+    getActivities,
+    getActivitiesByMat,
+    getActivitiesByType,
+    getActivityNextMat,
+    updateActivity,
+    activitiesLoading,
+    refetchActivities,
+    userActivitiesList,
+    activitiesList,
+    activityNextMat,
+    activityTypeList
+  };
 }

@@ -1,9 +1,9 @@
-import styles from "./cardActivity.module.css";
+import styles from "./cardActivitySelect.module.css";
 import { selectOptions } from "../../../utils/userSelectOptions";
 import usersServices from "../../../services/usersServices";
 import { useEffect } from "react";
 
-export default function CardActivity({ data }) {
+export default function CardActivitySelect({ data }) {
   const { getUsersByActivity, userListActivies, refetchUsers } =
     usersServices();
 
@@ -28,10 +28,9 @@ export default function CardActivity({ data }) {
   return (
     <div className={styles.cardBox}>
       <div className={styles.cardContent}>
-        <h1>{data.activity_title} - {getFormattedValue("activity_type", data.activity_type).slice(3)}</h1>
+        <h1>{data.activity_title}</h1>
         <p>Quantidade de usuários: <strong>{userListActivies.length}</strong></p>
         <p>Inicio: <strong>{data.activity_time_start}</strong> - Fim <strong>{data.activity_time_end}</strong></p>
-        <p>Código: <strong>{data.activity_mat}</strong></p>
         <p>
           {Array.isArray(data.activity_days)
             ? data.activity_days

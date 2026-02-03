@@ -21,6 +21,15 @@ activitiesRouter.post("/activitiesByMat", async (req, res) => {
   res.status(statusCode).send({ success, statusCode, body });
 });
 
+activitiesRouter.post("/activitiesByType", async (req, res) => {
+  const { activity_type } = req.body; 
+
+  const { success, statusCode, body } =
+    await activitiesControllers.getActivitiesByType(activity_type);
+
+  res.status(statusCode).send({ success, statusCode, body });
+});
+
 activitiesRouter.get("/nextMat", async (req, res) => {
   const { success, statusCode, body } =
     await activitiesControllers.getNextActivityMat();

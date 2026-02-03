@@ -26,6 +26,17 @@ export default class ActivitiesControllers {
     }
   }
 
+  async getActivitiesByType(activityType) {
+    try {
+      const result = await this.dataAccess.getActivitiesByType(
+        activityType
+      );
+      return ok(result);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
   async getNextActivityMat() {
     try {
       const nextMat = await this.dataAccess.getNextActivityMat();

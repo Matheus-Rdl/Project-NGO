@@ -140,5 +140,18 @@ export default function usersServices() {
       });
   };
 
-  return { addUser, getUsers, getUserNextMat, getUsersByActivity, updateUser, usersLoading, refetchUsers, usersList, userNextMat, userListActivies };
+  const updateUserActivities = (userId, activities) => {
+    return fetch(`${url}/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_activities: activities,
+      }),
+    });
+  };
+
+
+  return { addUser, getUsers, getUserNextMat, getUsersByActivity, updateUser, updateUserActivities, usersLoading, refetchUsers, usersList, userNextMat, userListActivies };
 }

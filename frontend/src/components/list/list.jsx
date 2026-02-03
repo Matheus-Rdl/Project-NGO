@@ -7,8 +7,20 @@ import {
   formatProperNoun,
 } from "../../utils/formatters";
 import { selectOptions } from "../../utils/userSelectOptions";
+import usersServices from "../../services/usersServices";
+import { useEffect } from "react";
 
 export default function List({ data, ativo, onClick, page }) {
+  const { getUsersByActivity, userListActivies, refetchUsers } =
+    usersServices();
+
+  useEffect(() => {
+    if (refetchUsers) {
+      getUsersByActivity(data.activity_mat);
+    }
+  }, [refetchUsers]);
+
+
   // Função segura para obter as opções
   const getSelectOptions = (fieldName) => {
     return selectOptions?.[fieldName] || {};
@@ -54,10 +66,17 @@ export default function List({ data, ativo, onClick, page }) {
         >
           <td>{data.activity_mat}</td>
           <td>{formatProperNoun(data.activity_title)}</td>
-          <td>{getFormattedValue("activity_type", data.activity_type)}</td>
+          <td>{getFormattedValue("activity_type", data.activity_type).slice(3)}</td>
+          <td>
+            {Array.isArray(data.activity_days)
+              ? data.activity_days
+                .map(day => getFormattedValue("activity_days", day).slice(3))
+                .join(" | ")
+              : getFormattedValue("activity_days", data.activity_days).slice(3)}
+          </td>
+          <td>{userListActivies.length}</td>
           <td>{data.activity_time_start}</td>
           <td>{data.activity_time_end}</td>
-          <td>100</td>
         </tr>
 
       ) : page === "activityManagementUsers" ? (

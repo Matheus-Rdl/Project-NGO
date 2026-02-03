@@ -101,9 +101,10 @@ export default function ActivityManagement() {
               <td>Código</td>
               <td>Nome</td>
               <td>Tipo</td>
+              <td>Dias</td>
+              <td>Alunos</td>
               <td>Horário de inicio</td>
               <td>Horário final</td>
-              <td>Alunos</td>
             </tr>
           </thead>
           <tbody>

@@ -19,6 +19,15 @@ export default class ActivitiesDataAccess {
     return result;
   }
 
+  async getActivitiesByType(activityType) {
+    const result = await Mongo.db
+    .collection(collectionName)
+    .find({activity_type: {$in: activityType} })
+    .toArray();
+
+    return result;
+  }
+
   async getNextActivityMat() {
     const lastActivity = await Mongo.db
       .collection(collectionName)

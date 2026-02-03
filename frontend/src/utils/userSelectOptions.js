@@ -97,10 +97,18 @@ export const selectOptions = {
     2: "2 - Não",
   },
 
+  user_activities_desired: {
+    1: "1 - Inglês",
+    2: "2 - Espanhol",
+    3: "3 - Fotografia",
+    4: "4 - Genérico",
+  },
+
   activity_type: {
     1: "1 - Inglês",
     2: "2 - Espanhol",
     3: "3 - Fotografia",
+    4: "4 - Genérico",
   },
 
   activity_active: {

@@ -10,7 +10,7 @@ import {
   formatRG,
   formatProperNoun,
 } from "../../../utils/formatters";
-import { fields } from "../../../utils/fields";
+import { fieldsUsers } from "../../../utils/fields.json";
 import { selectOptions } from "../../../utils/userSelectOptions";
 import usersServices from "../../../services/usersServices";
 import TextArea from "../../../components/formTextArea/formTextArea";
