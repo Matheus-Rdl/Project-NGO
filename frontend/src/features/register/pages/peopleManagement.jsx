@@ -14,6 +14,19 @@ export default function PeopleManagement() {
   //const userSelected = usersList.find((user) => user._id === userActive);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const [filters, setFilters] = useState({
+    situation: "",
+    mat: "",
+    name: "",
+    type: "",
+    cpf: "",
+    rg: "",
+    admissionDate: "",
+    birthDate: "",
+    district: "",
+    street: "",
+    mother: ""
+  });
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -39,6 +52,33 @@ export default function PeopleManagement() {
   const handleBack = () => {
     navigate(-1);
   };
+
+  //Função para atualizar filtros
+  const handleFilterChange = (field, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  //Função principal que vai filtrar na tela
+  const filteredUsers = usersList.filter(user => {
+    return (
+      user.user_situation?.toLowerCase().includes(filters.situation.toLowerCase()) &&
+      user.user_mat?.toString().includes(filters.mat) &&
+      user.user_name?.toLowerCase().includes(filters.name.toLowerCase()) &&
+      user.user_type?.some(t =>
+        String(t).toLowerCase().includes(filters.type.toLowerCase())
+      ) &&
+      user.user_cpf?.includes(filters.cpf) &&
+      user.user_rg?.includes(filters.rg) &&
+      user.user_registration_date?.includes(filters.admissionDate) &&
+      user.user_date_nasc?.includes(filters.birthDate) &&
+      user.user_district?.toLowerCase().includes(filters.district.toLowerCase()) &&
+      user.user_street?.toLowerCase().includes(filters.street.toLowerCase()) &&
+      user.user_mother_name?.toLowerCase().includes(filters.mother.toLowerCase())
+    );
+  });
 
   //Ele carrega a pagina até encontrar os estudantes
   if (usersLoading) {
@@ -118,8 +158,10 @@ export default function PeopleManagement() {
       <div className={styles.cardList}>
         <table>
           <thead>
-            <tr>
-              <td>Situação</td>
+            <tr className={styles.searchFieldsTr}>
+              <td>
+                  Situação
+              </td>
               <td>Matrícula</td>
               <td>Nome</td>
               <td>Tipo de usuário</td>
@@ -131,9 +173,24 @@ export default function PeopleManagement() {
               <td>Rua</td>
               <td>Nome da mãe</td>
             </tr>
+
+            <tr className={styles.searchFields}>
+              <td className={styles.searchFieldsTd}><input onChange={e => handleFilterChange("situation", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("mat", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("name", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("type", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("cpf", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("rg", e.target.value)} /></td>
+              <td><input type="date" onChange={e => handleFilterChange("admissionDate", e.target.value)} /></td>
+              <td><input type="date" onChange={e => handleFilterChange("birthDate", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("district", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("street", e.target.value)} /></td>
+              <td><input onChange={e => handleFilterChange("mother", e.target.value)} /></td>
+            </tr>
           </thead>
+
           <tbody>
-            {usersList.map((data) => (
+            {filteredUsers.map((data) => (
               <List
                 key={data._id}
                 data={data}

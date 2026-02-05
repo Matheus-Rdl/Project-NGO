@@ -29,7 +29,6 @@ export default function DialogAddActivity({ open, onClose, userData, onSaved }) 
     }
   }, [userData]);
 
-
   //Lista de menus
   const [listActive, setListActive] = useState(1 /*"Cadastrais"*/);
 

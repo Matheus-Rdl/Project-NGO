@@ -41,12 +41,12 @@ export default function List({ data, ativo, onClick, page }) {
           className={ativo ? `${styles.listActive}` : `${styles.list}`}
           onClick={onClick}
         >
-          <td>{getFormattedValue("user_situation", data.user_situation).slice(3)}</td>
+          <td>{getFormattedValue("user_situation", data.user_situation)}</td>{/*.slice(3)}</td>*/}
           <td>{data.user_mat}</td>
           <td>{formatName(data.user_name)}</td>
           <td>
             {data.user_type
-              .map((id) => getFormattedValue("user_type", id).slice(3))
+              .map((id) => getFormattedValue("user_type", id))//.slice(3))
               .join(" | ")}
           </td>
           <td>{formatCPF(data.user_cpf)}</td>

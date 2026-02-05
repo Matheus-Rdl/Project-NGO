@@ -66,6 +66,7 @@
   cursor: default;
   width: max-content;
   min-width: 100%;
+  position: relative;
 }
 
 .cardList table tr td {
@@ -80,4 +81,16 @@
 
 .cardList table tr td {
   border: 1px solid gray;
+}
+
+.searchFields{
+  display: none;
+}
+
+.searchFieldsTr td, .searchFieldsTr td:not(.searchFieldsTd){
+  position: relative;
+}
+
+.searchFieldsTd{
+  position: absolute;
 }
