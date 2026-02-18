@@ -39,6 +39,7 @@
   border: 1px solid green;
   display: flex;
   flex-direction: column;
+  z-index: 100;
 }
 
 .otherOptionBtns li {
@@ -70,18 +71,41 @@
 }
 
 .cardList table tr td {
-  padding: .7em 2em .7em .5em;
+  padding: .7em 7em .7em .5em;
+  margin-right: 10rem;
 }
 
 .cardList table thead tr td {
   border: 1px solid gray;
   border-radius: 3px;
   background-color: rgb(173, 255, 47, 0.8);
+  position: relative;
+}
+
+.cardList table thead tr td input {
+  width: 60%;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  padding-inline: .5rem;
+  transform: translateY(-50%);
+  background-color: rgba(228, 255, 188);
 }
 
 .cardList table tr td {
   border: 1px solid gray;
 }
+
+.searchIcon{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: x-large;
+  margin-right: .7rem;
+  cursor: pointer;
+}
+/*
 
 .searchFields{
   display: none;
@@ -94,3 +118,4 @@
 .searchFieldsTd{
   position: absolute;
 }
+  */

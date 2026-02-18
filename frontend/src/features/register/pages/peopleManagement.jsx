@@ -6,8 +6,13 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../../components/loading/page";
 import usersServices from "../../../services/usersServices";
+import { peopleMangementTR } from "../../../utils/peopleManagementTR.json";
+import { LuSearch, LuSearchX } from "react-icons/lu";
+import HeaderFilter from "../../../components/table/HeaderFilter/HeaderFilter";
 
 export default function PeopleManagement() {
+  console.log(peopleMangementTR)
+
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
   const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
@@ -27,6 +32,9 @@ export default function PeopleManagement() {
     street: "",
     mother: ""
   });
+
+  //FILTRO DE PESQUISA
+  const [openFilters, setOpenFilters] = useState({});
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -84,6 +92,23 @@ export default function PeopleManagement() {
   if (usersLoading) {
     return <Loading />;
   }
+
+  //FILTRO DE PESQUISA
+  //Função para abrir e fechar individualmente!!!
+  const toggleFilter = (field) => {
+    setOpenFilters(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }));
+
+    // limpa filtro ao fechar
+    if (openFilters[field]) {
+      setFilters(prev => ({
+        ...prev,
+        [field]: ""
+      }));
+    }
+  };
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
@@ -156,38 +181,15 @@ export default function PeopleManagement() {
       </div>
 
       <div className={styles.cardList}>
-        <table>
-          <thead>
-            <tr className={styles.searchFieldsTr}>
-              <td>
-                  Situação
-              </td>
-              <td>Matrícula</td>
-              <td>Nome</td>
-              <td>Tipo de usuário</td>
-              <td>CPF</td>
-              <td>RG</td>
-              <td>Data Admissão</td>
-              <td>Data Nasc.</td>
-              <td>Bairro</td>
-              <td>Rua</td>
-              <td>Nome da mãe</td>
-            </tr>
 
-            <tr className={styles.searchFields}>
-              <td className={styles.searchFieldsTd}><input onChange={e => handleFilterChange("situation", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("mat", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("name", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("type", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("cpf", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("rg", e.target.value)} /></td>
-              <td><input type="date" onChange={e => handleFilterChange("admissionDate", e.target.value)} /></td>
-              <td><input type="date" onChange={e => handleFilterChange("birthDate", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("district", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("street", e.target.value)} /></td>
-              <td><input onChange={e => handleFilterChange("mother", e.target.value)} /></td>
-            </tr>
-          </thead>
+        {/* MONTA A LISTA DO TR DA TABELA DE FORMNA DINAMICA */}
+        <table>
+          <HeaderFilter
+            columns={peopleMangementTR}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
+
 
           <tbody>
             {filteredUsers.map((data) => (
