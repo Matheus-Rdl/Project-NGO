@@ -51,8 +51,8 @@ export default function List({ data, ativo, onClick, page }) {
           </td>
           <td>{formatCPF(data.user_cpf)}</td>
           <td>{formatRG(data.user_rg)}</td>
-          <td>{data.user_registration_date}</td>
-          <td>{data.user_date_nasc}</td>
+          <td>{formatDate(data.user_registration_date)}</td>
+          <td>{formatDate(data.user_date_nasc)}</td>
           <td>{formatProperNoun(data.user_district)}</td>
           <td>{formatProperNoun(data.user_street)}</td>
           <td>{formatName(data.user_mother_name)}</td>

@@ -6,12 +6,11 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../../components/loading/page";
 import usersServices from "../../../services/usersServices";
-import { peopleMangementTR } from "../../../utils/peopleManagementTR.json";
-import { LuSearch, LuSearchX } from "react-icons/lu";
-import HeaderFilter from "../../../components/table/HeaderFilter/HeaderFilter";
+import { peopleManagementTR } from "../../../utils/HeaderList.json";
+import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 
 export default function PeopleManagement() {
-  console.log(peopleMangementTR)
+  console.log(peopleManagementTR)
 
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
@@ -23,7 +22,7 @@ export default function PeopleManagement() {
     situation: "",
     mat: "",
     name: "",
-    type: "",
+    type: [],
     cpf: "",
     rg: "",
     admissionDate: "",
@@ -32,9 +31,6 @@ export default function PeopleManagement() {
     street: "",
     mother: ""
   });
-
-  //FILTRO DE PESQUISA
-  const [openFilters, setOpenFilters] = useState({});
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -72,16 +68,30 @@ export default function PeopleManagement() {
   //Função principal que vai filtrar na tela
   const filteredUsers = usersList.filter(user => {
     return (
-      user.user_situation?.toLowerCase().includes(filters.situation.toLowerCase()) &&
+      (filters.situation === "" ||
+        String(user.user_situation) === filters.situation) &&
+
       user.user_mat?.toString().includes(filters.mat) &&
       user.user_name?.toLowerCase().includes(filters.name.toLowerCase()) &&
-      user.user_type?.some(t =>
-        String(t).toLowerCase().includes(filters.type.toLowerCase())
+
+      (
+        filters.type.length === 0 ||
+        user.user_type?.some(t =>
+          filters.type.includes(String(t))
+        )
       ) &&
+
       user.user_cpf?.includes(filters.cpf) &&
       user.user_rg?.includes(filters.rg) &&
-      user.user_registration_date?.includes(filters.admissionDate) &&
-      user.user_date_nasc?.includes(filters.birthDate) &&
+
+      user.user_registration_date
+        ?.replaceAll("-", "/")
+        .includes(filters.admissionDate) &&
+
+      user.user_date_nasc
+        ?.replaceAll("-", "/")
+        .includes(filters.birthDate) &&
+
       user.user_district?.toLowerCase().includes(filters.district.toLowerCase()) &&
       user.user_street?.toLowerCase().includes(filters.street.toLowerCase()) &&
       user.user_mother_name?.toLowerCase().includes(filters.mother.toLowerCase())
@@ -93,22 +103,6 @@ export default function PeopleManagement() {
     return <Loading />;
   }
 
-  //FILTRO DE PESQUISA
-  //Função para abrir e fechar individualmente!!!
-  const toggleFilter = (field) => {
-    setOpenFilters(prev => ({
-      ...prev,
-      [field]: !prev[field]
-    }));
-
-    // limpa filtro ao fechar
-    if (openFilters[field]) {
-      setFilters(prev => ({
-        ...prev,
-        [field]: ""
-      }));
-    }
-  };
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
@@ -181,28 +175,27 @@ export default function PeopleManagement() {
       </div>
 
       <div className={styles.cardList}>
+        <div className={styles.tableWrapper}>
+          <table>
+            <HeaderFilter
+              columns={peopleManagementTR}
+              filters={filters}
+              onFilterChange={handleFilterChange}
+            />
 
-        {/* MONTA A LISTA DO TR DA TABELA DE FORMNA DINAMICA */}
-        <table>
-          <HeaderFilter
-            columns={peopleMangementTR}
-            filters={filters}
-            onFilterChange={handleFilterChange}
-          />
-
-
-          <tbody>
-            {filteredUsers.map((data) => (
-              <List
-                key={data._id}
-                data={data}
-                ativo={userActive === data._id}
-                onClick={() => setuserActive(data._id)}
-                page={"peopleManagement"}
-              />
-            ))}
-          </tbody>
-        </table>
+            <tbody>
+              {filteredUsers.map((data) => (
+                <List
+                  key={data._id}
+                  data={data}
+                  ativo={userActive === data._id}
+                  onClick={() => setuserActive(data._id)}
+                  page={"peopleManagement"}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

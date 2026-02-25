@@ -49,7 +49,7 @@ export function formatDate(dateString) {
   const month = String(date.getMonth() + 1).padStart(2, "0"); // meses começam em 0
   const year = date.getFullYear();
 
-  return `${day}/${month}/${year}`;
+  return `${year}/${month}/${day}`;
 }
 
 //Formatar nomes de pessoas

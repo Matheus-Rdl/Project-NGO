@@ -1,0 +1,68 @@
+{
+    "peopleManagementTR": [
+        {
+            "text": "Situação",
+            "type": "select",
+            "filter": "situation",
+            "optionsKey": "user_situation"
+        },
+        {
+            "text": "Matrícula",
+            "type": "text",
+            "filter": "mat"
+        },
+        {
+            "text": "Nome",
+            "type": "text",
+            "filter": "name"
+        },
+        {
+            "text": "Tipo",
+            "type": "select",
+            "filter": "type",
+            "optionsKey": "user_type"
+        },
+        {
+            "text": "CPF",
+            "type": "text",
+            "filter": "cpf"
+        },
+        {
+            "text": "RG",
+            "type": "text",
+            "filter": "rg"
+        },
+        {
+            "text": "Data Admissão",
+            "type": "date",
+            "filter": "admissionDate"
+        },
+        {
+            "text": "Data Nasc.",
+            "type": "date",
+            "filter": "birthDate"
+        },
+        {
+            "text": "Bairro",
+            "type": "text",
+            "filter": "district"
+        },
+        {
+            "text": "Rua",
+            "type": "text",
+            "filter": "street"
+        },
+        {
+            "text": "Nome da mãe",
+            "type": "text",
+            "filter": "mother"
+        }
+    ],
+    "activitiesManagementTR": [
+        {
+            "text": "Código",
+            "type": "text",
+            "filter": "code"
+        }
+    ]
+}

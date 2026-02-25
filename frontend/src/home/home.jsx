@@ -1,3 +1,10 @@
+/*
+    Type: Fonte
+    User: Matheus Rodrigues
+    Description: Tela principal do sistema, Home da página
+    Date: 23/02/2026
+*/
+
 import NavBar from "../components/navbar/navbar";
 import { useState } from "react";
 import styles from "./home.module.css";

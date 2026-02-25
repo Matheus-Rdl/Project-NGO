@@ -1,3 +1,9 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 75px);
+}
+
 .title {
   padding: 1em 0 .5em 0;
   color: #696969;
@@ -53,46 +59,49 @@
 }
 
 .cardList {
-  width: auto;
-  height: auto;
+  flex: 1;                 /* ocupa todo espaço restante */
+  display: flex;
+  flex-direction: column;
   margin-top: 16px;
   border-radius: 6px;
   border: 1px solid gray;
-  background-color: rgb(156, 155, 155, 0.5);
-  overflow-x: auto;
-  white-space: nowrap;
+  background-color: rgba(156, 155, 155, 0.5);
+  overflow: hidden;        /* importante */
 }
 
-.cardList table {
-  cursor: default;
-  width: max-content;
-  min-width: 100%;
-  position: relative;
-}
-
-.cardList table tr td {
+.cardList table tr td, .cardList table tr th {
   padding: .7em 7em .7em .5em;
   margin-right: 10rem;
 }
 
-.cardList table thead tr td {
-  border: 1px solid gray;
-  border-radius: 3px;
+.cardList table thead tr td, .cardList table thead tr th {
   background-color: rgb(173, 255, 47, 0.8);
   position: relative;
+  min-width: 7.5rem;
 }
 
-.cardList table thead tr td input {
+.cardList table thead tr th {
+  background-color: rgba(173, 255, 47, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  min-width: 7.5rem;
+}
+
+.cardList table thead tr th input{
   width: 60%;
   height: 2rem;
   position: absolute;
   top: 50%;
+  left: 0;
   padding-inline: .5rem;
   transform: translateY(-50%);
   background-color: rgba(228, 255, 188);
+  border-radius: .3rem;
+  margin-left: .3rem;
 }
 
-.cardList table tr td {
+.cardList table tr td, .cardList table tr th {
   border: 1px solid gray;
 }
 
@@ -105,6 +114,19 @@
   margin-right: .7rem;
   cursor: pointer;
 }
+
+.tableWrapper {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.tableWrapper table {
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+
 /*
 
 .searchFields{

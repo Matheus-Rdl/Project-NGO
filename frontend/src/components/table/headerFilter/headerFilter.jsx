@@ -1,5 +1,5 @@
 /*
-    Type: Compenente
+    Type: Componente
     User: Matheus Rodrigues
     Description: Componente para montar filtro de tabelas no sistema
     Date: 18/02/2026
@@ -8,6 +8,7 @@
 import { useState } from "react";
 import { LuSearch, LuSearchX } from "react-icons/lu";
 import styles from "./headerFilter.module.css";
+import { selectOptions } from "../../../utils/userSelectOptions";
 
 // Componente reutilizável de cabeçalho com filtros
 // Props:
@@ -38,27 +39,85 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
     }
   };
 
+  const formatYearDateInput = (value) => {
+    const numbers = value.replace(/\D/g, "");
+
+    if (numbers.length <= 4) return numbers;
+    if (numbers.length <= 6)
+      return `${numbers.slice(0, 4)}/${numbers.slice(4)}`;
+
+    return `${numbers.slice(0, 4)}/${numbers.slice(4, 6)}/${numbers.slice(6, 8)}`;
+  };
+
   return (
     <thead>
-      <tr className={styles.headerFilterTable}>
+      <tr>
 
         {/* Percorre dinamicamente as colunas recebidas por props */}
         {columns.map((col) => (
           // Cada coluna do header recebe uma célula
-          <td key={col.filter}>
+          <th key={col.filter}>
             {/* Texto visível da coluna */}
             <p>{col.text}</p>
 
             {/* Se o filtro da coluna estiver aberto, renderiza o input correpondente */}
             {openFilters[col.filter] && (
-              <input
-                autoFocus //Foca automaticamente ao abrir
-                type={col.type} //Tipo definido na configuração (text, date, etc)
-                value={filters[col.filter] || ""}
-                onChange={(e) =>
-                  onFilterChange(col.filter, e.target.value)
-                }
-              />
+              col.type === "multiselect" ? (
+                <select
+                  className={styles.multiSelectFilter}
+                  multiple
+                  value={filters[col.filter] || []}
+                  onChange={(e) => {
+                    const selectedValues = Array.from(
+                      e.target.selectedOptions,
+                      option => option.value
+                    );
+                    onFilterChange(col.filter, selectedValues);
+                  }}
+                >
+                  {Object.entries(selectOptions[col.optionsKey] || {}).map(
+                    ([key, value]) => (
+                      <option key={key} value={key}>
+                        {value}
+                      </option>
+                    )
+                  )}
+                </select>
+              ) : col.type === "select" ? (
+                <select
+                  className={styles.selectFilter}
+                  autoFocus
+                  value={filters[col.filter] || ""}
+                  onChange={(e) =>
+                    onFilterChange(col.filter, e.target.value)
+                  }
+                >
+                  <option value="">Todos</option>
+
+                  {Object.entries(selectOptions[col.optionsKey] || {}).map(
+                    ([key, value]) => (
+                      <option key={key} value={key}>
+                        {value}
+                      </option>
+                    )
+                  )}
+                </select>
+              ) : (
+                <input
+                  autoFocus
+                  type="text"
+                  placeholder={col.type === "date" ? "aaaa/mm/dd" : ""}
+                  value={filters[col.filter] || ""}
+                  onChange={(e) => {
+                    if (col.type === "date") {
+                      const formatted = formatYearDateInput(e.target.value);
+                      onFilterChange(col.filter, formatted);
+                    } else {
+                      onFilterChange(col.filter, e.target.value);
+                    }
+                  }}
+                />
+              )
             )}
 
             {/*
@@ -77,7 +136,7 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
                 onClick={() => toggleFilter(col.filter)}
               />
             )}
-          </td>
+          </th>
         ))}
       </tr>
     </thead>

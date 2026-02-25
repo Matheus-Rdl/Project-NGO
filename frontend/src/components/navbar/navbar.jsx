@@ -1,3 +1,10 @@
+/*
+    Type: Componente
+    User: Matheus Rodrigues
+    Description: Componente para montar filtro de tabelas no sistema
+    Date: 23/02/2026
+*/
+
 import styles from "./navbar.module.css";
 import { useState } from "react";
 import {
@@ -12,9 +19,12 @@ import { BiHome } from "react-icons/bi";
 import { LuNewspaper } from "react-icons/lu";
 
 export default function NavBar({ setActiveScreen }) {
+
+  // Estado interno para fechar e abrir o NAV
   const [showNav, setShowNav] = useState(false);
 
-  // Array de itens da NavBar
+  // Array de itens da NavBar ("Futuramente vai pegar o menuItems do banco de dados e os icones guardado na aplicação")
+  // O que vai ser fixo vai ser esses que já estão
   const menuItems = [
     { label: "Pesquisar", icon: <IoMdSearch />, screen: null },
     { label: "Início", icon: <BiHome />, screen: "home" },
@@ -26,7 +36,10 @@ export default function NavBar({ setActiveScreen }) {
   ];
 
   return (
+
     <div className={showNav ? `${styles.nav} ${styles.active}` : styles.nav}>
+
+      {/*  */}
       {showNav ? (
         <IoIosArrowDropleftCircle
           className={styles.arrowMenu}
@@ -43,7 +56,13 @@ export default function NavBar({ setActiveScreen }) {
         {menuItems.map((item) => (
           <div
             key={item.label}
-            onClick={() => item.screen && setActiveScreen(item.screen)}
+            onClick={() => {
+              if (item.screen) {
+                setActiveScreen(item.screen);
+              }
+              setShowNav(false);
+            }}
+
           >
             <a>
               {item.icon}

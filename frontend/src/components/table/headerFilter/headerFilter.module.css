@@ -1,3 +1,4 @@
+/* Icone dos botões de pesquisa */
 .searchIcon{
   position: absolute;
   right: 0;
@@ -6,4 +7,32 @@
   font-size: x-large;
   margin-right: .7rem;
   cursor: pointer;
+}
+
+.selectFilter {
+  width: 60%;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding-inline: .5rem;
+  transform: translateY(-50%);
+  background-color: rgba(228, 255, 188);
+  border-radius: .3rem;
+  margin-left: .3rem;
+}
+
+.multiSelectFilter {
+  width: 70%;
+  height: 15rem;
+  position: absolute;
+  top: 0;
+  margin-top: .2rem;
+  padding-inline: 1.5rem;
+  background-color: rgba(228, 255, 188);
+  border-radius: .3rem;
+}
+
+.multiSelectFilter  option{
+  padding-block: .8rem;
 }
