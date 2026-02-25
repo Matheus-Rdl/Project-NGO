@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { LuSearch, LuSearchX } from "react-icons/lu";
 import styles from "./headerFilter.module.css";
-import { selectOptions } from "../../../utils/userSelectOptions";
+import { selectOptions as UserSelectOptions } from "../../../utils/userSelectOptions";
 
 // Componente reutilizável de cabeçalho com filtros
 // Props:
@@ -75,7 +75,7 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
                     onFilterChange(col.filter, selectedValues);
                   }}
                 >
-                  {Object.entries(selectOptions[col.optionsKey] || {}).map(
+                  {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
                     ([key, value]) => (
                       <option key={key} value={key}>
                         {value}
@@ -94,7 +94,7 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
                 >
                   <option value="">Todos</option>
 
-                  {Object.entries(selectOptions[col.optionsKey] || {}).map(
+                  {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
                     ([key, value]) => (
                       <option key={key} value={key}>
                         {value}

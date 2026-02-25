@@ -59,14 +59,14 @@
 }
 
 .cardList {
-  flex: 1;                 /* ocupa todo espaço restante */
+  flex: 1;                 
   display: flex;
   flex-direction: column;
   margin-top: 16px;
   border-radius: 6px;
   border: 1px solid gray;
   background-color: rgba(156, 155, 155, 0.5);
-  overflow: hidden;        /* importante */
+  overflow: hidden;
 }
 
 .cardList table tr td, .cardList table tr th {

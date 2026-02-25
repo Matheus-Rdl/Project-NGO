@@ -10,7 +10,6 @@ import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 
 export default function PeopleManagement() {
-  console.log(peopleManagementTR)
 
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
