@@ -41,7 +41,14 @@ export default function Home() {
           </>
         )}
         {activeScreen === "relatorios" && <h1>Relatórios</h1>}
-        {activeScreen === "configuracoes" && <h1>Configurações</h1>}
+        {activeScreen === "configuracoes" && (
+          <>
+            <h1>Configurações</h1>
+            <Link to={"/SignUp"}>
+              <h2>&bull; Cadastro de usuários do sistema</h2>
+            </Link>
+          </>
+        )}
       </div>
     </>
   );

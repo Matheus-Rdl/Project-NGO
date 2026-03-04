@@ -3,19 +3,8 @@ import styles from "../styles/peopleManagementDetailed.module.css";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import CardList from "../../../components/cards/cardList/cardList";
 import { useEffect, useState } from "react";
-import {
-  formatCPF,
-  formatDate,
-  formatName,
-  formatRG,
-  formatProperNoun,
-} from "../../../utils/formatters";
-import { fieldsUsers } from "../../../utils/fields.json";
-import { selectOptions } from "../../../utils/userSelectOptions";
 import usersServices from "../../../services/usersServices";
-import TextArea from "../../../components/formTextArea/formTextArea";
 import FormTextArea from "../../../components/formTextArea/formTextArea";
-import Select from "react-select";
 import { getCurrentDate } from "../../../utils/dateFunctions";
 import { Snackbar, Alert } from "@mui/material";
 import fieldsServices from "../../../services/fieldsServices";
@@ -366,7 +355,6 @@ export default function PeopleManagementDetailed() {
                 </div>
               );
             })}
-
 
             <div className={styles.btnForm}>
               <button onClick={handleBack}>Cancelar</button>

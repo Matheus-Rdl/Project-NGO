@@ -2,9 +2,9 @@ import express from "express"; // Import the Express framework
 import cors from "cors"; // Import CORS to allow cross-origin requests
 import { config } from "dotenv"; // Import dotenv to load environment variables
 import { Mongo } from "./database/mongo.js"; // Import custom MongoDB connection module
-import usersRouter from "./modules/users/usersRoutes.js";
-import fieldsRouter from "./modules/fields/fieldsRoutes.js";
-import activitiesRouter from "./modules/activities/activitiesRoutes.js";
+import usersRouter from "./modules/users/usersRouter.js";
+import fieldsRouter from "./modules/fields/fieldsRouter.js";
+import activitiesRouter from "./modules/activities/activitiesRouter.js";
 
 config(); // Load environment variables from .env into process.env
 

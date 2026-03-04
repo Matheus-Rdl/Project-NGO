@@ -46,8 +46,19 @@ export default class UsersDataAccess {
   async getUsersByActivity(activityMat) {
     const result = await Mongo.db
       .collection(collectionName)
-      .find({ user_activities: { $in: [activityMat] } }) 
+      .find({ user_activities: { $in: [activityMat] } })
       //{ projection: { user_mat: 1, user_name: 1, user_activities: 1 } })
+      .toArray();
+
+    return result;
+  }
+
+  async getUsersByType(typesArray) {
+    const result = await Mongo.db
+      .collection(collectionName)
+      .find({
+        user_type: { $in: typesArray }
+      })
       .toArray();
 
     return result;

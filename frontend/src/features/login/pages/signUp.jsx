@@ -1,22 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import CardUser from "../../../components/cards/cardUser/cardUser";
-import List from "../../../components/list/list";
-import styles from "../styles/peopleManagement.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import Loading from "../../../components/loading/page";
-import usersServices from "../../../services/usersServices";
-import { peopleManagementTR } from "../../../utils/HeaderList.json";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+/*
+    Type: Fonte
+    User: Matheus Rodrigues
+    Description: Tela de Cadastro de Usuários
+    Date: 03/03/2026
+*/
 
-export default function PeopleManagement() {
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import styles from "../styles/signup.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import List from "../../../components/list/list";
+import { peopleManagementTR } from "../../../utils/HeaderList.json";
+import { useEffect, useState } from "react";
+import usersServices from "../../../services/usersServices";
+
+export default function SignUp() {
 
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
-  const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
-  //const userSelected = usersList.find((user) => user._id === userActive);
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
+  const { getUsers, refetchUsers, usersLoading, getUsersByType, usersByType } = usersServices();
   const [filters, setFilters] = useState({
     situation: "",
     mat: "",
@@ -31,19 +33,6 @@ export default function PeopleManagement() {
     mother: ""
   });
 
-  const toggleMenu = () => setOpen((prev) => !prev);
-
-  // Fecha o menu se clicar fora
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   //leva uma mensagem para o services, a função getUsers
   useEffect(() => {
     if (refetchUsers) {
@@ -51,10 +40,9 @@ export default function PeopleManagement() {
     }
   }, [refetchUsers]);
 
-  //Função para voltar a tela
-  const handleBack = () => {
-    navigate(-1);
-  };
+  useEffect(() => {
+    getUsersByType([2, 4]); // Funcionário e Voluntário
+  }, []);
 
   //Função para atualizar filtros
   const handleFilterChange = (field, value) => {
@@ -65,7 +53,7 @@ export default function PeopleManagement() {
   };
 
   //Função principal que vai filtrar na tela
-  const filteredUsers = usersList.filter(user => {
+  const filteredUsers = usersByType.filter(user => {
     return (
       (filters.situation === "" ||
         String(user.user_situation) === filters.situation) &&
@@ -97,44 +85,36 @@ export default function PeopleManagement() {
     );
   });
 
-  //Ele carrega a pagina até encontrar os estudantes
-  if (usersLoading) {
-    return <Loading />;
-  }
-
+  //Função para voltar a tela
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
 
-      <h1 className={styles.title}>Gestão de pessoas</h1>
-
-      {/*
-      <div className={styles.cardUserBox}>
-        <CardUser title="Funcionários" quantity="145" />
-        <CardUser title="Alunos" quantity="1.345" />
-        <CardUser title="Responsáveis" quantity="545" />
-        <CardUser title="Voluntários" quantity="399" />
-      </div>
-      */}
+      <h1 className={styles.title}>Cadastro de usuários do sistema</h1>
 
       <div className={styles.cardButtons}>
+        {/*
         <Link
-          to={"/PeopleManagement/add"}
+          to={"/SignUp/add"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: usersByType.find((u) => u._id === userActive),
             currentMode: "A",
           }}
         >
           <button>Inserir</button>
         </Link>
+        */}
 
         <Link
-          to={"/PeopleManagement/view"}
+          to={"/SignUp/view"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: usersByType.find((u) => u._id === userActive),
             currentMode: "V",
           }}
         >
@@ -145,34 +125,15 @@ export default function PeopleManagement() {
         </Link>
 
         <Link
-          to={"/PeopleManagement/alter"}
+          to={"/SignUp/alter"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: usersByType.find((u) => u._id === userActive),
             currentMode: "E",
           }}
         >
           <button disabled={userActive === null}>Alterar</button>
         </Link>
-
-        <div ref={menuRef}>
-          <button disabled={userActive === null} onClick={toggleMenu}>
-            Outras opções ▼
-          </button>
-
-          {open && (
-            <ul className={styles.otherOptionBtns}>
-              <Link
-                to={"/PeopleManagementActivities"}
-                state={{
-                  userData: usersList.find((u) => u._id === userActive)
-                }}
-              >
-                <li>Atividades</li>
-              </Link>
-            </ul>
-          )}
-        </div>
       </div>
 
       <div className="cardList">
@@ -198,6 +159,7 @@ export default function PeopleManagement() {
           </table>
         </div>
       </div>
+
     </div>
   );
 }

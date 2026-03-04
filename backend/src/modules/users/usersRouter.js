@@ -24,6 +24,15 @@ usersRouter.get('/activity/:mat', async (req, res) => {
   res.status(statusCode).send({ success, statusCode, body });
 });
 
+usersRouter.get('/type', async (req, res) => {
+  const { types } = req.query;
+
+  const { success, statusCode, body } =
+    await usersControllers.getUsersByType(types);
+
+  res.status(statusCode).send({ success, statusCode, body });
+});
+
 usersRouter.post('/', async (req, res) => {
   const { success, statusCode, body } = await usersControllers.addUser(req.body)
 

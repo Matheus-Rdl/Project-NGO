@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function usersServices() {
+  const [usersByType, setUsersByType] = useState([]);
   const [usersLoading, setUsersLoading] = useState(false);
   const [refetchUsers, setRefetchUsers] = useState(true);
   const [usersList, setUsersList] = useState([]);
@@ -113,6 +114,36 @@ export default function usersServices() {
       });
   };
 
+  const getUsersByType = (typesArray) => {
+    setUsersLoading(true);
+
+    // transforma [2,4] em "2,4"
+    const typesQuery = typesArray.join(",");
+
+    fetch(`${url}/type?types=${typesQuery}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          setUsersByType(result.body);
+        } else {
+          console.log(result);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setUsersLoading(false);
+        setRefetchUsers(false);
+      });
+  };
+
   const updateUser = (userId, userData) => {
 
     console.log(userData)
@@ -152,6 +183,19 @@ export default function usersServices() {
     });
   };
 
-
-  return { addUser, getUsers, getUserNextMat, getUsersByActivity, updateUser, updateUserActivities, usersLoading, refetchUsers, usersList, userNextMat, userListActivies };
+  return {
+    addUser,
+    getUsers,
+    getUserNextMat,
+    getUsersByActivity,
+    getUsersByType,
+    updateUser,
+    updateUserActivities,
+    usersLoading,
+    refetchUsers,
+    usersList,
+    userNextMat,
+    userListActivies,
+    usersByType
+  };
 }

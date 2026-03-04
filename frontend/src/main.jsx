@@ -10,6 +10,9 @@ import ActivityManagement from './features/activities/pages/activityManagement.j
 import ActivityManagementDetailed from './features/activities/pages/activityManagementDetailed.jsx'
 import ActivityManagementUsers from './features/activities/pages/activityManagementUsers.jsx'
 import PeopleManagementActivities from './features/register/pages/peopleManagementActivities.jsx'
+import Login from './features/login/pages/login.jsx'
+import SignUp from './features/login/pages/signUp.jsx'
+import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
 
 const pages = createBrowserRouter([
   {
@@ -17,6 +20,11 @@ const pages = createBrowserRouter([
     element: <App/>,
     children: [
       {path: '/', element: <Home/>},
+
+      {path: '/Login', element: <Login/>},
+      {path: '/SignUp', element: <SignUp/>},
+      {path: '/SignUp/view', element: <SignUpDetailed/>},
+      {path: '/SignUp/alter', element: <SignUpDetailed/>},
 
       {path: '/PeopleManagement', element: <PeopleManagement/>},
       {path: '/PeopleManagement/add', element: <PeopleManagementDetailed/>},

@@ -88,3 +88,82 @@ main {
 .arrowBack:hover {
   transform: scale(1.2);
 }
+
+.cardList {
+  flex: 1;                 
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  border-radius: 6px;
+  border: 1px solid gray;
+  background-color: rgba(156, 155, 155, 0.5);
+  overflow: hidden;
+}
+
+.cardList table tr td{
+  cursor: pointer;
+}
+
+.cardList table tr td, .cardList table tr th {
+  padding: .7em 7em .7em .5em;
+  margin-right: 10rem;
+}
+
+.cardList table thead tr td, .cardList table thead tr th {
+  background-color: rgb(173, 255, 47, 0.8);
+  position: relative;
+  min-width: 7.5rem;
+}
+
+.cardList table thead tr th {
+  background-color: rgba(173, 255, 47, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  min-width: 7.5rem;
+}
+
+.cardList table thead tr th input{
+  width: 60%;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding-inline: .5rem;
+  transform: translateY(-50%);
+  background-color: rgba(228, 255, 188);
+  border-radius: .3rem;
+  margin-left: .3rem;
+}
+
+.cardList table tr td, .cardList table tr th {
+  border: 1px solid gray;
+}
+
+.searchIcon{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: x-large;
+  margin-right: .7rem;
+  cursor: pointer;
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.tableWrapper table {
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.cardListBox {
+  display: flex;
+  gap: 0.5em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}

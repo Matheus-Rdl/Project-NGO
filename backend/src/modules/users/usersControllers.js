@@ -33,6 +33,25 @@ export default class UsersControllers {
     }
   }
 
+  async getUsersByType(types) {
+    try {
+      if (!types) {
+        return ok([]);
+      }
+
+      // transforma "2,4" em [2,4]
+      const typesArray = types
+        .split(',')
+        .map(type => parseInt(type));
+
+      const users = await this.dataAccess.getUsersByType(typesArray);
+
+      return ok(users);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
 
   async addUser(userData) {
     try {
