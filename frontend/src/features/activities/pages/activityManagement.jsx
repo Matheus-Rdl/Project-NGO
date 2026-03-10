@@ -162,6 +162,7 @@ export default function ActivityManagement() {
                   data={data}
                   ativo={activityActive === data._id}
                   onClick={() => setActivityActive(data._id)}
+                  columns={activitiesManagementTR}
                   page={"activityManagement"}
                 />
               ))}

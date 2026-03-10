@@ -3,59 +3,64 @@
         {
             "text": "Situação",
             "type": "select",
-            "filter": "situation",
-            "optionsKey": "user_situation"
+            "optionsKey": "user_situation",
+            "dataKey": "user_situation"
         },
         {
             "text": "Matrícula",
             "type": "text",
-            "filter": "mat"
+            "dataKey": "user_mat"
         },
         {
             "text": "Nome",
             "type": "text",
-            "filter": "name"
+            "dataKey": "user_name"
         },
         {
             "text": "Tipo",
             "type": "select",
-            "filter": "type",
-            "optionsKey": "user_type"
+            "optionsKey": "user_type",
+            "dataKey": "user_type"
         },
         {
             "text": "CPF",
             "type": "text",
-            "filter": "cpf"
+            "dataKey": "user_cpf"
         },
         {
             "text": "RG",
             "type": "text",
-            "filter": "rg"
+            "dataKey": "user_rg"
         },
         {
             "text": "Data Admissão",
             "type": "date",
-            "filter": "admissionDate"
+            "dataKey": "user_registration_date"
         },
         {
             "text": "Data Nasc.",
             "type": "date",
-            "filter": "birthDate"
+            "dataKey": "user_date_nasc"
         },
         {
             "text": "Bairro",
             "type": "text",
-            "filter": "district"
+            "dataKey": "user_district"
         },
         {
             "text": "Rua",
             "type": "text",
-            "filter": "street"
+            "dataKey": "user_street"
         },
         {
             "text": "Nome da mãe",
             "type": "text",
-            "filter": "mother"
+            "dataKey": "user_mother_name"
+        },
+        {
+            "text": "Nome do responsável",
+            "type": "text",
+            "dataKey": "user_minor_name"
         }
     ],
     "activitiesManagementTR": [

@@ -10,9 +10,17 @@ import { selectOptions } from "../../utils/userSelectOptions";
 import usersServices from "../../services/usersServices";
 import { useEffect } from "react";
 
-export default function List({ data, ativo, onClick, page }) {
+export default function List({ data, ativo, onClick, page, columns }) {
   const { getUsersByActivity, userListActivies, refetchUsers } =
     usersServices();
+
+  const formatters = {
+    cpf: formatCPF,
+    rg: formatRG,
+    name: formatName,
+    date: formatDate,
+    proper: formatProperNoun
+  };
 
   useEffect(() => {
     if (refetchUsers) {
@@ -92,7 +100,28 @@ export default function List({ data, ativo, onClick, page }) {
         </tr>
 
       ) : (
-        <>Desconhecido</>
+        <tr
+          className={ativo ? styles.listActive : styles.list}
+          onClick={onClick}
+        >
+          {columns.map((col) => {
+
+            let value = data[col.dataKey];
+
+            if (col.optionsKey) {
+
+              if (Array.isArray(value)) {
+                value = value
+                  .map((v) => selectOptions[col.optionsKey]?.[v] ?? v)
+                  .join(", ");
+              } else {
+                value = selectOptions[col.optionsKey]?.[value] ?? value;
+              }
+            }
+
+            return <td key={col.dataKey}>{value}</td>;
+          })}
+        </tr>
       )}
     </>
   );

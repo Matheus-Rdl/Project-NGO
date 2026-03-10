@@ -10,6 +10,10 @@
   font-size: x-large;
 }
 
+.subtitle {
+  color: #696969;
+  font-size: large;
+}
 
 .cardButtons {
   display: flex;

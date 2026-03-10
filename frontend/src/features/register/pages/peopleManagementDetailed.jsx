@@ -357,7 +357,7 @@ export default function PeopleManagementDetailed() {
             })}
 
             <div className={styles.btnForm}>
-              <button onClick={handleBack}>Cancelar</button>
+              <button type="button" onClick={handleBack}>Cancelar</button>
               {!isViewMode && <button type="submit">Salvar</button>}
             </div>
           </div>

@@ -13,39 +13,56 @@ import PeopleManagementActivities from './features/register/pages/peopleManageme
 import Login from './features/login/pages/login.jsx'
 import SignUp from './features/login/pages/signUp.jsx'
 import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from './features/login/context/authContext.jsx'
+import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx';
 
 const pages = createBrowserRouter([
+
+  // ROTA PUBLICA
   {
-    path: '/',
-    element: <App/>,
+    path: "/Login",
+    element: <Login />
+  },
+
+  // ROTAS PROTEGIDAS
+  {
+    element: <ProtectedRoute />,
     children: [
-      {path: '/', element: <Home/>},
+      {
+        path: "/",
+        element: <App />,
+        children: [
 
-      {path: '/Login', element: <Login/>},
-      {path: '/SignUp', element: <SignUp/>},
-      {path: '/SignUp/view', element: <SignUpDetailed/>},
-      {path: '/SignUp/alter', element: <SignUpDetailed/>},
+          { path: "/", element: <Home /> },
 
-      {path: '/PeopleManagement', element: <PeopleManagement/>},
-      {path: '/PeopleManagement/add', element: <PeopleManagementDetailed/>},
-      {path: '/PeopleManagement/view', element: <PeopleManagementDetailed/>},
-      {path: '/PeopleManagement/alter', element: <PeopleManagementDetailed/>},
-      {path: '/PeopleManagementActivities', element: <PeopleManagementActivities/>},
+          { path: "/SignUp", element: <SignUp /> },
+          { path: "/SignUp/view", element: <SignUpDetailed /> },
+          { path: "/SignUp/alter", element: <SignUpDetailed /> },
 
-      {path: '/ActivityManagement', element: <ActivityManagement/>},
-      {path: '/ActivityManagement/add', element: <ActivityManagementDetailed/>},
-      {path: '/ActivityManagement/view', element: <ActivityManagementDetailed/>},
-      {path: '/ActivityManagement/alter', element: <ActivityManagementDetailed/>},
-      {path: '/ActivityManagementUsers', element: <ActivityManagementUsers/>},
+          { path: "/PeopleManagement", element: <PeopleManagement /> },
+          { path: "/PeopleManagement/add", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagement/view", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagement/alter", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagementActivities", element: <PeopleManagementActivities /> },
 
-      {/*path: '/settings', element: <Settings/>*/},
-      {/*path: '/economic', element: <Economic/>*/}
+          { path: "/ActivityManagement", element: <ActivityManagement /> },
+          { path: "/ActivityManagement/add", element: <ActivityManagementDetailed /> },
+          { path: "/ActivityManagement/view", element: <ActivityManagementDetailed /> },
+          { path: "/ActivityManagement/alter", element: <ActivityManagementDetailed /> },
+          { path: "/ActivityManagementUsers", element: <ActivityManagementUsers /> }
+
+        ]
+      }
     ]
   }
-])
+
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={pages}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={pages}></RouterProvider>
+    </AuthProvider>
   </StrictMode>,
 )

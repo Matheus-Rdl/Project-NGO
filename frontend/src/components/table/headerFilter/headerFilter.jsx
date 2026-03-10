@@ -56,23 +56,23 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
         {/* Percorre dinamicamente as colunas recebidas por props */}
         {columns.map((col) => (
           // Cada coluna do header recebe uma célula
-          <th key={col.filter}>
+          <th key={col.dataKey}>
             {/* Texto visível da coluna */}
             <p>{col.text}</p>
 
             {/* Se o filtro da coluna estiver aberto, renderiza o input correpondente */}
-            {openFilters[col.filter] && (
+            {openFilters[col.dataKey] && (
               col.type === "multiselect" ? (
                 <select
                   className={styles.multiSelectFilter}
                   multiple
-                  value={filters[col.filter] || []}
+                  value={filters[col.dataKey] || []}
                   onChange={(e) => {
                     const selectedValues = Array.from(
                       e.target.selectedOptions,
                       option => option.value
                     );
-                    onFilterChange(col.filter, selectedValues);
+                    onFilterChange(col.dataKey, selectedValues);
                   }}
                 >
                   {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
@@ -87,9 +87,9 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
                 <select
                   className={styles.selectFilter}
                   autoFocus
-                  value={filters[col.filter] || ""}
+                  value={filters[col.dataKey] || ""}
                   onChange={(e) =>
-                    onFilterChange(col.filter, e.target.value)
+                    onFilterChange(col.dataKey, e.target.value)
                   }
                 >
                   <option value="">Todos</option>
@@ -107,13 +107,13 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
                   autoFocus
                   type="text"
                   placeholder={col.type === "date" ? "aaaa/mm/dd" : ""}
-                  value={filters[col.filter] || ""}
+                  value={filters[col.dataKey] || ""}
                   onChange={(e) => {
                     if (col.type === "date") {
                       const formatted = formatYearDateInput(e.target.value);
-                      onFilterChange(col.filter, formatted);
+                      onFilterChange(col.dataKey, formatted);
                     } else {
-                      onFilterChange(col.filter, e.target.value);
+                      onFilterChange(col.dataKey, e.target.value);
                     }
                   }}
                 />
@@ -125,15 +125,15 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
               - Aberto -> ícone de fechar (X)
               - fechado -> ícone de buscar
             */}
-            {openFilters[col.filter] ? (
+            {openFilters[col.dataKey] ? (
               <LuSearchX
                 className={styles.searchIcon}
-                onClick={() => toggleFilter(col.filter)}
+                onClick={() => toggleFilter(col.dataKey)}
               />
             ) : (
               <LuSearch
                 className={styles.searchIcon}
-                onClick={() => toggleFilter(col.filter)}
+                onClick={() => toggleFilter(col.dataKey)}
               />
             )}
           </th>

@@ -11,7 +11,9 @@
       "mode": "",
       "required": true,
       "minLength": 6,
-      "maxLength": 6
+      "maxLength": 6,
+      "filterOn": true,
+      "filterType": "text"
     },
     {
       "collection": "users",
@@ -24,7 +26,9 @@
       "mode": "EA",
       "required": true,
       "minLength": 3,
-      "maxLength": 80
+      "maxLength": 80,
+      "filterOn": true,
+      "filterType": "text"
     },
     {
       "collection": "users",
@@ -503,13 +507,39 @@
       "title": "Usuário",
       "field": "user_system_name",
       "type": "text",
-      "order": 1,
+      "order": 2,
       "input": 1,
       "folder": 1,
       "mode": "EA",
       "required": true,
       "minLength": 6,
       "maxLength": 20
+    }
+    ,{
+      "collection": "users_system",
+      "title": "Matrícula",
+      "field": "user_system_mat",
+      "type": "number",
+      "order": 0,
+      "input": 0,
+      "folder": 0,
+      "mode": "",
+      "required": true,
+      "minLength": 6,
+      "maxLength": 6
+    }
+    ,{
+      "collection": "users_system",
+      "title": "Senha",
+      "field": "user_system_password",
+      "type": "text",
+      "order": 3,
+      "input": 1,
+      "folder": 1,
+      "mode": "",
+      "required": true,
+      "minLength": 8,
+      "maxLength": 18
     }
   ]
 }

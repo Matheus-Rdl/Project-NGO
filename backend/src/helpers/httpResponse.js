@@ -1,23 +1,29 @@
-export const ok = (body) => {
-  return {
-    success: true,
-    statusCode: 200,
-    body: body,
-  };
-};
+export const ok = (body) => ({
+  success: true,
+  statusCode: 200,
+  body,
+});
 
-export const notFound = () => {
-  return {
-    success: false,
-    statusCode: 400,
-    body: "Not found",
-  };
-};
+export const created = (body) => ({
+  success: true,
+  statusCode: 201,
+  body,
+});
 
-export const serverError = (error) => {
-  return {
-    success: false,
-    statusCode: 400,
-    body: error,
-  };
-};
+export const badRequest = (message = "Bad request") => ({
+  success: false,
+  statusCode: 400,
+  body: message,
+});
+
+export const notFound = (message = "Not found") => ({
+  success: false,
+  statusCode: 404,
+  body: message,
+});
+
+export const serverError = (error) => ({
+  success: false,
+  statusCode: 500,
+  body: error?.message || "Internal server error",
+});

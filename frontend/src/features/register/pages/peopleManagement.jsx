@@ -17,19 +17,7 @@ export default function PeopleManagement() {
   //const userSelected = usersList.find((user) => user._id === userActive);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
-  const [filters, setFilters] = useState({
-    situation: "",
-    mat: "",
-    name: "",
-    type: [],
-    cpf: "",
-    rg: "",
-    admissionDate: "",
-    birthDate: "",
-    district: "",
-    street: "",
-    mother: ""
-  });
+  const [filters, setFilters] = useState({});
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -65,36 +53,39 @@ export default function PeopleManagement() {
   };
 
   //Função principal que vai filtrar na tela
-  const filteredUsers = usersList.filter(user => {
-    return (
-      (filters.situation === "" ||
-        String(user.user_situation) === filters.situation) &&
+  const filteredUsers = usersList.filter((user) => {
+    return peopleManagementTR.every((col) => {
 
-      user.user_mat?.toString().includes(filters.mat) &&
-      user.user_name?.toLowerCase().includes(filters.name.toLowerCase()) &&
+      const filterValue = filters[col.dataKey];
+      const userValue = user[col.dataKey];
 
-      (
-        filters.type.length === 0 ||
-        user.user_type?.some(t =>
-          filters.type.includes(String(t))
-        )
-      ) &&
+      if (!filterValue || filterValue.length === 0) return true;
 
-      user.user_cpf?.includes(filters.cpf) &&
-      user.user_rg?.includes(filters.rg) &&
+      if (col.type === "select") {
 
-      user.user_registration_date
-        ?.replaceAll("-", "/")
-        .includes(filters.admissionDate) &&
+        if (Array.isArray(userValue)) {
+          return userValue.includes(Number(filterValue)) || userValue.includes(filterValue);
+        }
 
-      user.user_date_nasc
-        ?.replaceAll("-", "/")
-        .includes(filters.birthDate) &&
+        return String(userValue) === String(filterValue);
+      }
 
-      user.user_district?.toLowerCase().includes(filters.district.toLowerCase()) &&
-      user.user_street?.toLowerCase().includes(filters.street.toLowerCase()) &&
-      user.user_mother_name?.toLowerCase().includes(filters.mother.toLowerCase())
-    );
+      if (col.type === "multiselect") {
+        return userValue?.some(v =>
+          filterValue.includes(String(v))
+        );
+      }
+
+      if (col.type === "date") {
+        return String(userValue)
+          .replaceAll("-", "/")
+          .includes(filterValue);
+      }
+
+      return String(userValue)
+        .toLowerCase()
+        .includes(String(filterValue).toLowerCase());
+    });
   });
 
   //Ele carrega a pagina até encontrar os estudantes
@@ -189,9 +180,9 @@ export default function PeopleManagement() {
                 <List
                   key={data._id}
                   data={data}
+                  columns={peopleManagementTR}
                   ativo={userActive === data._id}
                   onClick={() => setuserActive(data._id)}
-                  page={"peopleManagement"}
                 />
               ))}
             </tbody>

@@ -12,6 +12,14 @@ import CardList from "../../../components/cards/cardList/cardList";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
 import FormTextArea from "../../../components/formTextArea/formTextArea";
+import userSystemServices from "../../../services/usersSystemServices";
+import {
+  formatCPF,
+  formatDate,
+  formatName,
+  formatRG,
+  formatProperNoun,
+} from "../../../utils/formatters";
 
 export default function SignUpDetailed() {
 
@@ -19,6 +27,7 @@ export default function SignUpDetailed() {
   const location = useLocation();
   const { userId, userData, currentMode } = location.state || {};
   const { getFieldsByTitle, fieldsList } = fieldsServices();
+  const { getUserSystemByMat, upsertUserSystem } = userSystemServices();
   const [formData, setFormData] = useState({});
 
   //Lista de menus
@@ -27,8 +36,6 @@ export default function SignUpDetailed() {
   const isViewMode = currentMode === "V";
   const isEditMode = currentMode === "E";
   const isAddMode = currentMode === "A";
-
-  console.log(userData)
 
   const listItems = {
     1: "Cadastrais",
@@ -39,8 +46,20 @@ export default function SignUpDetailed() {
     getFieldsByTitle("users_system");
   }, []);
 
+  useEffect(() => {
+    if (userData?.user_mat) {
+      getUserSystemByMat(userData.user_mat)
+        .then(result => {
+          if (result.success && result.body) {
+            setFormData(result.body);
+          }
+        })
+    }
+  }, [userData])
+
   //Função para voltar a tela
-  const handleBack = () => {
+  const handleBack = (e) => {
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -53,10 +72,23 @@ export default function SignUpDetailed() {
       [name]: value,
     }));
   };
-  //CRUD
-  //Função finalizando o formulário, inserir
-  const handleSubmitForm = (e) => {
+
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
+
+    if (!userData?.user_mat) return;
+
+    const payload = {
+      ...formData,
+      user_system_mat: userData.user_mat
+    };
+
+    const result = await upsertUserSystem(userData.user_mat, payload);
+
+    if (result.success) {
+      navigate(-1)
+    }
+
   };
 
   return (
@@ -68,6 +100,8 @@ export default function SignUpDetailed() {
         {isAddMode && "Cadastro de usuários do sistema - Inserir"}
         {isEditMode && "Cadastro de usuários do sistema - Alterar"}
       </h1>
+
+      <h2 className={styles.subtitle}>{userData.user_mat} - {formatName(userData.user_name)}</h2>
 
       <div className="cardListBox">
         {Object.entries(listItems).map(([key, label]) => (
