@@ -30,9 +30,16 @@ async function main() {
 
   // Middleware to allow requests from other origins
   app.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [
+      "http://localhost:5173",
+      "https://matheus-rdl.github.io"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
   }));
+
+  // 👇 ESSA LINHA RESOLVE O PRE-FLIGHT
+  app.options("*", cors());
 
   // Root route - responds with a welcome message
   app.get("/", (req, res) => {
