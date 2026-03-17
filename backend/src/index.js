@@ -29,7 +29,10 @@ async function main() {
   app.use(express.json());
 
   // Middleware to allow requests from other origins
-  app.use(cors());
+  app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  }));
 
   // Root route - responds with a welcome message
   app.get("/", (req, res) => {
@@ -47,8 +50,8 @@ async function main() {
   app.use("/users-system", usersSystemRouter);
 
   // Start the server and listen on the defined port
-  app.listen(port, () => {
-    console.log(`Server running on: http://${hostname}:${port}`);
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port: ${port}`);
   });
 }
 

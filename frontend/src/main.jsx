@@ -2,7 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import { createHashRouter, RouterProvider } from 'react-router-dom'
+
 import Home from './home/home.jsx'
 import PeopleManagement from './features/register/pages/peopleManagement.jsx'
 import PeopleManagementDetailed from './features/register/pages/peopleManagementDetailed.jsx'
@@ -10,14 +12,15 @@ import ActivityManagement from './features/activities/pages/activityManagement.j
 import ActivityManagementDetailed from './features/activities/pages/activityManagementDetailed.jsx'
 import ActivityManagementUsers from './features/activities/pages/activityManagementUsers.jsx'
 import PeopleManagementActivities from './features/register/pages/peopleManagementActivities.jsx'
+
 import Login from './features/login/pages/login.jsx'
 import SignUp from './features/login/pages/signUp.jsx'
 import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
-import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from './features/login/context/authContext.jsx'
-import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx';
 
-const pages = createBrowserRouter([
+import { AuthProvider } from './features/login/context/authContext.jsx'
+import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
+
+const pages = createHashRouter([
 
   // ROTA PUBLICA
   {
@@ -62,7 +65,7 @@ const pages = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={pages}></RouterProvider>
+      <RouterProvider router={pages} />
     </AuthProvider>
-  </StrictMode>,
+  </StrictMode>
 )
