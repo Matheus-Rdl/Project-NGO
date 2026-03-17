@@ -38,9 +38,6 @@ async function main() {
     credentials: true
   }));
 
-  // 👇 ESSA LINHA RESOLVE O PRE-FLIGHT
-  app.options("*", cors());
-
   // Root route - responds with a welcome message
   app.get("/", (req, res) => {
     res.send({
