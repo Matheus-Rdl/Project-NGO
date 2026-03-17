@@ -4,62 +4,11 @@
   height: calc(100vh - 75px);
 }
 
-.title {
-  padding: 1em 0 .5em 0;
-  color: #696969;
-  font-size: x-large;
-}
-
 .cardUserBox {
   display: grid;
   grid-template-columns: repeat(4, 3fr);
   gap: 1em;
 }
-
-.cardButtons {
-  display: flex;
-  margin: 16px 0 0 0;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.cardButtons button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid green;
-  background-color: greenyellow;
-  cursor: pointer;
-}
-
-.cardButtons button:hover {
-  transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
-}
-
-.otherOptionBtns {
-  background-color: rgb(158, 227, 55);
-  list-style: none;
-  position: absolute;
-  padding: .5em 1em .5em .8em;
-  border-radius: .5em;
-  border: 1px solid green;
-  display: flex;
-  flex-direction: column;
-  z-index: 100;
-}
-
-.otherOptionBtns li {
-  cursor: pointer;
-  padding: .2em 1em .2em .5em;
-  border-radius: .2em;
-}
-
-.otherOptionBtns li:hover {
-  background-color: rgb(140, 202, 47);
-}
-
-
-
 
 /*
 

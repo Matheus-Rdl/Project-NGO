@@ -4,7 +4,7 @@
 
 .header{
   width: 100%;
-  height: 50px;
+  height: 35px;
   position: fixed;
   background-color: green;
   box-shadow: 1px 1px 5px black;
@@ -16,7 +16,7 @@
 
 
 .header p{
-  font-size: 15px;
+  font-size: x-small;
   color: greenyellow;
   margin-right: 16px;
 }

@@ -95,13 +95,13 @@ export default function SignUpDetailed() {
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
 
-      <h1 className={styles.title}>
+      <h1 className="title-page">
         {isViewMode && "Cadastro de usuários do sistema - Visualizar"}
         {isAddMode && "Cadastro de usuários do sistema - Inserir"}
         {isEditMode && "Cadastro de usuários do sistema - Alterar"}
       </h1>
 
-      <h2 className={styles.subtitle}>{userData.user_mat} - {formatName(userData.user_name)}</h2>
+      <h2 className="subtitle-page">{userData.user_mat} - {formatName(userData.user_name)}</h2>
 
       <div className="cardListBox">
         {Object.entries(listItems).map(([key, label]) => (
@@ -115,7 +115,7 @@ export default function SignUpDetailed() {
       </div>
 
       <form
-        className={styles.managementForm}
+        className="management-form"
         onSubmit={handleSubmitForm}
         autoComplete="off"
       >
@@ -133,7 +133,7 @@ export default function SignUpDetailed() {
           autoComplete="new-password"
         />
         {/* -------------------------------------------------------- */}
-        <div className={styles.formCard}>
+        <div className="form-card">
           {fieldsList.map((field) => (
             <div
               key={field._id}
@@ -157,7 +157,7 @@ export default function SignUpDetailed() {
             </div>
           ))}
 
-          <div className={styles.btnForm}>
+          <div className="button-box">
             <button onClick={handleBack}>Cancelar</button>
             {!isViewMode && <button type="submit">Salvar</button>}
           </div>

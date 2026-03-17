@@ -8,7 +8,7 @@ export default function CardList({ text, active, onClick, setActiveScreen }) {
       onClick={onClick}
     >
       <div className={styles.cardContent}>
-        <h1>{text}</h1>
+        <p>{text}</p>
       </div>
     </div>
   );

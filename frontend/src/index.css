@@ -44,8 +44,16 @@ main {
   padding: 50px 0 0 80px;
 }
 
-.main h1 {
+h1{
   font-size: x-large;
+}
+
+p {
+  font-size: small;
+}
+
+.main h1 {
+  font-size: large;
   width: fit-content;
   color: #696969;
   padding: 1em 0 .5em 1em;
@@ -56,7 +64,7 @@ main {
 }
 
 .main h2 {
-  font-size: large;
+  font-size: small;
   width: fit-content;
   color: rgb(0, 167, 0);
   padding: 0 0 .5em 1em;
@@ -72,11 +80,22 @@ main {
   padding: 65px 1em 0 1em;
 }
 
+.title-page {
+  padding: 1em 0 .5em 0;
+  color: #696969;
+  font-size: large;
+}
+
+.subtitle-page{
+  color: #696969;
+  font-size: medium;
+}
+
 .arrowBack {
-  font-size: 32px;
+  font-size: 20px;
   color: greenyellow;
   position: fixed;
-  margin-top: .3em;
+  margin-top: 8px;
   top: 0;
   background-color: green;
   border-radius: 50%;
@@ -88,6 +107,8 @@ main {
 .arrowBack:hover {
   transform: scale(1.2);
 }
+
+/* Tabelas e listas */
 
 .cardList {
   flex: 1;                 
@@ -105,7 +126,7 @@ main {
 }
 
 .cardList table tr td, .cardList table tr th {
-  padding: .7em 7em .7em .5em;
+  padding: .5em 5em .5em .3em;
   margin-right: 10rem;
 }
 
@@ -159,6 +180,7 @@ main {
 .tableWrapper table {
   border-collapse: collapse;
   white-space: nowrap;
+  font-size: small;
 }
 
 .cardListBox {
@@ -166,4 +188,98 @@ main {
   gap: 0.5em;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+/* Botões que ficam na página */
+
+.card-buttons {
+  display: flex;
+  margin: 8px 0 0 0;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.card-buttons button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid green;
+  background-color: greenyellow;
+  cursor: pointer;
+  font-size: x-small;
+}
+
+.card-buttons button:hover {
+  transform: scale(0.95);
+  background-color: rgb(158, 227, 55);
+}
+
+.other-option-btns {
+  background-color: rgb(158, 227, 55);
+  list-style: none;
+  position: absolute;
+  padding: .5em 1em .5em .8em;
+  border-radius: .5em;
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.other-option-btns li {
+  cursor: pointer;
+  padding: .2em 1em .2em .5em;
+  border-radius: .2em;
+  font-size: x-small;
+  color: black;
+}
+
+.otherOptionBtns li:hover {
+  background-color: rgb(140, 202, 47);
+}
+
+/* Formulários */
+
+.card-list-box-form{
+  display: flex;
+  gap: 0.5em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.management-form{
+  margin-block: 1.5em;
+}
+
+.management-form .form-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.management-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.management-form .button-box {
+  position: fixed;
+  top: 72px;
+  right: 12px;
+  display: flex;
+  gap: 0.5em
+}
+
+.management-form button {
+  border: 1px solid green;
+  background-color: greenyellow;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: x-small;
+}
+
+.management-form button:hover {
+  transform: scale(0.95);
+  background-color: rgb(158, 227, 55);
 }

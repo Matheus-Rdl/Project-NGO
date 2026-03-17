@@ -5,10 +5,7 @@
 }
 
 .cardListBox {
-  display: flex;
-  gap: 0.5em;
-  overflow-x: auto;
-  overflow-y: hidden;
+
 }
 
 .managementForm {

@@ -22,11 +22,11 @@
   box-shadow: 1px 1px 3px black;
 }
 
-.cardContent h1 {
-  font-size: medium;
+.cardContent p {
   color: greenyellow;
   padding-bottom: 1px;
   margin: 0px;
+  font-weight: bold;
 }
 
 .cardContent {

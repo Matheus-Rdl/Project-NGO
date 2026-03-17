@@ -77,8 +77,8 @@ export default function ActivityManagement() {
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
-      <h1 className={styles.title}>Gerenciar Atividades</h1>
-      <div className={styles.cardButtons}>
+      <h1 className="title-page">Gerenciar Atividades</h1>
+      <div className="card-buttons">
         <Link
           to={"/ActivityManagement/add"}
           state={{
@@ -121,7 +121,7 @@ export default function ActivityManagement() {
           </button>
 
           {open && (
-            <ul className={styles.otherOptionBtns}>
+            <ul className="other-option-btns">
               <Link to={'/ActivityManagementUsers'} state={{
                 activityData: activitiesList.find((u) => u._id === activityActive)
               }}>
@@ -132,8 +132,8 @@ export default function ActivityManagement() {
         </div>
       </div>
 
-      <div className={styles.cardList}>
-        <div className={styles.tableWrapper}>
+      <div className="cardList">
+        <div className="tableWrapper">
 
           <table>
             <HeaderFilter

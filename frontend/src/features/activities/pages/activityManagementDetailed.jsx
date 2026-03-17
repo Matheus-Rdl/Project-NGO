@@ -176,13 +176,13 @@ export default function ActivityManagementDetailed() {
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
-      <h1 className={styles.title}>
+      <h1 className="title-page">
         {isViewMode && "Gerenciar Atividades - Visualizar"}
         {isAddMode && "Gerenciar Atividades - Inserir"}
         {isEditMode && "Gerenciar Atividades - Alterar"}
       </h1>
 
-      <div className={styles.cardListBox}>
+      <div className="card-list-box-form">
         {Object.entries(listItems).map(([key, label]) => (
           <CardList
             key={key}
@@ -195,7 +195,7 @@ export default function ActivityManagementDetailed() {
 
       <div>
         <form
-          className={styles.managementForm}
+          className="management-form"
           onSubmit={handleSubmitForm}
           autoComplete="off"
         >
@@ -213,7 +213,7 @@ export default function ActivityManagementDetailed() {
             autoComplete="new-password"
           />
           {/* -------------------------------------------------------- */}
-          <div className={styles.formCard}>
+          <div className="form-card">
             {fieldsList.map((field) => (
               <div
                 key={field._id}
@@ -236,7 +236,7 @@ export default function ActivityManagementDetailed() {
               </div>
             ))}
 
-            <div className={styles.btnForm}>
+            <div className="button-box">
               <button onClick={handleBack}>Cancelar</button>
               {!isViewMode && <button type="submit">Salvar</button>}
             </div>

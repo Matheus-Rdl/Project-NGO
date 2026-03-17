@@ -98,7 +98,7 @@ export default function PeopleManagement() {
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
 
-      <h1 className={styles.title}>Gestão de pessoas</h1>
+      <h1 className="title-page">Gestão de pessoas</h1>
 
       {/*
       <div className={styles.cardUserBox}>
@@ -109,7 +109,7 @@ export default function PeopleManagement() {
       </div>
       */}
 
-      <div className={styles.cardButtons}>
+      <div className="card-buttons">
         <Link
           to={"/PeopleManagement/add"}
           state={{
@@ -152,7 +152,7 @@ export default function PeopleManagement() {
           </button>
 
           {open && (
-            <ul className={styles.otherOptionBtns}>
+            <ul className="other-option-btns">
               <Link
                 to={"/PeopleManagementActivities"}
                 state={{

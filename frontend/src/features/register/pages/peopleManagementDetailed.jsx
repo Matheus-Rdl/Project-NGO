@@ -283,13 +283,13 @@ export default function PeopleManagementDetailed() {
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
-      <h1 className={styles.title}>
+      <h1 className="title-page">
         {isViewMode && "Gestão de pessoas - Visualizar"}
         {isAddMode && "Gestão de pessoas - Inserir"}
         {isEditMode && "Gestão de pessoas - Alterar"}
       </h1>
 
-      <div className={styles.cardListBox}>
+      <div className="card-list-box-form">
         {Object.entries(listItems).map(([key, label]) => (
           <CardList
             key={key}
@@ -302,7 +302,7 @@ export default function PeopleManagementDetailed() {
 
       <div>
         <form
-          className={styles.managementForm}
+          className="management-form"
           onSubmit={handleSubmitForm}
           autoComplete="off"
         >
@@ -320,7 +320,7 @@ export default function PeopleManagementDetailed() {
             autoComplete="new-password"
           />
           {/* -------------------------------------------------------- */}
-          <div className={styles.formCard}>
+          <div className="form-card">
             {fieldsList.map((field) => {
 
               // ✅ REGRA DE DEPENDÊNCIA (GENÉRICA)
@@ -356,7 +356,7 @@ export default function PeopleManagementDetailed() {
               );
             })}
 
-            <div className={styles.btnForm}>
+            <div className="button-box">
               <button type="button" onClick={handleBack}>Cancelar</button>
               {!isViewMode && <button type="submit">Salvar</button>}
             </div>

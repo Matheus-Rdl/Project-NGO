@@ -97,9 +97,9 @@ export default function SignUp() {
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
 
-      <h1 className={styles.title}>Cadastro de usuários do sistema</h1>
+      <h1 className="title-page">Cadastro de usuários do sistema</h1>
 
-      <div className={styles.cardButtons}>
+      <div className="card-buttons">
         {/*
         <Link
           to={"/SignUp/add"}
