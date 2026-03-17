@@ -8,7 +8,9 @@ export default function activitiesServices() {
   const [activityNextMat, setActivityNextMat] = useState([]);
   const [activityTypeList, setActivityTypeList] = useState([]);
 
-  const url = "http://localhost:3000/activities";
+  const url = `${import.meta.env.VITE_API_URL}/activities`;
+
+  console.log(url)
 
   const addActivity = (activityData) => {
 

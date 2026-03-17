@@ -8,7 +8,7 @@ export default function usersServices() {
   const [userNextMat, setUserNextMat] = useState([]);
   const [userListActivies, setListUserActivies] = useState([]);
 
-  const url = "http://localhost:3000/users";
+  const url = `${import.meta.env.VITE_API_URL}/users`;
 
   const addUser = (userData) => {
 

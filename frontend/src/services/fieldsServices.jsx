@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function fieldsServices() {
   const [fieldsList, setFieldsList] = useState([]);
 
-  const url = "http://localhost:3000/fields";
+  const url = `${import.meta.env.VITE_API_URL}/fields`;
 
   const getFieldsByTitle = (fieldTitle) => {
 
