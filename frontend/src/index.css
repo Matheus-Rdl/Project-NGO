@@ -146,7 +146,7 @@ p {
 
 .cardList table thead tr th input{
   width: 60%;
-  height: 2rem;
+  height: 1.3rem;
   position: absolute;
   top: 50%;
   left: 0;
@@ -155,6 +155,8 @@ p {
   background-color: rgba(228, 255, 188);
   border-radius: .3rem;
   margin-left: .3rem;
+  font-size: small;
+  border: 1px solid black;
 }
 
 .cardList table tr td, .cardList table tr th {

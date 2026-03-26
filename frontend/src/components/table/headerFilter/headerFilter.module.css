@@ -11,7 +11,7 @@
 
 .selectFilter {
   width: 60%;
-  height: 2rem;
+  height: 1.5rem;
   position: absolute;
   top: 50%;
   left: 0;
@@ -20,6 +20,8 @@
   background-color: rgba(228, 255, 188);
   border-radius: .3rem;
   margin-left: .3rem;
+  font-size: small;
+  border: 1px solid black;
 }
 
 .multiSelectFilter {

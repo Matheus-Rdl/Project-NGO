@@ -8,16 +8,17 @@ import Loading from "../../../components/loading/page";
 import usersServices from "../../../services/usersServices";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import useTableFilter from "../../../hooks/useTableFilter";
 
 export default function PeopleManagement() {
 
   const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
   const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
-  //const userSelected = usersList.find((user) => user._id === userActive);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const [filters, setFilters] = useState({});
+  const selectedUser = usersList?.find((u) => u._id === userActive);
 
   const toggleMenu = () => setOpen((prev) => !prev);
 
@@ -34,9 +35,7 @@ export default function PeopleManagement() {
 
   //leva uma mensagem para o services, a função getUsers
   useEffect(() => {
-    if (refetchUsers) {
-      getUsers();
-    }
+    getUsers();
   }, [refetchUsers]);
 
   //Função para voltar a tela
@@ -53,40 +52,12 @@ export default function PeopleManagement() {
   };
 
   //Função principal que vai filtrar na tela
-  const filteredUsers = usersList.filter((user) => {
-    return peopleManagementTR.every((col) => {
+  const filteredUsers = useTableFilter(
+    usersList,
+    filters,
+    peopleManagementTR
+  );
 
-      const filterValue = filters[col.dataKey];
-      const userValue = user[col.dataKey];
-
-      if (!filterValue || filterValue.length === 0) return true;
-
-      if (col.type === "select") {
-
-        if (Array.isArray(userValue)) {
-          return userValue.includes(Number(filterValue)) || userValue.includes(filterValue);
-        }
-
-        return String(userValue) === String(filterValue);
-      }
-
-      if (col.type === "multiselect") {
-        return userValue?.some(v =>
-          filterValue.includes(String(v))
-        );
-      }
-
-      if (col.type === "date") {
-        return String(userValue)
-          .replaceAll("-", "/")
-          .includes(filterValue);
-      }
-
-      return String(userValue)
-        .toLowerCase()
-        .includes(String(filterValue).toLowerCase());
-    });
-  });
 
   //Ele carrega a pagina até encontrar os estudantes
   if (usersLoading) {
@@ -114,7 +85,7 @@ export default function PeopleManagement() {
           to={"/PeopleManagement/add"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: selectedUser,
             currentMode: "A",
           }}
         >
@@ -125,12 +96,11 @@ export default function PeopleManagement() {
           to={"/PeopleManagement/view"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: selectedUser,
             currentMode: "V",
           }}
         >
           <button disabled={userActive === null}>
-            {/*className={userActive ? `${styles.btnOn}` : `${styles.btnOff}`}*/}
             Visualizar
           </button>
         </Link>
@@ -139,7 +109,7 @@ export default function PeopleManagement() {
           to={"/PeopleManagement/alter"}
           state={{
             userId: userActive,
-            userData: usersList.find((u) => u._id === userActive),
+            userData: selectedUser,
             currentMode: "E",
           }}
         >
@@ -156,7 +126,7 @@ export default function PeopleManagement() {
               <Link
                 to={"/PeopleManagementActivities"}
                 state={{
-                  userData: usersList.find((u) => u._id === userActive)
+                  userData: selectedUser
                 }}
               >
                 <li>Atividades</li>
