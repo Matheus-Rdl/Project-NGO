@@ -10,8 +10,6 @@ export default function activitiesServices() {
 
   const url = `${import.meta.env.VITE_API_URL}/activities`;
 
-  console.log(url)
-
   const addActivity = (activityData) => {
 
     fetch(`${url}`, {

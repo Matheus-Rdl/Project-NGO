@@ -71,15 +71,6 @@ export default function PeopleManagement() {
 
       <h1 className="title-page">Gestão de pessoas</h1>
 
-      {/*
-      <div className={styles.cardUserBox}>
-        <CardUser title="Funcionários" quantity="145" />
-        <CardUser title="Alunos" quantity="1.345" />
-        <CardUser title="Responsáveis" quantity="545" />
-        <CardUser title="Voluntários" quantity="399" />
-      </div>
-      */}
-
       <div className="card-buttons">
         <Link
           to={"/PeopleManagement/add"}

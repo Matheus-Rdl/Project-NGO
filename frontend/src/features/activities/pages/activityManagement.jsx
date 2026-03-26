@@ -7,6 +7,7 @@ import List from "../../../components/list/list";
 import usersServices from "../../../services/usersServices";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import useTableFilter from "../../../hooks/useTableFilter";
 
 export default function ActivityManagement() {
   const navigate = useNavigate();
@@ -18,15 +19,7 @@ export default function ActivityManagement() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const toggleMenu = () => setOpen((prev) => !prev);
-  const [filters, setFilters] = useState({
-    code: "",
-    title: "",
-    type: "",
-    days: "",
-    students: "",
-    begin_time: "",
-    end_time: "",
-  });
+  const [filters, setFilters] = useState({});
 
   // Fecha o menu se clicar fora
   useEffect(() => {
@@ -58,26 +51,19 @@ export default function ActivityManagement() {
     }));
   };
 
-  console.log(activitiesManagementTR)
-
-
   //Função principal que vai filtrar na tela
-  const filteredActivities = activitiesList.filter(activity => {
-    return (
-      activity.activity_mat?.toString().includes(filters.code) &&
-      activity.activity_title?.toString().includes(filters.title) &&
-      activity.activity_type?.toString().includes(filters.type) &&
-      activity.activity_days?.toString().includes(filters.days) &&
-      activity.userListActivies?.toString().includes(filters.students) &&
-      activity.activity_time_start?.toString().includes(filters.begin_time) &&
-      activity.activity_time_end?.toString().includes(filters.end_time)
-    );
-  });
+  const filteredActivities = useTableFilter(
+    activitiesList,
+    filters,
+    activitiesManagementTR
+  );
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      
       <h1 className="title-page">Gerenciar Atividades</h1>
+
       <div className="card-buttons">
         <Link
           to={"/ActivityManagement/add"}
@@ -141,8 +127,20 @@ export default function ActivityManagement() {
               filters={filters}
               onFilterChange={handleFilterChange}
             />
-            {/*
+
             <tbody>
+              {filteredActivities.map((data) => (
+                <List
+                  key={data._id}
+                  data={data}
+                  columns={activitiesManagementTR}
+                  ativo={activityActive === data._id}
+                  onClick={() => setActivityActive(data._id)}
+                />
+              ))}
+            </tbody>
+
+            {/*            <tbody>
               {filteredActivities.map((data) => (
                 <List
                   key={data._id}
@@ -153,7 +151,6 @@ export default function ActivityManagement() {
                 />
               ))}
             </tbody>
-            */}
 
             <tbody>
               {activitiesList.map((data) => (
@@ -167,6 +164,7 @@ export default function ActivityManagement() {
                 />
               ))}
             </tbody>
+ */}
           </table>
         </div>
       </div>

@@ -67,39 +67,40 @@
         {
             "text": "Código",
             "type": "text",
-            "filter": "code"
+            "dataKey": "activity_mat"
         },
         {
             "text": "Nome",
             "type": "text",
-            "filter": "title"
+            "dataKey": "activity_title"
         },
         {
             "text": "Tipo",
-            "type": "text",
-            "filter": "type",
+            "type": "select",
+            "dataKey": "activity_type",
             "optionsKey": "activity_type"
         },
         {
             "text": "Dias",
-            "type": "text",
-            "filter": "days",
+            "type": "select",
+            "dataKey": "activity_days",
             "optionsKey": "activity_days"
         },
         {
-            "text": "Alunos",
-            "type": "text",
-            "filter": "students"
-        },
-        {
             "text": "Horário de inicio",
             "type": "text",
-            "filter": "begin_time"
+            "dataKey": "activity_time_start"
         },
         {
-            "text": "Horário de inicio",
+            "text": "Horário de termino",
             "type": "text",
-            "filter": "end_time"
+            "dataKey": "activity_time_end"
+        },
+        {
+            "text": "Ativo",
+            "type": "select",
+            "dataKey": "activity_active",
+            "optionsKey": "activity_active"
         }
     ]
 }
