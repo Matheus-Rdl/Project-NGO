@@ -1,3 +1,12 @@
+/*
+    Type: Page
+    Name: PeopleManagement
+    Description:
+      Página peopleManagement responsável por orquestrar a tela, seus estados locais, integrações e componentes visuais.
+    Author: Matheus Rodrigues
+    Last Edit: 01/04/2026
+*/
+
 import { useEffect, useRef, useState } from "react";
 import CardUser from "../../../components/cards/cardUser/cardUser";
 import List from "../../../components/list/list";
@@ -13,17 +22,19 @@ import useTableFilter from "../../../hooks/useTableFilter";
 export default function PeopleManagement() {
 
   const navigate = useNavigate();
-  const [userActive, setuserActive] = useState(null);
-  const { getUsers, refetchUsers, usersList, usersLoading } = usersServices();
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
-  const [filters, setFilters] = useState({});
+  const [userActive, setuserActive] = useState(null); // Estado local responsável por controlar "userActive" durante o ciclo de vida do componente.
+  const { getUsers, refetchUsers, usersList, usersLoading } = usersServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
+  const [open, setOpen] = useState(false); // Estado local responsável por controlar "open" durante o ciclo de vida do componente.
+  const menuRef = useRef(null); // Referência persistente usada para acessar "menuRef" sem provocar nova renderização.
+  const [filters, setFilters] = useState({}); // Estado local responsável por controlar "filters" durante o ciclo de vida do componente.
   const selectedUser = usersList?.find((u) => u._id === userActive);
 
+  // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
   const toggleMenu = () => setOpen((prev) => !prev);
 
   // Fecha o menu se clicar fora
   useEffect(() => {
+  // Função de evento "handleClickOutside". Normalmente é acionada por clique, submit ou interação do usuário.
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
@@ -39,11 +50,13 @@ export default function PeopleManagement() {
   }, [refetchUsers]);
 
   //Função para voltar a tela
+  // Função de evento "handleBack". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleBack = () => {
     navigate(-1);
   };
 
   //Função para atualizar filtros
+  // Função de evento "handleFilterChange". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({
       ...prev,
@@ -52,6 +65,7 @@ export default function PeopleManagement() {
   };
 
   //Função principal que vai filtrar na tela
+  // Aplica a regra de filtro em memória antes da renderização, mantendo a tabela desacoplada da lógica de busca.
   const filteredUsers = useTableFilter(
     usersList,
     filters,
@@ -71,6 +85,7 @@ export default function PeopleManagement() {
 
       <h1 className="title-page">Gestão de pessoas</h1>
 
+      {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
       <div className="card-buttons">
         <Link
           to={"/PeopleManagement/add"}
@@ -112,6 +127,7 @@ export default function PeopleManagement() {
             Outras opções ▼
           </button>
 
+          {/* Renderização condicional: esse bloco só aparece quando o estado correspondente estiver ativo. */}
           {open && (
             <ul className="other-option-btns">
               <Link
@@ -129,6 +145,7 @@ export default function PeopleManagement() {
 
       <div className="cardList">
         <div className="tableWrapper">
+          {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
           <table>
             <HeaderFilter
               columns={peopleManagementTR}
@@ -136,7 +153,9 @@ export default function PeopleManagement() {
               onFilterChange={handleFilterChange}
             />
 
+            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
             <tbody>
+              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
               {filteredUsers.map((data) => (
                 <List
                   key={data._id}

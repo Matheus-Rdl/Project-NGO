@@ -1,12 +1,32 @@
+/*
+    Type: Component
+    Name: CardActivity
+    Description:
+      Componente cardActivity responsável por renderizar parte da interface do sistema.
+    Author: Matheus Rodrigues
+    Last Edit: 01/04/2026
+*/
+
 import styles from "./cardActivity.module.css";
 import { selectOptions } from "../../../utils/userSelectOptions";
 import usersServices from "../../../services/usersServices";
 import { useEffect } from "react";
 
+/*
+  Componente principal do arquivo.
+  A partir daqui ficam concentrados os estados, integrações,
+  funções auxiliares e o JSX responsável pela renderização da tela.
+*/
 export default function CardActivity({ data }) {
   const { getUsersByActivity, userListActivies, refetchUsers } =
+  // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
     usersServices();
 
+  /*
+    Efeito colateral executado conforme as dependências abaixo.
+    Esse bloco é usado para sincronizar a interface com eventos externos,
+    carregamento inicial, listeners ou reações a mudanças de estado.
+  */
   useEffect(() => {
     if (refetchUsers) {
       getUsersByActivity(data.activity_mat);
@@ -25,6 +45,11 @@ export default function CardActivity({ data }) {
     return options?.[value] || value || "";
   };
 
+  /*
+    Bloco de renderização.
+    Aqui o componente transforma estado + props em interface visual.
+    A leitura do JSX abaixo deve ser feita de cima para baixo, como a montagem da tela.
+  */
   return (
     <div className={styles.cardBox}>
       <div className={styles.cardContent}>

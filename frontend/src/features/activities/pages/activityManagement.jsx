@@ -1,3 +1,12 @@
+/*
+    Type: Page
+    Name: ActivityManagement
+    Description:
+      Página activityManagement responsável por orquestrar a tela, seus estados locais, integrações e componentes visuais.
+    Author: Matheus Rodrigues
+    Last Edit: 01/04/2026
+*/
+
 import { useEffect, useRef, useState } from "react";
 import activitiesServices from "../../../services/activitiesServices";
 import styles from "../styles/activityManagement.module.css";
@@ -11,18 +20,17 @@ import useTableFilter from "../../../hooks/useTableFilter";
 
 export default function ActivityManagement() {
   const navigate = useNavigate();
-  const [activityActive, setActivityActive] = useState(null);
-  const { getActivities, refetchActivities, activitiesList } = activitiesServices();
-  const { userListActivies } =
-    usersServices();
-
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
-  const toggleMenu = () => setOpen((prev) => !prev);
-  const [filters, setFilters] = useState({});
+  const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.
+  const { getActivities, refetchActivities, activitiesList } = activitiesServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
+  const { userListActivies } = usersServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
+  const [open, setOpen] = useState(false); // Estado local responsável por controlar "open" durante o ciclo de vida do componente.
+  const menuRef = useRef(null); // Referência persistente usada para acessar "menuRef" sem provocar nova renderização.
+  const toggleMenu = () => setOpen((prev) => !prev); // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
+  const [filters, setFilters] = useState({}); // Estado local responsável por controlar "filters" durante o ciclo de vida do componente.
 
   // Fecha o menu se clicar fora
   useEffect(() => {
+  // Função de evento "handleClickOutside". Normalmente é acionada por clique, submit ou interação do usuário.
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
@@ -39,11 +47,13 @@ export default function ActivityManagement() {
   }, [refetchActivities]);
 
   //Função para voltar a tela
+  // Função de evento "handleBack". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleBack = () => {
     navigate(-1);
   };
 
   //Função para atualizar filtros
+  // Função de evento "handleFilterChange". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({
       ...prev,
@@ -52,6 +62,7 @@ export default function ActivityManagement() {
   };
 
   //Função principal que vai filtrar na tela
+  // Aplica a regra de filtro em memória antes da renderização, mantendo a tabela desacoplada da lógica de busca.
   const filteredActivities = useTableFilter(
     activitiesList,
     filters,
@@ -64,6 +75,7 @@ export default function ActivityManagement() {
       
       <h1 className="title-page">Gerenciar Atividades</h1>
 
+      {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
       <div className="card-buttons">
         <Link
           to={"/ActivityManagement/add"}
@@ -106,6 +118,7 @@ export default function ActivityManagement() {
             Outras opções ▼
           </button>
 
+          {/* Renderização condicional: esse bloco só aparece quando o estado correspondente estiver ativo. */}
           {open && (
             <ul className="other-option-btns">
               <Link to={'/ActivityManagementUsers'} state={{
@@ -121,6 +134,7 @@ export default function ActivityManagement() {
       <div className="cardList">
         <div className="tableWrapper">
 
+          {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
           <table>
             <HeaderFilter
               columns={activitiesManagementTR}
@@ -128,7 +142,9 @@ export default function ActivityManagement() {
               onFilterChange={handleFilterChange}
             />
 
+            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
             <tbody>
+              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
               {filteredActivities.map((data) => (
                 <List
                   key={data._id}
