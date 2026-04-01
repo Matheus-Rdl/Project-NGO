@@ -1,15 +1,13 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styles from "../styles/peopleManagementActivities.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import ActivityManagementUserActivity from "../../activities/pages/activityManagementUserActivity";
 import activitiesServices from "../../../services/activitiesServices";
 import { useEffect, useState } from "react";
 import CardActivity from "../../../components/cards/cardActivity/cardActivity";
-import { Dialog } from "@mui/material";
 import DialogAddActivity from "../../../components/dialog/dialogAddActivity/dialogAddActivity";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function PeopleManagementActivities() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { userData } = location.state || {};
   const { getActivitiesByMat, userActivitiesList, refetchActivities } =
@@ -21,11 +19,6 @@ export default function PeopleManagementActivities() {
       getActivitiesByMat(userData.user_activities);
     }
   }, [refetchActivities]);
-
-  //Função para voltar a tela
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   const handleAddActivity = () => {
     setAddActivity(true)
@@ -39,7 +32,7 @@ export default function PeopleManagementActivities() {
     <>
       <div className={`${styles.pageContainer} main-page`}>
         <div className={styles.pageContainerContent}>
-          <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+          <HandleBack/>
           <h1 className={styles.title}>Atividades do usuário</h1>
 
           <button onClick={handleAddActivity}>Adicionar Atividade</button>

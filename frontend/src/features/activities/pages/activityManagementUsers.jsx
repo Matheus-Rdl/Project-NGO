@@ -1,6 +1,5 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/activityManagementUsers.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { formatProperNoun } from "../../../utils/formatters";
 import CardActivity from "../../../components/cards/cardActivity/cardActivity";
 import usersServices from "../../../services/usersServices";
@@ -10,9 +9,9 @@ import ActivityManagementUserActivity from "./activityManagementUserActivity";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function ActivityManagementUsers() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { activityData } = location.state || {};
   const { getUsersByActivity, userListActivies, refetchUsers, } =
@@ -42,15 +41,10 @@ export default function ActivityManagementUsers() {
     peopleManagementTR
   );
 
-  //Função para voltar a tela
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <div className={styles.pageContainerContent}>
-        <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+        <HandleBack/>
         <h1 className="title-page">
           {formatProperNoun(activityData.activity_title)}
         </h1>

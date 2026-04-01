@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/peopleManagementDetailed.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import CardList from "../../../components/cards/cardList/cardList";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
@@ -9,6 +8,7 @@ import { getCurrentDate } from "../../../utils/dateFunctions";
 import { Snackbar, Alert } from "@mui/material";
 import fieldsServices from "../../../services/fieldsServices";
 import { validateField } from "../../../utils/fieldValidators";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function PeopleManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -282,7 +282,7 @@ export default function PeopleManagementDetailed() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
       <h1 className="title-page">
         {isViewMode && "Gestão de pessoas - Visualizar"}
         {isAddMode && "Gestão de pessoas - Inserir"}

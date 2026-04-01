@@ -5,18 +5,16 @@
     Date: 03/03/2026
 */
 
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import styles from "../styles/signup.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import List from "../../../components/list/list";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function SignUp() {
-
-  const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null);
   const { getUsers, refetchUsers, usersLoading, getUsersByType, usersByType } = usersServices();
   const [filters, setFilters] = useState({
@@ -88,14 +86,10 @@ export default function SignUp() {
     });
   });
 
-  //Função para voltar a tela
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
 
       <h1 className="title-page">Cadastro de usuários do sistema</h1>
 

@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import CardList from "../../../components/cards/cardList/cardList";
 import FormTextArea from "../../../components/formTextArea/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import activitiesServices from "../../../services/activitiesServices";
 import { Snackbar, Alert } from "@mui/material";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -175,7 +175,7 @@ export default function ActivityManagementDetailed() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
       <h1 className="title-page">
         {isViewMode && "Gerenciar Atividades - Visualizar"}
         {isAddMode && "Gerenciar Atividades - Inserir"}

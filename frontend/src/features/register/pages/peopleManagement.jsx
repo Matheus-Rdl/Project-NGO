@@ -8,20 +8,18 @@
 */
 
 import { useEffect, useRef, useState } from "react";
-import CardUser from "../../../components/cards/cardUser/cardUser";
 import List from "../../../components/list/list";
 import styles from "../styles/peopleManagement.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../../components/loading/page";
 import usersServices from "../../../services/usersServices";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function PeopleManagement() {
 
-  const navigate = useNavigate();
   const [userActive, setuserActive] = useState(null); // Estado local responsável por controlar "userActive" durante o ciclo de vida do componente.
   const { getUsers, refetchUsers, usersList, usersLoading } = usersServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
   const [open, setOpen] = useState(false); // Estado local responsável por controlar "open" durante o ciclo de vida do componente.
@@ -49,12 +47,6 @@ export default function PeopleManagement() {
     getUsers();
   }, [refetchUsers]);
 
-  //Função para voltar a tela
-  // Função de evento "handleBack". Normalmente é acionada por clique, submit ou interação do usuário.
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   //Função para atualizar filtros
   // Função de evento "handleFilterChange". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleFilterChange = (field, value) => {
@@ -81,7 +73,7 @@ export default function PeopleManagement() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
 
       <h1 className="title-page">Gestão de pessoas</h1>
 

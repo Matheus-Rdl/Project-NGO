@@ -6,7 +6,6 @@
 */
 
 import styles from "../styles/signup.module.css";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardList from "../../../components/cards/cardList/cardList";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import {
   formatRG,
   formatProperNoun,
 } from "../../../utils/formatters";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function SignUpDetailed() {
 
@@ -93,7 +93,7 @@ export default function SignUpDetailed() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
 
       <h1 className="title-page">
         {isViewMode && "Cadastro de usuários do sistema - Visualizar"}

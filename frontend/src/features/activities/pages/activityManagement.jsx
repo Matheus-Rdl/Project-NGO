@@ -10,19 +10,16 @@
 import { useEffect, useRef, useState } from "react";
 import activitiesServices from "../../../services/activitiesServices";
 import styles from "../styles/activityManagement.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { Link } from "react-router-dom";
 import List from "../../../components/list/list";
-import usersServices from "../../../services/usersServices";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
+import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function ActivityManagement() {
-  const navigate = useNavigate();
   const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.
   const { getActivities, refetchActivities, activitiesList } = activitiesServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
-  const { userListActivies } = usersServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
   const [open, setOpen] = useState(false); // Estado local responsável por controlar "open" durante o ciclo de vida do componente.
   const menuRef = useRef(null); // Referência persistente usada para acessar "menuRef" sem provocar nova renderização.
   const toggleMenu = () => setOpen((prev) => !prev); // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
@@ -46,12 +43,6 @@ export default function ActivityManagement() {
     }
   }, [refetchActivities]);
 
-  //Função para voltar a tela
-  // Função de evento "handleBack". Normalmente é acionada por clique, submit ou interação do usuário.
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   //Função para atualizar filtros
   // Função de evento "handleFilterChange". Normalmente é acionada por clique, submit ou interação do usuário.
   const handleFilterChange = (field, value) => {
@@ -71,7 +62,7 @@ export default function ActivityManagement() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
+      <HandleBack/>
       
       <h1 className="title-page">Gerenciar Atividades</h1>
 
