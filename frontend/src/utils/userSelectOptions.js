@@ -51,7 +51,7 @@ export const selectOptions = {
     1: "1 - ATIVADO",
     2: "2 - AFASTADO",
     3: "3 - PRÉ-MATRICULA",
-    4: "4 - AUSENTE"
+    4: "4 - INATIVO",
   },
 
   user_type: {
@@ -102,6 +102,21 @@ export const selectOptions = {
     2: "2 - ESPANHOL",
     3: "3 - FOTOGRAFIA",
     4: "4 - GENÉRICO",
+  },
+
+  user_document_missing: {
+    1: "1 - SIM",
+    2: "2 - NÃO",
+  },
+
+  user_documents_missing: {
+    1: "1 - RG",
+    2: "2 - CPF",
+    3: "3 - DOCUMENTO RESPONSÁVEL",
+    4: "4 - COMPROVANTE DE ENDEREÇO",
+    5: "5 - DECLARAÇÃO ESCOLAR",
+    6: "6 - AUTORIZAÇÃO DO USO DE IMAGEM",
+    7: "7 - AUTORIZAÇÃO DO MANUEL DO ALUNO (INGLÊS)",
   },
 
   activity_type: {

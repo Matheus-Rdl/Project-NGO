@@ -17,6 +17,9 @@ import Login from './features/login/pages/login.jsx'
 import SignUp from './features/login/pages/signUp.jsx'
 import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
 
+import FieldsManagement from './features/fields/pages/fieldsManagement.jsx'
+import FieldsManagementList from './features/fields/pages/fieldsManagementList.jsx'
+
 import { AuthProvider } from './features/login/context/authContext.jsx'
 import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
 
@@ -53,7 +56,10 @@ const pages = createHashRouter([
           { path: "/ActivityManagement/add", element: <ActivityManagementDetailed /> },
           { path: "/ActivityManagement/view", element: <ActivityManagementDetailed /> },
           { path: "/ActivityManagement/alter", element: <ActivityManagementDetailed /> },
-          { path: "/ActivityManagementUsers", element: <ActivityManagementUsers /> }
+          { path: "/ActivityManagementUsers", element: <ActivityManagementUsers /> },
+          
+          { path: "/FieldsManagement", element: <FieldsManagement /> },
+          { path: "/FieldsManagementList", element: <FieldsManagementList /> }
 
         ]
       }

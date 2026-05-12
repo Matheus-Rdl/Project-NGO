@@ -47,6 +47,12 @@ export default function Home() {
             <Link to={"/SignUp"}>
               <h2>&bull; Cadastro de usuários do sistema</h2>
             </Link>
+            <Link to={"/FieldsManagement"}>
+              <h2>&bull; Campos do sistema</h2>
+            </Link>
+            <Link to={"/SignUp"}>
+              <h2>&bull; Ordenação de campos</h2>
+            </Link>
           </>
         )}
       </div>

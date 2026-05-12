@@ -45,6 +45,7 @@ export default function PeopleManagementDetailed() {
     4: "Endereço",
     5: "Contatos",
     6: "Outros",
+    7: "Anexos",
   };
 
   // PeopleManagementDetailed.js

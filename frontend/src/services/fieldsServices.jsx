@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function fieldsServices() {
+  const [refetchFields, setRefetchFields] = useState(true);
   const [fieldsList, setFieldsList] = useState([]);
 
   const url = `${import.meta.env.VITE_API_URL}/fields`;
@@ -27,8 +28,9 @@ export default function fieldsServices() {
         //console.log(error);
       })
       .finally(() => {
+        setRefetchFields(false)
       });
   };
 
-  return { getFieldsByTitle, fieldsList };
+  return { getFieldsByTitle, refetchFields, fieldsList };
 }

@@ -10,6 +10,7 @@ import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack/handleBack";
+import { generateAttendanceExcel } from "../../../services/excelServices";
 
 export default function ActivityManagementUsers() {
   const location = useLocation();
@@ -21,10 +22,10 @@ export default function ActivityManagementUsers() {
   const selectedUser = userListActivies?.find((u) => u._id === userActivityActive);
 
   useEffect(() => {
-    if (refetchUsers) {
+    if (refetchUsers && activityData?.activity_mat) {
       getUsersByActivity(activityData.activity_mat);
     }
-  }, [refetchUsers]);
+  }, [refetchUsers, activityData]);
 
   //Função para atualizar filtros
   const handleFilterChange = (field, value) => {
@@ -41,10 +42,16 @@ export default function ActivityManagementUsers() {
     peopleManagementTR
   );
 
+  console.log(userListActivies)
+  userListActivies.map((user) => ({
+    matricula: user.registration,
+    nome: user.name
+  }))
+
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <div className={styles.pageContainerContent}>
-        <HandleBack/>
+        <HandleBack />
         <h1 className="title-page">
           {formatProperNoun(activityData.activity_title)}
         </h1>
@@ -76,6 +83,22 @@ export default function ActivityManagementUsers() {
           >
             <button disabled={userActivityActive === null}>Alterar</button>
           </Link>
+
+          <button
+            onClick={() =>
+              generateAttendanceExcel({
+                turma: activityData,
+                mes: 5,
+                ano: 2026,
+                alunos: userListActivies.map((user) => ({
+                  matricula: user.user_mat,
+                  nome: user.user_name,
+                })),
+              })
+            }
+          >
+            Relatório de presença
+          </button>
 
         </div>
 

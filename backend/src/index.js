@@ -25,18 +25,20 @@ async function main() {
   // Print the connection result (success message or error)
   console.log(mongoConnection);
 
-  // Middleware to parse JSON bodies in requests
-  app.use(express.json());
-
   // Middleware to allow requests from other origins
   app.use(cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:5174",
       "https://matheus-rdl.github.io"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
   }));
+
+  // Middleware to parse JSON bodies in requests
+  app.use(express.json());
 
   // Root route - responds with a welcome message
   app.get("/", (req, res) => {
