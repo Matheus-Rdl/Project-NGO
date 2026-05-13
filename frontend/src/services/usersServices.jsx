@@ -11,27 +11,19 @@ export default function usersServices() {
   const url = `${import.meta.env.VITE_API_URL}/users`;
 
   const addUser = (userData) => {
-
     fetch(`${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(userData),
     })
       .then((response) => response.json())
       .then((result) => {
-        //if (result.success) {
-        //  setTablesList(result.body);
-        //} else {
         console.log(result);
-        //}
       })
       .catch((error) => {
         console.log(error);
-      })
-      .finally(() => {
       });
   };
 
@@ -42,7 +34,6 @@ export default function usersServices() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -50,11 +41,11 @@ export default function usersServices() {
         if (result.success) {
           setUsersList(result.body);
         } else {
-          //console.log(result);
+          console.log(result);
         }
       })
       .catch((error) => {
-        //console.log(error);
+        console.log(error);
       })
       .finally(() => {
         setUsersLoading(false);
@@ -63,12 +54,10 @@ export default function usersServices() {
   };
 
   const getUserNextMat = () => {
-
     fetch(`${url}/nextMat`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -76,11 +65,11 @@ export default function usersServices() {
         if (result.success) {
           setUserNextMat(result.body);
         } else {
-          //console.log(result);
+          console.log(result);
         }
       })
       .catch((error) => {
-        //console.log(error);
+        console.log(error);
       })
       .finally(() => {
         setUsersLoading(false);
@@ -90,11 +79,19 @@ export default function usersServices() {
 
   const getUsersByActivity = (activityMat) => {
 
+    // Validação para impedir chamadas com undefined
+    if (!activityMat) {
+      console.warn(
+        "getUsersByActivity recebeu activityMat inválido:",
+        activityMat
+      );
+      return;
+    }
+
     fetch(`${url}/activity/${activityMat}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -124,7 +121,6 @@ export default function usersServices() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -146,28 +142,24 @@ export default function usersServices() {
 
   const updateUser = (userId, userData) => {
 
-    console.log(userData)
-    console.log(JSON.stringify(userData))
+    console.log(userData);
+    console.log(JSON.stringify(userData));
 
     fetch(`${url}/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
       .then((response) => response.json())
       .then((result) => {
-        if (result.success) {
-        } else {
-          //console.log(result);
+        if (!result.success) {
+          console.log(result);
         }
       })
       .catch((error) => {
-        //console.log(error);
-      })
-      .finally(() => {
+        console.log(error);
       });
   };
 
@@ -196,6 +188,6 @@ export default function usersServices() {
     usersList,
     userNextMat,
     userListActivies,
-    usersByType
+    usersByType,
   };
 }

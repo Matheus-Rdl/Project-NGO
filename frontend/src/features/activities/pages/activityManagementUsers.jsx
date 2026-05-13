@@ -42,12 +42,6 @@ export default function ActivityManagementUsers() {
     peopleManagementTR
   );
 
-  console.log(userListActivies)
-  userListActivies.map((user) => ({
-    matricula: user.registration,
-    nome: user.name
-  }))
-
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <div className={styles.pageContainerContent}>

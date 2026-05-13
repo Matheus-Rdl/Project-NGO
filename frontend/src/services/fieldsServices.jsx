@@ -12,7 +12,6 @@ export default function fieldsServices() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())

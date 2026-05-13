@@ -116,7 +116,7 @@ export const selectOptions = {
     4: "4 - COMPROVANTE DE ENDEREÇO",
     5: "5 - DECLARAÇÃO ESCOLAR",
     6: "6 - AUTORIZAÇÃO DO USO DE IMAGEM",
-    7: "7 - AUTORIZAÇÃO DO MANUEL DO ALUNO (INGLÊS)",
+    7: "7 - AUTORIZAÇÃO DO MANUAL DO ALUNO (INGLÊS)",
   },
 
   activity_type: {

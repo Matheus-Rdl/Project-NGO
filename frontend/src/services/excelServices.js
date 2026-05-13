@@ -1,5 +1,6 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { selectOptions } from "../utils/userSelectOptions";
 
 export async function generateAttendanceExcel({
   turma,
@@ -8,7 +9,10 @@ export async function generateAttendanceExcel({
   ano
 }) {
 
-  console.log(turma.activity_days)
+  console.log(turma.activity_days) //=7
+
+    const activityDayText =
+    selectOptions.activity_days[turma.activity_days]?.split(" - ")[1];
 
   const workbook = new ExcelJS.Workbook();
 
@@ -34,7 +38,6 @@ export async function generateAttendanceExcel({
   ];
 
   for (let dia = 1; dia <= diasDoMes; dia++) {
-
     const data = new Date(ano, mes - 1, dia);
 
     if (data.getDay() === Number(turma.activity_days) - 1) {
@@ -47,7 +50,7 @@ export async function generateAttendanceExcel({
   const titleCell = sheet.getCell("A1");
 
   titleCell.value =
-    `Turma - ${turma.activity_title}`;
+    `Turma - ${turma.activity_title} - ${activityDayText} - ${turma.activity_time_start} às ${turma.activity_time_end}`;
   titleCell.font = {
     bold: true,
     size: 12,
@@ -86,7 +89,7 @@ export async function generateAttendanceExcel({
     ]);
   });
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     sheet.addRow([
       "",
       "",

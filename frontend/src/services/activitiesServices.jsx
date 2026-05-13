@@ -16,7 +16,6 @@ export default function activitiesServices() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(activityData),
     })
@@ -42,7 +41,6 @@ export default function activitiesServices() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -69,7 +67,6 @@ export default function activitiesServices() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({ user_activities: activities }),
     })
@@ -97,7 +94,6 @@ export default function activitiesServices() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({ activity_type: type }),
     })
@@ -124,7 +120,6 @@ export default function activitiesServices() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => response.json())
@@ -153,7 +148,6 @@ export default function activitiesServices() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(activityData)
     })
