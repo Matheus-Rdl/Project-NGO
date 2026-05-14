@@ -3,7 +3,7 @@ user_gender
 1 - Masculino
 2 - Feminino
 3 - Outro
-4 - Prefiro não informar 
+4 - Prefir não informar 
 
 user_civil_status
 1 - Solteiro(a)
