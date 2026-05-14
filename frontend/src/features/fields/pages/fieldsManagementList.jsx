@@ -50,10 +50,28 @@ export default function FieldsManagementList() {
     }));
   };
 
+  // Ordena os campos antes de aplicar os filtros
+  const sortedFields = [...fieldsList].sort((a, b) => {
+
+    // Primeiro ordena pela pasta/menu
+    const folderA = Number(a.folder);
+    const folderB = Number(b.folder);
+
+    if (folderA !== folderB) {
+      return folderA - folderB;
+    }
+
+    // Depois ordena pela ordem do campo
+    const orderA = Number(a.order);
+    const orderB = Number(b.order);
+
+    return orderA - orderB;
+  });
+
   //Função principal que vai filtrar na tela
   // Aplica a regra de filtro em memória antes da renderização, mantendo a tabela desacoplada da lógica de busca.
   const filteredUsers = useTableFilter(
-    fieldsList,
+    sortedFields,
     filters,
     fieldsManagementTR
   );

@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.formGroup label{
+.formGroup label, .formGroupSelect label{
   font-weight: bold;
 }
 

@@ -45,9 +45,11 @@ export default function PeopleManagementActivities() {
             ))}
           </div>
         </div>
+
         <div className={styles.pageContainerActivityManagementUserActivity}>
           <ActivityManagementUserActivity />
         </div>
+        
       </div>
 
       <DialogAddActivity

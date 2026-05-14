@@ -3,14 +3,16 @@ import styles from "../styles/activityManagementUsers.module.css";
 import { formatProperNoun } from "../../../utils/formatters";
 import CardActivity from "../../../components/cards/cardActivity/cardActivity";
 import usersServices from "../../../services/usersServices";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import List from "../../../components/list/list";
 import ActivityManagementUserActivity from "./activityManagementUserActivity";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack/handleBack";
-import { generateAttendanceExcel } from "../../../services/excelServices";
+import { generateExcelPresences } from "../../../services/reports/presences/excelPresences";
+import DialogAddActivity from "../../../components/dialog/dialogAddActivity/dialogAddActivity";
+import Presence from "../../../components/reports/presences/presence";
 
 export default function ActivityManagementUsers() {
   const location = useLocation();
@@ -20,6 +22,7 @@ export default function ActivityManagementUsers() {
   const [userActivityActive, setUserActivityActive] = useState(null);
   const [filters, setFilters] = useState({});
   const selectedUser = userListActivies?.find((u) => u._id === userActivityActive);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     if (refetchUsers && activityData?.activity_mat) {
@@ -35,12 +38,34 @@ export default function ActivityManagementUsers() {
     }));
   };
 
+  // Fecha o menu se clicar fora
+  useEffect(() => {
+    // Função de evento "handleClickOutside". Normalmente é acionada por clique, submit ou interação do usuário.
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const [open, setOpen] = useState(false);
+  // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
+  const toggleMenu = () => setOpen((prev) => !prev);
+
   //Função principal que vai filtrar na tela
   const filteredUsers = useTableFilter(
     userListActivies,
     filters,
     peopleManagementTR
   );
+
+  const [presence, setPresence] = useState(null);
+  // function that open the dialog of presences
+  const handlePresence = () => {
+    setPresence(true)
+  }
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
@@ -78,21 +103,31 @@ export default function ActivityManagementUsers() {
             <button disabled={userActivityActive === null}>Alterar</button>
           </Link>
 
-          <button
-            onClick={() =>
-              generateAttendanceExcel({
-                turma: activityData,
-                mes: 5,
-                ano: 2026,
-                alunos: userListActivies.map((user) => ({
-                  matricula: user.user_mat,
-                  nome: user.user_name,
-                })),
-              })
-            }
-          >
-            Relatório de presença
-          </button>
+          <div ref={menuRef}>
+            <button onClick={toggleMenu}>
+              Relatórios ▼
+            </button>
+
+            {/* Renderização condicional: esse bloco só aparece quando o estado correspondente estiver ativo. */}
+            {open && (
+              <ul className="other-option-btns">
+                {/*
+                <li onClick={() =>
+                  generateExcelPresences({
+                    turma: activityData,
+                    mes: 5,
+                    ano: 2026,
+                    alunos: userListActivies.map((user) => ({
+                      matricula: user.user_mat,
+                      nome: user.user_name,
+                    })),
+                  })
+                }>Presenças</li>
+                */}
+                <li onClick={handlePresence}>Presenças</li>
+              </ul>
+            )}
+          </div>
 
         </div>
 
@@ -124,6 +159,19 @@ export default function ActivityManagementUsers() {
       <div className={styles.pageContainerActivityManagementUserActivity}>
         <ActivityManagementUserActivity />
       </div>
+
+      <Presence
+        open={presence}
+        onClose={() => setPresence(null)}
+        activityData={activityData}
+        usersList={userListActivies.map((user) => ({
+          matricula: user.user_mat,
+          nome: user.user_name,
+        }))}
+      />
     </div>
+
+
+
   );
 }

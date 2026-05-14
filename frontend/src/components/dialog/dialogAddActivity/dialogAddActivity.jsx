@@ -9,7 +9,7 @@ import CardActivitySelect from '../../cards/cardActivitySelect/CardActivitySelec
 import usersServices from '../../../services/usersServices';
 
 export default function DialogAddActivity({ open, onClose, userData, onSaved }) {
-  
+
   const { getActivitiesByType, activityTypeList, refetchActivities } =
     activitiesServices();
 
@@ -104,10 +104,10 @@ export default function DialogAddActivity({ open, onClose, userData, onSaved }) 
             </div>
           ))}
 
-          <button className={styles.btnSaveActivity} onClick={handleSave}>
-            Salvar
-          </button>
         </div>
+        <button className={styles.btnSaveActivity} onClick={handleSave}>
+          Salvar
+        </button>
       </div>
     </Dialog>
   );
