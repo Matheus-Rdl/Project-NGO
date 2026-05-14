@@ -177,10 +177,10 @@ export default function PeopleManagementDetailed() {
             user_state: dataCep.uf || "",
           }));
         } else {
-          console.warn("CEP inválido!");
+          //console.warn("CEP inválido!");
         }
       } catch (err) {
-        console.warn("Erro ao consultar CEP: ", err);
+        //console.warn("Erro ao consultar CEP: ", err);
       }
     }
   };

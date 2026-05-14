@@ -24,11 +24,11 @@ export default function activitiesServices() {
         //if (result.success) {
         //  setTablesList(result.body);
         //} else {
-        console.log(result);
+        //console.log(result);
         //}
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       })
       .finally(() => {
       });

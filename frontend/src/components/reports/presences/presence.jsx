@@ -8,7 +8,7 @@ export default function Presence({ open, onClose, activityData, usersList }) {
 	const [year, setYear] = useState("");
 	const [format, setFormat] = useState("pdf");
 
-	console.log(usersList)
+	//console.log(usersList)
 
 	const months = [
 		{ value: 1, label: "Janeiro" },

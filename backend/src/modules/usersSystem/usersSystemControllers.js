@@ -7,6 +7,7 @@ export default class UsersControllers {
   }
 
   async getByMat(mat) {
+    console.log(mat)
     try {
       const result = await this.dataAccess.getByMat(mat);
 

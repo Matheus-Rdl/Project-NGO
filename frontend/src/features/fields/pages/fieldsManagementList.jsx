@@ -39,7 +39,7 @@ export default function FieldsManagementList() {
     }
   }, [collection, refetchFields]);
 
-  console.log(fieldsList)
+  //console.log(fieldsList)
 
   //Função para atualizar filtros
   // Função de evento "handleFilterChange". Normalmente é acionada por clique, submit ou interação do usuário.

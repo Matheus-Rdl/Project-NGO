@@ -4,6 +4,7 @@ import { MongoClient } from "mongodb"; // Import MongoClient from the official M
 export const Mongo = {
   // Async function to connect to MongoDB
   async connect({ mongoConnectionString, mongoDbName }) {
+    console.log("Database conectado:", mongoConnectionString);
     try {
       // Create MongoDB client instance using the connection string
       const client = new MongoClient(mongoConnectionString);
