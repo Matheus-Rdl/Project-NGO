@@ -18,7 +18,7 @@ async function main() {
 
   //console.log("MONGO_CS:", process.env.MONGO_CS);
   //console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
-  
+
   console.log("TESTE_MONGO_CS:", process.env.TESTE_MONGO_CS);
   console.log("TESTE_MONGO_DB_NAME:", process.env.TESTE_MONGO_DB_NAME);
 
@@ -36,7 +36,8 @@ async function main() {
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "https://matheus-rdl.github.io"
+      "https://matheus-rdl.github.io",
+      "https://project-ngo-self.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
