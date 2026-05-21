@@ -19,13 +19,13 @@ async function main() {
   //console.log("MONGO_CS:", process.env.MONGO_CS);
   //console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
 
-  console.log("TESTE_MONGO_CS:", process.env.TESTE_MONGO_CS);
-  console.log("TESTE_MONGO_DB_NAME:", process.env.TESTE_MONGO_DB_NAME);
+  console.log("MONGO_CS:", process.env.MONGO_CS);
+  console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
 
   // Connect to MongoDB using custom module
   const mongoConnection = await Mongo.connect({
-    mongoConnectionString: process.env.TESTE_MONGO_CS,
-    mongoDbName: process.env.TESTE_MONGO_DB_NAME,
+    mongoConnectionString: process.env.MONGO_CS,
+    mongoDbName: process.env.MONGO_DB_NAME,
   });
 
   // Print the connection result (success message or error)
