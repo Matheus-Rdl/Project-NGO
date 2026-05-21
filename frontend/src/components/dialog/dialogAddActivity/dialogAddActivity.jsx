@@ -5,7 +5,7 @@ import Select from "react-select";
 import CardList from '../../cards/cardList/cardList';
 import { useEffect, useState } from 'react';
 import activitiesServices from '../../../services/activitiesServices';
-import CardActivitySelect from '../../cards/cardActivitySelect/CardActivitySelect';
+import CardActivitySelect from '../../cards/cardActivitySelect/cardActivitySelect';
 import usersServices from '../../../services/usersServices';
 
 export default function DialogAddActivity({ open, onClose, userData, onSaved }) {
