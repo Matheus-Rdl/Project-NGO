@@ -49,7 +49,7 @@ async function main() {
     res.send({
       success: true,
       statusCode: 200,
-      body: "Welcome to NGO-Project",
+      body: "Welcome to NGO-Project - TESTE",
     });
   });
 
