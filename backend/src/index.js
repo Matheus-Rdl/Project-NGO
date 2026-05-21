@@ -12,7 +12,7 @@ config(); // Load environment variables from .env into process.env
 // Main function to start the server
 async function main() {
   const hostname = "localhost";
-  const port = 3000;
+  const port = 4000;
 
   const app = express(); // Create an instance of the Express application
 
