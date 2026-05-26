@@ -30,7 +30,7 @@
 
 .managementForm button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  background-color: var(--color-secondary)
 }
 
 .managementForm .formCard {

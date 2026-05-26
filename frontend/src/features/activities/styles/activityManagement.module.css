@@ -5,7 +5,7 @@
 }
 
 .otherOptionBtns {
-  background-color: rgb(158, 227, 55);
+  background-color: var(--color-secondary);
   list-style: none;
   position: absolute;
   padding: .5em 1em .5em .8em;
@@ -110,5 +110,5 @@
 
 .cardButtons button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }

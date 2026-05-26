@@ -13,7 +13,7 @@
 }
 
 .cardLoginForm{
-  background-color: rgb(173, 255, 47,0.6);
+  background-color: var(--color-secondary);
   width: 50%;
   height: 100%;
   margin-left: 35%;
