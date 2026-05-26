@@ -10,7 +10,7 @@
   position: absolute;
   padding: .5em 1em .5em .8em;
   border-radius: .5em;
-  border: 1px solid green;
+  border: 1px solid var(--color-primary);
   display: flex;
   flex-direction: column;
 }
@@ -103,8 +103,8 @@
 .cardButtons button {
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid green;
-  background-color: greenyellow;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-secondary);
   cursor: pointer;
 }
 

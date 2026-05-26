@@ -19,7 +19,7 @@
   margin-block: .5em;
   cursor: pointer;
   border: none;
-  color: greenyellow;
+  color: var(--color-secondary);
   display: flex;
   justify-content: center;
   position: sticky;

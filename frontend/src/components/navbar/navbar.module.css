@@ -1,6 +1,6 @@
 .nav {
   width: 50px;
-  background: green;
+  background: var(--color-primary);
   position: fixed;
   height: 100%;
   transition: 0.5s;
@@ -14,11 +14,11 @@
 
 .nav .arrowMenu {
   font-size: 25px;
-  color: greenyellow;
+  color: var(--color-secondary);
   position: absolute;
   margin-top: 70px;
   right: -12px;
-  background-color: green;
+  background-color: var(--color-primary);
   border-radius: 50%;
   transition: 0.3s;
   cursor: pointer;
@@ -79,8 +79,8 @@
   border-radius: 0 100px 100px 125px;
   font-weight: 500;
   transition: opacity 0.2s;
-  border: 2px solid green;
-  background-color: greenyellow;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-secondary);
 }
 
 .menu .textShow:hover {
