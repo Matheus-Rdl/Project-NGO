@@ -6,7 +6,7 @@
   width: 100%;
   height: 35px;
   position: fixed;
-  background-color: green;
+  background-color: var(--color-primary);
   box-shadow: 1px 1px 5px black;
   display: flex;
   justify-content: flex-end;
@@ -17,13 +17,13 @@
 
 .header p{
   font-size: x-small;
-  color: greenyellow;
+  color: var(--color-secondary);
   margin-right: 16px;
 }
 
 .header svg {
   font-size: 36px;
-  color: rgb(138, 220, 15);
+  color: var(--color-secondary);
   padding: 8px 0;
   cursor: pointer;
   margin-right: 16px;

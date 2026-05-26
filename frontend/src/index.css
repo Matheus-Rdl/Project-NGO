@@ -26,6 +26,10 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-primary: green;
+  --color-secondary: greenyellow;
+  --color-tertiary: rgb(228, 255, 188);
 }
 
 body{ 
@@ -66,7 +70,7 @@ p {
 .main h2 {
   font-size: small;
   width: fit-content;
-  color: rgb(0, 167, 0);
+  color: var(--color-primary);
   padding: 0 0 .5em 1em;
   cursor: pointer;
   transition: 0.2s;
@@ -93,11 +97,11 @@ p {
 
 .arrowBack {
   font-size: 20px;
-  color: greenyellow;
+  color: var(--color-secondary);
   position: fixed;
   margin-top: 8px;
   top: 0;
-  background-color: green;
+  background-color: var(--color-primary);
   border-radius: 50%;
   transition: 0.3s;
   cursor: pointer;
@@ -131,13 +135,13 @@ p {
 }
 
 .cardList table thead tr td, .cardList table thead tr th {
-  background-color: rgb(173, 255, 47, 0.8);
+  background-color: var(--color-primary);
   position: relative;
   min-width: 7.5rem;
 }
 
 .cardList table thead tr th {
-  background-color: rgba(173, 255, 47, 0.95);
+  background-color: var(--color-secondary);
   position: sticky;
   top: 0;
   z-index: 5;
@@ -152,7 +156,7 @@ p {
   left: 0;
   padding-inline: .5rem;
   transform: translateY(-50%);
-  background-color: rgba(228, 255, 188);
+  background-color: var(--color-tertiary);
   border-radius: .3rem;
   margin-left: .3rem;
   font-size: small;
@@ -204,24 +208,24 @@ p {
 .card-buttons button {
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid green;
-  background-color: greenyellow;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-secondary);
   cursor: pointer;
   font-size: x-small;
 }
 
 .card-buttons button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }
 
 .other-option-btns {
-  background-color: rgb(158, 227, 55);
+  background-color: var(--color-secondary);
   list-style: none;
   position: absolute;
   padding: .5em 1em .5em .8em;
   border-radius: .5em;
-  border: 1px solid green;
+  border: 1px solid var(--color-primary);
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -236,7 +240,7 @@ p {
 }
 
 .otherOptionBtns li:hover {
-  background-color: rgb(140, 202, 47);
+  filter: brightness(0.92);
 }
 
 /* Formulários */
@@ -273,8 +277,8 @@ p {
 }
 
 .management-form button {
-  border: 1px solid green;
-  background-color: greenyellow;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-secondary);
   border-radius: 8px;
   padding: 8px 10px;
   cursor: pointer;
@@ -283,5 +287,5 @@ p {
 
 .management-form button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }

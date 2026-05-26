@@ -16,6 +16,9 @@ async function main() {
 
   const app = express(); // Create an instance of the Express application
 
+  //console.log("MONGO_CS:", process.env.MONGO_CS);
+  //console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
+
   console.log("MONGO_CS:", process.env.MONGO_CS);
   console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
 
@@ -35,6 +38,7 @@ async function main() {
       "http://localhost:5174",
       "https://matheus-rdl.github.io",
       "https://project-ngo-develop.vercel.app"
+
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
