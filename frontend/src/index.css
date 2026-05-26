@@ -69,7 +69,7 @@ p {
 .main h2 {
   font-size: small;
   width: fit-content;
-  color: var(--color-secondary);
+  color: var(--color-primary);
   padding: 0 0 .5em 1em;
   cursor: pointer;
   transition: 0.2s;
@@ -215,11 +215,11 @@ p {
 
 .card-buttons button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }
 
 .other-option-btns {
-  background-color: rgb(158, 227, 55);
+  background-color: var(--color-secondary);
   list-style: none;
   position: absolute;
   padding: .5em 1em .5em .8em;
