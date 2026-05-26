@@ -42,13 +42,13 @@
 }
 
 .cardList table thead tr td, .cardList table thead tr th {
-  background-color: rgb(173, 255, 47, 0.8);
+  background-color: var(--color-primary);
   position: relative;
   min-width: 7.5rem;
 }
 
 .cardList table thead tr th {
-  background-color: rgba(173, 255, 47, 0.95);
+  background-color: var(--color-secondary);
   position: sticky;
   top: 0;
   z-index: 5;
