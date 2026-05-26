@@ -27,9 +27,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --color-primary: green;
-  --color-secondary: greenyellow;
-  --color-tertiary: rgb(228, 255, 188);
+  --color-primary: rgb(40, 103, 197);
+  --color-secondary: rgb(170, 204, 255);
+  --color-tertiary: rgb(173, 218, 255);
 }
 
 body{ 
