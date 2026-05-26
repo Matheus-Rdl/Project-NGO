@@ -29,6 +29,7 @@
 
   --color-primary: green;
   --color-secondary: greenyellow;
+  --color-tertiary: rgb(228, 255, 188);;
 }
 
 body{ 
@@ -155,7 +156,7 @@ p {
   left: 0;
   padding-inline: .5rem;
   transform: translateY(-50%);
-  background-color: rgba(228, 255, 188);
+  background-color: var(--color-tertiary);
   border-radius: .3rem;
   margin-left: .3rem;
   font-size: small;
@@ -239,7 +240,7 @@ p {
 }
 
 .otherOptionBtns li:hover {
-  background-color: rgb(140, 202, 47);
+  filter: brightness(0.92);
 }
 
 /* Formulários */
@@ -286,5 +287,5 @@ p {
 
 .management-form button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }

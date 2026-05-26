@@ -22,7 +22,7 @@
 }
 
 .otherOptionBtns li:hover {
-  background-color: rgb(140, 202, 47);
+  filter: brightness(0.92);
 }
 
 .cardList {
@@ -63,7 +63,7 @@
   left: 0;
   padding-inline: .5rem;
   transform: translateY(-50%);
-  background-color: rgba(228, 255, 188);
+  background-color: var(--color-tertiary);
   border-radius: .3rem;
   margin-left: .3rem;
 }

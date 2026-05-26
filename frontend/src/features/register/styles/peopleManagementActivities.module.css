@@ -13,7 +13,7 @@
 
 .pageContainer button:hover {
   transform: scale(0.95);
-  background-color: rgb(158, 227, 55);
+  filter: brightness(0.92);
 }
 
 .pageContainerContentActivities{
