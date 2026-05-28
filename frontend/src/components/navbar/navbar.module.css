@@ -68,7 +68,7 @@
   font-size: small;
   border-radius: 6px;
   transition: opacity 1.8s ease;
-  background-color: var(--color-primary);
+  background-color: var(--color-secondary);
   cursor: pointer;
 }
 
