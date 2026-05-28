@@ -37,8 +37,7 @@ async function main() {
       "http://localhost:5173",
       "http://localhost:5174",
       "https://matheus-rdl.github.io",
-      "https://project-ngo-develop.vercel.app"
-
+      "https://develop-ngo.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
