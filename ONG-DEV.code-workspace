@@ -6,10 +6,10 @@
 	],
 	"settings": {
 		"workbench.colorCustomizations": {
-			"titleBar.activeBackground": "#1E3A5F",
+			"titleBar.activeBackground": "#14532D",
 			"titleBar.activeForeground": "#FFFFFF",
-			"activityBar.background": "#1E3A5F",
-			"statusBar.background": "#1E3A5F"
+			"activityBar.background": "#14532D",
+			"statusBar.background": "#14532D"
 		},
 		"window.title": "🧪 DEVELOP - ${rootName}"
 	}
