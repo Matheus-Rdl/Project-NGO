@@ -23,6 +23,11 @@ import FieldsManagementList from './features/fields/pages/fieldsManagementList.j
 import { AuthProvider } from './features/login/context/authContext.jsx'
 import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
 
+document.documentElement.setAttribute(
+  "data-env",
+  import.meta.env.VITE_ENV
+);
+
 const pages = createHashRouter([
 
   // ROTA PUBLICA
