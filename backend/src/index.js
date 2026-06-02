@@ -12,7 +12,7 @@ config(); // Load environment variables from .env into process.env
 // Main function to start the server
 async function main() {
   const hostname = "localhost";
-  const port = 3000;
+  const port = 4000;
 
   const app = express(); // Create an instance of the Express application
 
@@ -37,6 +37,7 @@ async function main() {
       "http://localhost:5173",
       "http://localhost:5174",
       "https://matheus-rdl.github.io",
+      "https://develop-ngo.vercel.app",
       "https://production-ngo.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -52,7 +53,7 @@ async function main() {
     res.send({
       success: true,
       statusCode: 200,
-      body: "Welcome to NGO-Project - PRODUÇÃO",
+      body: "Welcome to NGO-Project - TESTE",
     });
   });
 
