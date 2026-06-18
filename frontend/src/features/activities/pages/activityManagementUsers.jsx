@@ -124,7 +124,11 @@ export default function ActivityManagementUsers() {
                   })
                 }>Presenças</li>
                 */}
+                <li>Geral da turma</li>
+                <li>Lista de alunos</li>
+                <li>Frequência</li>
                 <li onClick={handlePresence}>Presenças</li>
+                <li>Prestação de contas</li>
               </ul>
             )}
           </div>
@@ -170,8 +174,6 @@ export default function ActivityManagementUsers() {
         }))}
       />
     </div>
-
-
 
   );
 }

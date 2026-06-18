@@ -10,8 +10,21 @@
 import { Link } from "react-router-dom";
 import HandleBack from "../../../components/handleBack/handleBack";
 import styles from "../styles/fieldsManagement.module.css";
+import collectionsServices from "../../../services/collectionsServices"
+import { useEffect } from "react";
 
 export default function FieldsManagement() {
+  //Service que pega os dados da coleção -> "collections"
+  const { getCollections, refetchCollections, collectionsList } = collectionsServices();
+
+  useEffect(() => {
+    if (refetchCollections) {
+      getCollections();
+    }
+  }, [refetchCollections]);
+  console.log(collectionsList)
+
+
   // Lista das coleções CHUMBADO
   const listCollection = [
     {
