@@ -7,6 +7,7 @@ import fieldsRouter from "./modules/fields/fieldsRouter.js";
 import activitiesRouter from "./modules/activities/activitiesRouter.js";
 import usersSystemRouter from "./modules/usersSystem/usersSystemRouter.js";
 import pagesRouter from "./modules/pages/pagesRouter.js";
+import menusRouter from "./modules/menus/menusRouter.js";
 
 config(); // Load environment variables from .env into process.env
 
@@ -64,6 +65,7 @@ async function main() {
   app.use("/activities", activitiesRouter);
   app.use("/users-system", usersSystemRouter);
   app.use("/pages", pagesRouter);
+  app.use("/menus", menusRouter);
 
   // Start the server and listen on the defined port
   app.listen(port, "0.0.0.0", () => {

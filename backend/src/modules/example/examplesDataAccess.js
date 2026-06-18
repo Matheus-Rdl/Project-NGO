@@ -7,7 +7,7 @@ export default class ExamplesDataAccess {
 
   //Pega todos os usuários da base
   async getExamples() {
-    const result = await Mongo.db.example(exampleName).find({}).sort({ order: 1 }).toArray();
+    const result = await Mongo.db.collection(exampleName).find({}).sort({ order: 1 }).toArray();
 
     return result;
   }

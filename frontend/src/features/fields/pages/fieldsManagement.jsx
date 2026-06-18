@@ -22,24 +22,6 @@ export default function FieldsManagement() {
       getPages();
     }
   }, [refetchPages]);
-  console.log(pagesList)
-
-
-  // Lista das coleções CHUMBADO
-  const listPage = [
-    {
-      label: "Usuários",
-      value: "users",
-    },
-    {
-      label: "Atividades",
-      value: "activities",
-    },
-    {
-      label: "Usuários do sistema",
-      value: "users_system",
-    }
-  ];
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
@@ -53,7 +35,7 @@ export default function FieldsManagement() {
             to={"/FieldsManagementMenu"}
             state={{ page: page.page, name: page.name }}
           >
-            <h1>{page.name}</h1>
+            <h2>&bull; {page.name}</h2>
           </Link>
 
         </div>
