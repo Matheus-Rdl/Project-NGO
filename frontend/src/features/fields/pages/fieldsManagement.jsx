@@ -10,23 +10,23 @@
 import { Link } from "react-router-dom";
 import HandleBack from "../../../components/handleBack/handleBack";
 import styles from "../styles/fieldsManagement.module.css";
-import collectionsServices from "../../../services/collectionsServices"
+import pagesServices from "../../../services/pagesServices"
 import { useEffect } from "react";
 
 export default function FieldsManagement() {
-  //Service que pega os dados da coleção -> "collections"
-  const { getCollections, refetchCollections, collectionsList } = collectionsServices();
+  //Service que pega os dados da coleção -> "pages"
+  const { getPages, refetchPages, pagesList } = pagesServices();
 
   useEffect(() => {
-    if (refetchCollections) {
-      getCollections();
+    if (refetchPages) {
+      getPages();
     }
-  }, [refetchCollections]);
-  console.log(collectionsList)
+  }, [refetchPages]);
+  console.log(pagesList)
 
 
   // Lista das coleções CHUMBADO
-  const listCollection = [
+  const listPage = [
     {
       label: "Usuários",
       value: "users",
@@ -46,14 +46,16 @@ export default function FieldsManagement() {
       <HandleBack />
       <h1 className="title-page">Coleções dos campos</h1>
 
-      {listCollection.map((collection) => (
-        <div key={collection.value} className="card-list-box-form">
+      {pagesList.map((page) => (
+        <div key={page._id} className="card-list-box-form">
+
           <Link
-            to={"/FieldsManagementList"}
-            state={{ collection: collection.value, label: collection.label }}
+            to={"/FieldsManagementMenu"}
+            state={{ page: page.page, name: page.name }}
           >
-            <h1>{collection.label}</h1>
+            <h1>{page.name}</h1>
           </Link>
+
         </div>
       ))}
     </div>

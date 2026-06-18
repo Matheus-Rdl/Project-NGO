@@ -1,20 +1,20 @@
 import { useState } from "react";
 
-export default function collectionsServices() {
-  const [collectionsLoading, setCollectionsLoading] = useState(false);
-  const [refetchCollections, setRefetchCollections] = useState(true);
-  const [collectionsList, setCollectionsList] = useState([]);
+export default function pagesServices() {
+  const [pagesLoading, setPagesLoading] = useState(false);
+  const [refetchPages, setRefetchPages] = useState(true);
+  const [pagesList, setPagesList] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/collections`;
+  const url = `${import.meta.env.VITE_API_URL}/pages`;
 
-  const addCollection = (collectionData) => {
+  const addPage = (pageData) => {
 
     fetch(`${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(collectionData),
+      body: JSON.stringify(pageData),
     })
       .then((response) => response.json())
       .then((result) => {
@@ -31,8 +31,8 @@ export default function collectionsServices() {
       });
   };
 
-  const getCollections = () => {
-    setCollectionsLoading(true);
+  const getPages = () => {
+    setPagesLoading(true);
 
     fetch(`${url}`, {
       method: "GET",
@@ -43,7 +43,7 @@ export default function collectionsServices() {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          setCollectionsList(result.body);
+          setPagesList(result.body);
         } else {
           //console.log(result);
         }
@@ -52,22 +52,22 @@ export default function collectionsServices() {
         //console.log(error);
       })
       .finally(() => {
-        setCollectionsLoading(false);
-        setRefetchCollections(false);
+        setPagesLoading(false);
+        setRefetchPages(false);
       });
   };
 
-  const updateCollection = (collectionId, collectionData) => {
+  const updatePage = (pageId, pageData) => {
 
-    console.log(collectionData)
-    console.log(JSON.stringify(collectionData))
+    console.log(pageData)
+    console.log(JSON.stringify(pageData))
 
-    fetch(`${url}/${collectionId}`, {
+    fetch(`${url}/${pageId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(collectionData)
+      body: JSON.stringify(pageData)
     })
       .then((response) => response.json())
       .then((result) => {
@@ -84,11 +84,11 @@ export default function collectionsServices() {
   };
 
   return {
-    addCollection,
-    getCollections,
-    updateCollection,
-    collectionsLoading,
-    refetchCollections,
-    collectionsList
+    addPage,
+    getPages,
+    updatePage,
+    pagesLoading,
+    refetchPages,
+    pagesList
   };
 }
