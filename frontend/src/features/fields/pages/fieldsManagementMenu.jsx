@@ -11,14 +11,16 @@ import { useLocation } from "react-router-dom";
 import HandleBack from "../../../components/handleBack/handleBack";
 import styles from "../styles/fieldsManagementMenu.module.css";
 import menusServices from "../../../services/menusServices";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { MdEditSquare, MdOutlinePreview, MdOutlineViewList } from "react-icons/md";
+import DialogFieldManagementMenu from "./dialog/dialogFieldManagementMenu/dialogFieldManagementMenu";
 
 export default function FieldsManagementMenu() {
   const location = useLocation();
   const { page, name, collection } = location.state || {};
+
 
   //Service que pega os dados das coleções -> "menus", "fields"
   const { getMenus, refetchMenus, menusList } = menusServices();
@@ -35,13 +37,24 @@ export default function FieldsManagementMenu() {
       getFieldsByTitle(collection);
     }
   }, [collection, refetchFields]);
-  console.log(page)
+
+  //Dialog dos campos
+  const [fieldDialog, setFieldDialog] = useState(null);
+  const handleShowDialog = () => {
+    setFieldDialog(true)
+  }
+
+  //Tipo de dialog que vai aparecer -> "menu", "view" ou "alter"
+  const [typeDialog, setTypeDialog] = useState("");
+
+  //Campo que está sendo clicado para interação
+  const [fieldSelected, setFieldSelected] = useState(null);
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <HandleBack />
       <h1 className="title-page">Campos - {name}</h1>
-      <h2>Menus da página</h2>
+      <h2 className="subtitle-page">Menus da página</h2>
 
       <div className={styles.listMenu}>
         {menusList
@@ -64,13 +77,33 @@ export default function FieldsManagementMenu() {
                     {fieldsList
                       .filter(field => field.menuId === menu.id)
                       .map(field => (
-                        <tr>
-                          <td key={field._id}>
+                        <tr key={field._id}>
+                          <td>
                             <p>{field.title}</p>
                             <div>
-                              <MdEditSquare />
-                              <MdOutlinePreview />
-                              <MdOutlineViewList />
+                              <MdOutlineViewList
+                                onClick={() => {
+                                  setTypeDialog("menu");
+                                  setFieldSelected(field);
+                                  handleShowDialog();
+                                }}
+                              />
+
+                              <MdOutlinePreview
+                                onClick={() => {
+                                  setTypeDialog("view");
+                                  setFieldSelected(field);
+                                  handleShowDialog();
+                                }}
+                              />
+
+                              <MdEditSquare
+                                onClick={() => {
+                                  setTypeDialog("alter");
+                                  setFieldSelected(field);
+                                  handleShowDialog();
+                                }}
+                              />
                             </div>
                           </td>
                         </tr>
@@ -83,6 +116,16 @@ export default function FieldsManagementMenu() {
             </details>
           ))}
       </div>
+
+      <DialogFieldManagementMenu
+        open={fieldDialog}
+        onClose={() => setFieldDialog(null)}
+        typeDialog={typeDialog}
+        field={fieldSelected}
+        fieldList={fieldsList}
+        page={page}
+      />
+
     </div>
   );
 }

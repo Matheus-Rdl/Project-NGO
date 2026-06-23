@@ -14,7 +14,7 @@ export default class FieldsDataAccess {
 
   //Adiciona um usuário no sistema
   async addField(fieldData) {
-  
+
     const result = await Mongo.db
       .collection(collectionName)
       .insertOne(fieldData);
@@ -40,6 +40,28 @@ export default class FieldsDataAccess {
         { _id: new ObjectId(fieldId) },
         { $set: fieldData }
       );
+
+    return result;
+  }
+
+  async updateFieldsOrder(fields) {
+
+    const operations = fields.map(field => ({
+      updateOne: {
+        filter: {
+          _id: new ObjectId(field._id)
+        },
+        update: {
+          $set: {
+            order: field.order
+          }
+        }
+      }
+    }));
+
+    const result = await Mongo.db
+      .collection(collectionName)
+      .bulkWrite(operations);
 
     return result;
   }

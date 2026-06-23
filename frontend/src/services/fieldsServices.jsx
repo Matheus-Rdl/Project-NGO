@@ -31,5 +31,28 @@ export default function fieldsServices() {
       });
   };
 
-  return { getFieldsByTitle, refetchFields, fieldsList };
+  const updateFieldsOrder = async (fields) => {
+    try {
+      const response = await fetch(`${url}/order`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(fields),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setRefetchFields(true);
+      }
+
+      return result;
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { getFieldsByTitle, updateFieldsOrder, refetchFields, fieldsList };
 }
