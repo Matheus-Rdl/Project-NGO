@@ -33,7 +33,7 @@ export default function FieldsManagement() {
 
           <Link
             to={"/FieldsManagementMenu"}
-            state={{ page: page.page, name: page.name }}
+            state={{ page: page.page, name: page.name , collection: page.collection}}
           >
             <h2>&bull; {page.name}</h2>
           </Link>

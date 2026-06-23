@@ -9,6 +9,7 @@ import { Snackbar, Alert } from "@mui/material";
 import fieldsServices from "../../../services/fieldsServices";
 import { validateField } from "../../../utils/fieldValidators";
 import HandleBack from "../../../components/handleBack/handleBack";
+import menusServices from "../../../services/menusServices";
 
 export default function PeopleManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -23,10 +24,11 @@ export default function PeopleManagementDetailed() {
   //Utils
   const formattedDate = getCurrentDate();
 
-  //Services
+  //Service que pega os dados das coleções -> "menus", "fields", "users"
   const { addUser, getUserNextMat, updateUser, refetchUsers, userNextMat } =
     usersServices();
   const { getFieldsByTitle, fieldsList } = fieldsServices();
+  const { getMenus, refetchMenus, menusList } = menusServices();
 
   //SnackBar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -36,17 +38,6 @@ export default function PeopleManagementDetailed() {
   const isViewMode = currentMode === "V";
   const isEditMode = currentMode === "E";
   const isAddMode = currentMode === "A";
-
-  // Lista dos menus do cadastro de usuários
-  const listItems = {
-    1: "Cadastrais",
-    2: "Funcionais",
-    3: "Documentos",
-    4: "Endereço",
-    5: "Contatos",
-    6: "Outros",
-    7: "Anexos",
-  };
 
   // PeopleManagementDetailed.js
 
@@ -79,6 +70,13 @@ export default function PeopleManagementDetailed() {
     }
   }, [isAddMode, userData, userNextMat, formattedDate, fieldsList]);
 
+  //useEffect para menus
+  useEffect(() => {
+    if (refetchMenus) {
+      getMenus();
+    }
+  }, [refetchMenus]);
+
   // Leva uma mensagem para o services, a função getUserNextMat caso seja para adicionar usuário
   if (isAddMode) {
     useEffect(() => {
@@ -93,25 +91,25 @@ export default function PeopleManagementDetailed() {
   }, []);
 
   useEffect(() => {
-  // valor que representa "SIM"
-  const YES_VALUE = "1"; // ajuste se for "S", true, etc.
+    // valor que representa "SIM"
+    const YES_VALUE = "1"; // ajuste se for "S", true, etc.
 
-  if (formData.user_physically_disabled !== YES_VALUE) {
-    setFormData((prev) => {
-      // se já estiver vazio, não faz nada
-      if (!prev.user_type_physically_disabled) return prev;
+    if (formData.user_physically_disabled !== YES_VALUE) {
+      setFormData((prev) => {
+        // se já estiver vazio, não faz nada
+        if (!prev.user_type_physically_disabled) return prev;
 
-      return {
-        ...prev,
-        user_type_physically_disabled: "",
-      };
-    });
-  }
-}, [formData.user_physically_disabled]);
+        return {
+          ...prev,
+          user_type_physically_disabled: "",
+        };
+      });
+    }
+  }, [formData.user_physically_disabled]);
 
 
   //FUNÇõES
-  /* COLOCA PARA MAIUSCULO, É MELHOR COLOCAR EM MAIUSCULO NA JHORA QUE ENVIAR O FORMULÁRIO
+  /* COLOCA PARA MAIUSCULO, É MELHOR COLOCAR EM MAIUSCULO NA HORA QUE ENVIAR O FORMULÁRIO
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -125,12 +123,12 @@ export default function PeopleManagementDetailed() {
   const validateFields = (fieldsList, formData) => {
     const newErrors = {};
 
-    
+
     fieldsList.forEach((field) => {
-      
+
       if (field.dependsOn) {
         const { field: dependsField, value } = field.dependsOn;
-  
+
         if (formData[dependsField] !== value) {
           return; // 🔥 não valida este campo
         }
@@ -283,22 +281,30 @@ export default function PeopleManagementDetailed() {
 
   return (
     <div className={`${styles.pageContainer} main-page`}>
-      <HandleBack/>
+      <HandleBack />
       <h1 className="title-page">
         {isViewMode && "Gestão de pessoas - Visualizar"}
         {isAddMode && "Gestão de pessoas - Inserir"}
         {isEditMode && "Gestão de pessoas - Alterar"}
       </h1>
 
+      {/* MONTA a distribuição de menus recebido pelo banco e somente da página "people Management"*/}
       <div className="card-list-box-form">
-        {Object.entries(listItems).map(([key, label]) => (
-          <CardList
-            key={key}
-            text={label}
-            active={listActive === Number(key)}
-            onClick={() => setListActive(Number(key))}
-          />
-        ))}
+        {menusList
+          .filter(menu => menu.pageId === "peopleManagement")
+          .sort((a, b) => {
+            if (a.order === 0) return 1;
+            if (b.order === 0) return -1;
+            return a.order - b.order;
+          })
+          .map((menu) => (
+            <CardList
+              key={menu._id}
+              text={menu.name}
+              active={listActive === Number(menu.order)}
+              onClick={() => setListActive(Number(menu.order))}
+            />
+          ))}
       </div>
 
       <div>
