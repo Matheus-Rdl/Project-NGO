@@ -46,6 +46,11 @@ export default function FieldsManagementMenu() {
       <div className={styles.listMenu}>
         {menusList
           .filter(menu => menu.pageId === page)
+          .sort((a, b) => {
+            if (a.order === 0) return 1;
+            if (b.order === 0) return -1;
+            return a.order - b.order;
+          })
           .map((menu) => (
             <details key={menu._id} className={styles.menu}>
               <summary className={styles.menuSummary}>

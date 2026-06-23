@@ -42,7 +42,7 @@ export default function DialogAddActivity({ open, onClose, userData, onSaved }) 
 
   useEffect(() => {
     if (refetchActivities) {
-      getActivitiesByType(["1", "2", "3"]);
+      getActivitiesByType(["1", "2", "3", "4"]);
     }
   }, [refetchActivities]);
 
