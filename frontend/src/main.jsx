@@ -22,6 +22,7 @@ import FieldsManagementList from './features/fields/pages/fieldsManagementList.j
 
 import { AuthProvider } from './features/login/context/authContext.jsx'
 import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
+import FieldsManagementMenu from './features/fields/pages/fieldsManagementMenu.jsx'
 
 document.documentElement.setAttribute(
   "data-env",
@@ -64,7 +65,8 @@ const pages = createHashRouter([
           { path: "/ActivityManagementUsers", element: <ActivityManagementUsers /> },
           
           { path: "/FieldsManagement", element: <FieldsManagement /> },
-          { path: "/FieldsManagementList", element: <FieldsManagementList /> }
+          { path: "/FieldsManagementList", element: <FieldsManagementList /> },
+          { path: "/FieldsManagementMenu", element: <FieldsManagementMenu /> }
 
         ]
       }

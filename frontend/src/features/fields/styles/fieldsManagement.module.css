@@ -3,3 +3,16 @@
   flex-direction: column;
   height: calc(100vh - 75px);
 }
+
+.pageContainer h2 {
+  font-size: small;
+  width: fit-content;
+  color: var(--color-primary);
+  padding: 0 0 .5em 1em;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pageContainer h2:hover {
+  transform: scale(1.1);
+}
