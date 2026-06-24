@@ -44,8 +44,6 @@ export default class FieldsControllers {
 
   async updateFieldsOrder(fields) {
     try {
-      console.log("CONTROLLER:", fields);
-
       const result = await this.dataAccess.updateFieldsOrder(fields);
 
       return ok(result);

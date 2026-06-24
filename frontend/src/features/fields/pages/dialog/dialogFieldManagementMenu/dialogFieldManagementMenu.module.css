@@ -1,13 +1,24 @@
-
-.dialog {
-  padding: 1rem 5rem;
+.dialogPaper {
+  width: 100%;
+  margin: 0;
 }
 
-.textTitle{
+.dialogMenu {
+  width: 70%;
+  padding-block: 1rem;
+  padding-inline: 7.5%;
+  margin-inline: 7.5%;
+}
+
+.textTitle {
   text-align: center;
 }
 
-.fieldListBox{
+.textTitle h3 {
+  color: var(--color-primary);
+}
+
+.fieldListBox {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
@@ -17,7 +28,7 @@
   overflow-x: hidden;
 }
 
-.field{
+.field {
   display: flex;
   justify-content: space-between;
   border: 2px solid #696969;
@@ -27,20 +38,20 @@
   margin-top: .5rem;
 }
 
-.field p{
+.field p {
   font-size: .9rem;
 }
 
-.field .btnArrows{
+.field .btnArrows {
   display: none;
 }
 
-.fieldActive{
-  transform: scale(1.1);
+.fieldActive {
+  transform: scale(1.05);
   background-color: rgba(156, 155, 155, 0.3);
 }
 
-.fieldActive .btnArrows{
+.fieldActive .btnArrows {
   display: flex;
   flex-direction: column;
   gap: .2rem;
@@ -48,7 +59,7 @@
   cursor: pointer;
 }
 
-.dialog button{
+.dialogMenu button {
   background-color: var(--color-primary);
   color: white;
   border: none;
@@ -58,4 +69,43 @@
   margin-inline: 15%;
   cursor: pointer;
   border-radius: .5rem;
+}
+
+.dialogView {
+  width: 80%;
+  padding-block: 1rem;
+  padding-inline: 5%;
+  margin-inline: 5%;
+  margin-bottom: 2rem;
+}
+
+.dialogView h4{
+  margin-left: 1rem;
+  margin-top: 1.5rem;
+  font-weight: 500;
+}
+
+.dialogView .dialogViewContent div {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogView .dialogViewContent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: .5rem;
+}
+
+.dialogView .dialogViewContent div label {
+  font-weight: bold;
+}
+
+.dialogView .dialogViewContent div input {
+  background-color: rgb(156, 155, 155, 0.3);
+  border: 1px solid gray;
+  border-radius: .3em;
+  padding: .7em 2em .7em .5em;
+  font-size: small;
+  margin-right: .5rem;
 }

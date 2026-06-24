@@ -50,6 +50,11 @@ export default function FieldsManagementMenu() {
   //Campo que está sendo clicado para interação
   const [fieldSelected, setFieldSelected] = useState(null);
 
+  //Verifica qual lista foi atualizada, esperando um retorno do DialogFieldManagementMenu
+  const refreshFields = () => {
+    getFieldsByTitle(collection);
+  };
+
   return (
     <div className={`${styles.pageContainer} main-page`}>
       <HandleBack />
@@ -124,6 +129,8 @@ export default function FieldsManagementMenu() {
         field={fieldSelected}
         fieldList={fieldsList}
         page={page}
+        refreshFields={refreshFields}
+        menusList={menusList}
       />
 
     </div>

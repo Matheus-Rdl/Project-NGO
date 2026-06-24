@@ -45,17 +45,8 @@ export default class FieldsDataAccess {
   }
 
   async updateFieldsOrder(fields) {
-    console.log("UPDATE FIELDS:", fields);
 
     const operations = fields.map(field => {
-
-      console.log(
-        "ID:",
-        field._id,
-        "TIPO:",
-        typeof field._id
-      );
-
       return {
         updateOne: {
           filter: {

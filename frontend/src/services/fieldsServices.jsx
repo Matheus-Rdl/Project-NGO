@@ -32,30 +32,17 @@ export default function fieldsServices() {
   };
 
   const updateFieldsOrder = async (fields) => {
+    const response = await fetch(`${url}/order`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
 
-    console.log(fields)
+    const result = await response.json();
 
-    try {
-
-      const response = await fetch(`${url}/order`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(fields),
-      });
-
-      console.log("STATUS:", response.status);
-
-      const text = await response.text();
-
-      console.log("RESPONSE:", text);
-
-      return text;
-
-    } catch (error) {
-      console.error(error);
-    }
+    return result;
   };
 
   return { getFieldsByTitle, updateFieldsOrder, refetchFields, fieldsList };

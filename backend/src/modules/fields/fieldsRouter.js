@@ -24,9 +24,6 @@ fieldsRouter.delete('/:id', async (req, res) => {
 })
 
 fieldsRouter.put('/order', async (req, res) => {
-
-    console.log("BODY RECEBIDO:", req.body);
-
     const { success, statusCode, body } = await fieldsControllers.updateFieldsOrder(req.body);
 
     res.status(statusCode).send({ success, statusCode, body });
