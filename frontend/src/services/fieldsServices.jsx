@@ -32,7 +32,11 @@ export default function fieldsServices() {
   };
 
   const updateFieldsOrder = async (fields) => {
+
+    console.log(fields)
+
     try {
+
       const response = await fetch(`${url}/order`, {
         method: "PUT",
         headers: {
@@ -41,13 +45,13 @@ export default function fieldsServices() {
         body: JSON.stringify(fields),
       });
 
-      const result = await response.json();
+      console.log("STATUS:", response.status);
 
-      if (result.success) {
-        setRefetchFields(true);
-      }
+      const text = await response.text();
 
-      return result;
+      console.log("RESPONSE:", text);
+
+      return text;
 
     } catch (error) {
       console.error(error);

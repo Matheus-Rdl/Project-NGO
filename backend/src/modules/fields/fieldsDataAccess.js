@@ -33,36 +33,45 @@ export default class FieldsDataAccess {
 
   //Atualiza dados do usuário
   async updateField(fieldId, fieldData) {
+    console.log("UPDATE FIELD:", fieldId);
 
-    const result = Mongo.db
-      .collection(collectionName)
-      .findOneAndUpdate(
-        { _id: new ObjectId(fieldId) },
-        { $set: fieldData }
-      );
-
-    return result;
+    try {
+      const result = await this.dataAccess.updateField(fieldId, fieldData);
+      return ok(result);
+    } catch (error) {
+      console.error(error);
+      return serverError(error);
+    }
   }
 
   async updateFieldsOrder(fields) {
+    console.log("UPDATE FIELDS:", fields);
 
-    const operations = fields.map(field => ({
-      updateOne: {
-        filter: {
-          _id: new ObjectId(field._id)
-        },
-        update: {
-          $set: {
-            order: field.order
+    const operations = fields.map(field => {
+
+      console.log(
+        "ID:",
+        field._id,
+        "TIPO:",
+        typeof field._id
+      );
+
+      return {
+        updateOne: {
+          filter: {
+            _id: new ObjectId(field._id)
+          },
+          update: {
+            $set: {
+              order: field.order
+            }
           }
         }
-      }
-    }));
+      };
+    });
 
-    const result = await Mongo.db
+    return await Mongo.db
       .collection(collectionName)
       .bulkWrite(operations);
-
-    return result;
   }
 }
