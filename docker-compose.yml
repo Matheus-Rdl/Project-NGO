@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Backend da ONG
+  ngo-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: project-ngo-backend
+    ports:
+      - "3010:3000" # Mapeia porta 3010 do servidor para a 3000 do container
+    env_file:
+      - .env # Usa o .env único que configuramos na raiz
+    restart: unless-stopped
+    networks:
+      - squamata-global
+
+  # Frontend da ONG (Nginx)
+  ngo-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - OLD_VITE_API_URL=${OLD_VITE_API_URL}
+        - VITE_ENV=${VITE_ENV}
+    container_name: project-ngo-frontend
+    ports:
+      - "3011:80"   # Mapeia porta 3011 do servidor para a 80 do Nginx
+    depends_on:
+      - ngo-backend
+    restart: unless-stopped
+    networks:
+      - squamata-global
+
+networks:
+  squamata-global:
+    external: true
