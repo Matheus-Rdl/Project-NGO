@@ -14,7 +14,7 @@ export default class FieldsDataAccess {
 
   //Adiciona um usuário no sistema
   async addField(fieldData) {
-  
+
     const result = await Mongo.db
       .collection(collectionName)
       .insertOne(fieldData);
@@ -33,14 +33,36 @@ export default class FieldsDataAccess {
 
   //Atualiza dados do usuário
   async updateField(fieldId, fieldData) {
+    console.log("UPDATE FIELD:", fieldId);
 
-    const result = Mongo.db
+    try {
+      const result = await this.dataAccess.updateField(fieldId, fieldData);
+      return ok(result);
+    } catch (error) {
+      console.error(error);
+      return serverError(error);
+    }
+  }
+
+  async updateFieldsOrder(fields) {
+
+    const operations = fields.map(field => {
+      return {
+        updateOne: {
+          filter: {
+            _id: new ObjectId(field._id)
+          },
+          update: {
+            $set: {
+              order: field.order
+            }
+          }
+        }
+      };
+    });
+
+    return await Mongo.db
       .collection(collectionName)
-      .findOneAndUpdate(
-        { _id: new ObjectId(fieldId) },
-        { $set: fieldData }
-      );
-
-    return result;
+      .bulkWrite(operations);
   }
 }

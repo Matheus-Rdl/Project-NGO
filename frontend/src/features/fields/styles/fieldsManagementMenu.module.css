@@ -6,7 +6,9 @@
 
 .pageContainer h2 {}
 
-.listMenu {}
+.listMenu {
+  margin-top: 1rem;
+}
 
 .menu {
   border: 3px solid var(--color-primary);

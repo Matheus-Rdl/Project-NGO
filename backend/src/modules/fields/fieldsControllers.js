@@ -41,4 +41,18 @@ export default class FieldsControllers {
       return serverError(error);
     }
   }
+
+  async updateFieldsOrder(fields) {
+    try {
+      const result = await this.dataAccess.updateFieldsOrder(fields);
+
+      return ok(result);
+
+    } catch (error) {
+      console.error("ERRO UPDATE ORDER:");
+      console.error(error);
+
+      return serverError(error);
+    }
+  }
 }

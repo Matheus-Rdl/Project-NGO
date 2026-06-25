@@ -29,15 +29,6 @@ export const selectOptions = {
     11: "11 - PÓS-DOUTORADO",
   },
 
-  color: {
-    1: "1 - BRANCA",
-    2: "2 - PRETA",
-    3: "3 - PARDA",
-    4: "4 - AMARELA / ASIÁTICA",
-    5: "5 - INDÍGENA",
-    6: "6 - PREFIRO NÃO INFORMAR",
-  },
-
   user_color: {
     1: "1 - BRANCA",
     2: "2 - PRETA",
@@ -140,4 +131,20 @@ export const selectOptions = {
     6: "6 - SEXTA",
     7: "7 - SÁBADO",
   },
+
+  type: {
+    "text": "1 - TEXTO",
+    "number": "2 - NUMERO",
+    "select": "3 - SELEÇÃO",
+    "multiselect": "4 - MULTIPLA SELEÇÃO",
+    "date": "5 - DATA",
+    "rg": "6 - RG",
+    "cpf": "7 - CPF",
+  },
+
+  required: {
+    true: "1 - SIM",
+    false: "2 - NÃO",
+  },
+
 };

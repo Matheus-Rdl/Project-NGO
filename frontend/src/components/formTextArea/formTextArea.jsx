@@ -35,8 +35,8 @@ export default function FormTextArea({
     if (!maxLength) return "auto"; // tamanho padrão se não tiver maxLength
     if (maxLength < 10) return "150px";
     if (maxLength <= 20) return "300px";
-    if (maxLength <= 40) return "500px";
-    if (maxLength <= 80) return "450px";
+    if (maxLength <= 40) return "450px";
+    if (maxLength <= 80) return "500px";
     return "500px"; // para casos muito grandes
   };
 
