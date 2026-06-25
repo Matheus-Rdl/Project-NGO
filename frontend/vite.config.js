@@ -5,4 +5,5 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/",
+  envDir: "../" //Busca o arquivo .env na raiz do projeto (fora da pasta frontend)
 });

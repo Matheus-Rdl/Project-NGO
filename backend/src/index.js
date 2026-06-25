@@ -1,5 +1,7 @@
 import express from "express"; // Import the Express framework
 import cors from "cors"; // Import CORS to allow cross-origin requests
+import path from "path";
+import { fileURLToPath } from "url";
 import { config } from "dotenv"; // Import dotenv to load environment variables
 import { Mongo } from "./database/mongo.js"; // Import custom MongoDB connection module
 import usersRouter from "./modules/users/usersRouter.js";
@@ -9,7 +11,12 @@ import usersSystemRouter from "./modules/usersSystem/usersSystemRouter.js";
 import pagesRouter from "./modules/pages/pagesRouter.js";
 import menusRouter from "./modules/menus/menusRouter.js";
 
-config(); // Load environment variables from .env into process.env
+// Em ES Modules, precisamos recriar as variáveis __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Dizemos ao dotenv para subir duas pastas e procurar o .env na raiz do projeto
+config({ path: path.resolve(__dirname, '../../.env') });
 
 // Main function to start the server
 async function main() {
