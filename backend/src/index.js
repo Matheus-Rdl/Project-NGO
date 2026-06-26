@@ -50,6 +50,7 @@ async function main() {
       "https://matheus-rdl.github.io",
       "https://develop-ngo.vercel.app",
       "https://production-ngo.vercel.app",
+      "http://100.111.240.89:3011",          // Para quando você testar acessando pelo IP local no Optiplex
       "http://localhost:3011",               // Para quando você testar acessando pelo IP local no Optiplex
       "https://ong.calangoapp.com.br",       // A nova URL oficial de Produção
       "https://ong-teste.calangoapp.com.br"  // (Opcional) Se você for criar um túnel para o ambiente de testes depois
