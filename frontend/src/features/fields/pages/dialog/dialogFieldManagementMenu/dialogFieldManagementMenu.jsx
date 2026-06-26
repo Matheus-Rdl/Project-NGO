@@ -150,7 +150,7 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   };
   //Formata de acordo com o dado recebido
   const formatMode = (mode) => {
-    if (!mode) return "";
+    if (!mode) return "Sem alteração";
     return mode
       .split("")
       .map(letter => modeOptions[letter])
