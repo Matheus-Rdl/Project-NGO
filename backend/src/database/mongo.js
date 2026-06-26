@@ -1,29 +1,20 @@
-import { MongoClient } from "mongodb"; // Import MongoClient from the official MongoDB package
+import mongoose from 'mongoose';
 
-// Custom MongoDB utility module
 export const Mongo = {
-  // Async function to connect to MongoDB
   async connect({ mongoConnectionString, mongoDbName }) {
-    console.log("Database conectado:", mongoConnectionString);
     try {
-      // Create MongoDB client instance using the connection string
-      const client = new MongoClient(mongoConnectionString);
+      console.log("Conectando ao banco com Mongoose...");
       
-      // Connect to MongoDB cluster
-      await client.connect();
-
-      // Select the target database
-      const db = client.db(mongoDbName);
-
-      // Store references to client and database for later use
-      this.client = client;
-      this.db = db;
-
-      // Return a success message
+      // O Mongoose gerencia a conexão globalmente
+      await mongoose.connect(mongoConnectionString, {
+        dbName: mongoDbName
+      });
+      
+      console.log("Conectado ao MongoDB!");
       return "Connected to mongo!";
     } catch (error) {
-      // Return an error object if the connection fails
-      return { text: "Error during mongo connection!", error };
+      console.error("Erro durante a conexão com o banco de dados!", error);
+      throw error;
     }
-  },
+  }
 };

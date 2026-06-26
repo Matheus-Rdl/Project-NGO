@@ -1,114 +1,39 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const collectionName = "users";
+import User from '../../models/User.js';
 
 export default class UsersDataAccess {
-
-  //Pega todos os usuários da base
+  // Pega todos os usuários
   async getUsers() {
-    const result = await Mongo.db.collection(collectionName).find({}).toArray();
-
-    return result;
+    return await User.find({}).lean(); 
+    // .lean() retorna um objeto JS puro (mais rápido), ideal para leitura
   }
 
-  //Pega proxima matricula que será utulizada no sistema
-  async getNextUserMat() {
-    const lastUser = await Mongo.db
-      .collection(collectionName)
-      .aggregate([
-        {
-          $match: { user_mat: { $exists: true } },
-        },
-        {
-          $addFields: { userMatNumber: { $toInt: "$user_mat" } },
-        },
-        {
-          $sort: { userMatNumber: -1 },
-        },
-        {
-          $limit: 1,
-        },
-      ])
-      .toArray();
-
-    let nextMat = "000001";
-
-    if (lastUser.length > 0 && lastUser[0].user_mat) {
-      const lastMatNumber = parseInt(lastUser[0].user_mat, 10);
-      const newMatNumber = lastMatNumber + 1;
-      nextMat = String(newMatNumber).padStart(6, "0");
-    }
-
-    return nextMat;
+  // Pega usuário específico
+  async getUser(id) {
+    return await User.findById(id).lean();
   }
 
-  async getUsersByActivity(activityMat) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .find({ user_activities: { $in: [activityMat] } })
-      //{ projection: { user_mat: 1, user_name: 1, user_activities: 1 } })
-      .toArray();
-
-    return result;
+  // Pega usuário por matrícula (se precisar)
+  async getUserByMat(user_mat) {
+    return await User.findOne({ user_mat }).lean();
   }
 
-  async getUsersByType(typesArray) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .find({
-        user_type: { $in: typesArray }
-      })
-      .toArray();
-
-    return result;
-  }
-
-  //Adiciona um usuário no sistema
+  // Adiciona novo usuário
   async addUser(userData) {
-
-    const normalizedData = {};
-    for (const key in userData) {
-      normalizedData[key] =
-        typeof userData[key] === "string"
-          ? userData[key].toUpperCase()
-          : userData[key];
-    }
-
-    const result = await Mongo.db
-      .collection(collectionName)
-      .insertOne(normalizedData);
-
-    return result;
+    const newUser = new User(userData);
+    return await newUser.save(); // Validações e Uppercase acontecem aqui
   }
 
-  //Deleta um usuário
-  async deleteUser(userId) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(userId) });
-
-    return result;
+  // Atualiza um usuário
+  async updateUser(id, userData) {
+    return await User.findByIdAndUpdate(
+      id, 
+      userData, 
+      { new: true, runValidators: true } // new: retorna o novo objeto, runValidators: força as regras do Schema na edição
+    );
   }
 
-  //Atualiza dados do usuário
-  async updateUser(userId, userData) {
-
-    const normalizedData = {};
-    for (const key in userData) {
-      normalizedData[key] =
-        typeof userData[key] === "string"
-          ? userData[key].toUpperCase()
-          : userData[key];
-    }
-
-    const result = Mongo.db
-      .collection(collectionName)
-      .findOneAndUpdate(
-        { _id: new ObjectId(userId) },
-        { $set: normalizedData }
-      );
-
-    return result;
+  // Deleta um usuário
+  async deleteUser(id) {
+    return await User.findByIdAndDelete(id);
   }
 }
