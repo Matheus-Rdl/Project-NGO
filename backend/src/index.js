@@ -20,8 +20,10 @@ config({ path: path.resolve(__dirname, '../../.env') });
 
 // Main function to start the server
 async function main() {
-  const hostname = "localhost";
-  const port = 4000;
+  // Puxa a porta do .env ou usa a 3000 como segurança (fallback)
+  const port = process.env.API_PORT || 3000;
+  // No Docker, o host deve ser '0.0.0.0' para aceitar conexões externas
+  const hostname = "0.0.0.0";
 
   const app = express(); // Create an instance of the Express application
 
