@@ -27,12 +27,6 @@ async function main() {
 
   const app = express(); // Create an instance of the Express application
 
-  //console.log("MONGO_CS:", process.env.MONGO_CS);
-  //console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
-
-  console.log("MONGO_CS:", process.env.MONGO_CS);
-  console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
-
   // Connect to MongoDB using custom module
   const mongoConnection = await Mongo.connect({
     mongoConnectionString: process.env.MONGO_CS,
