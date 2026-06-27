@@ -45,14 +45,10 @@ const userSchema = new mongoose.Schema({
   user_minor: { type: Number, required: true }, 
   user_minor_name: { type: String, uppercase: true, maxlength: 80 },
   user_minor_rg: { type: String, maxlength: 10 },
-  user_minor_cpf: { type: String, maxlength: 11 },
-  
-  // Extras
-  user_naturality_country: { type: String, uppercase: true },
-  user_naturality_state: { type: String, uppercase: true },
-  user_naturality: { type: String, uppercase: true }
+  user_minor_cpf: { type: String, maxlength: 11 }
 }, { 
-  timestamps: true // Cria createdAt e updatedAt
-}); 
+  timestamps: true,
+  strict: false // Evita erros 500 caso o frontend envie campos extras
+});
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema, 'users');

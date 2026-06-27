@@ -12,7 +12,7 @@ const activitySchema = new mongoose.Schema(
     activity_title: {
       type: String,
       required: true,
-      uppercase: true, // Substitui a normalização manual do DataAccess
+      uppercase: true,
       minlength: 3,
       maxlength: 30
     },
@@ -44,9 +44,8 @@ const activitySchema = new mongoose.Schema(
     }
   },
   { 
-    timestamps: true 
+    timestamps: true,strict: false
   }
 );
 
-// O 3º argumento 'activities' fixa o nome da coleção e evita que o Mongoose adicione um 's' extra
 export default mongoose.model('Activity', activitySchema, 'activities');
