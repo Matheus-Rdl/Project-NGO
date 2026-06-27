@@ -3,44 +3,36 @@ import Field from "../../models/Field.js";
 export default class FieldsDataAccess {
 
   async getFields() {
-    // Usamos o .lean() aqui para enviar um JSON puro para o React, igual ao Mongo nativo e mantendo a performance
-    const result = await Field.find({}).sort({ order: 1 }).lean();
-    return result;
+    // Busca todos os fields, ordena pela propriedade 'order' e retorna JSON puro
+    return await Field.find({}).sort({ order: 1 }).lean();
   }
 
   async addField(fieldData) {
     const field = new Field(fieldData);
-    const result = await field.save();
-    return result;
+    return await field.save();
   }
 
   async deleteField(fieldId) {
-    const result = await Field.findByIdAndDelete(fieldId);
-    return result;
+    return await Field.findByIdAndDelete(fieldId);
   }
 
   async updateField(fieldId, fieldData) {
-    // Código corrigido para retornar os dados da base de dados e não de um controller
-    const result = await Field.findByIdAndUpdate(
+    // Atualiza o documento e retorna o novo, validando que o ID é válido
+    return await Field.findByIdAndUpdate(
       fieldId,
       { $set: fieldData },
       { new: true }
     );
-    return result;
   }
 
   async updateFieldsOrder(fields) {
-    const operations = fields.map(field => {
-      return {
-        updateOne: {
-          filter: { _id: field._id }, // O Mongoose converte para ObjectId automaticamente
-          update: { $set: { order: field.order } }
-        }
-      };
-    });
+    const operations = fields.map(field => ({
+      updateOne: {
+        filter: { _id: field._id },
+        update: { $set: { order: field.order } }
+      }
+    }));
 
-    // O Mongoose também suporta operações de bulkWrite nativamente
-    const result = await Field.bulkWrite(operations);
-    return result;
+    return await Field.bulkWrite(operations);
   }
 }

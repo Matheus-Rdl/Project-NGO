@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
 
 const fieldSchema = new mongoose.Schema(
-  {}, // Deixamos o schema vazio
+  {
+    // Campo opcional para garantir ordenação
+    order: { type: Number, default: 0 }
+  },
   { 
-    strict: false, // Permite que qualquer dado seja salvo no documento
+    strict: false, // Fundamental: permite que campos dinâmicos (label, type, dependsOn, etc.) existam
     timestamps: true 
   }
 );

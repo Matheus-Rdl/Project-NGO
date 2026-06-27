@@ -1,46 +1,30 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const pageName = "pages";
+import Page from "../../models/Page.js";
 
 export default class PagesDataAccess {
 
-  //Pega todos os usuários da base
+  // Pega todas as páginas configuradas no sistema
   async getPages() {
-    const result = await Mongo.db.collection(pageName).find({}).sort({ order: 1 }).toArray();
-
-    return result;
+    // Busca ordenando pela propriedade 'order' e retorna como JSON puro
+    return await Page.find({}).sort({ order: 1 }).lean();
   }
 
-  //Adiciona um usuário no sistema
+  // Adiciona uma nova configuração de página
   async addPage(pageData) {
-  
-    const result = await Mongo.db
-      .page(pageName)
-      .insertOne(pageData);
-
-    return result;
+    const page = new Page(pageData);
+    return await page.save();
   }
 
-  //Deleta um usuário
+  // Deleta uma página pelo ID do documento
   async deletePage(pageId) {
-    const result = await Mongo.db
-      .page(pageName)
-      .findOneAndDelete({ _id: new ObjectId(pageId) });
-
-    return result;
+    return await Page.findByIdAndDelete(pageId);
   }
 
-  //Atualiza dados do usuário
+  // Atualiza os dados de configuração de uma página específica
   async updatePage(pageId, pageData) {
-
-    const result = Mongo.db
-      .page(pageName)
-      .findOneAndUpdate(
-        { _id: new ObjectId(pageId) },
-        { $set: pageData }
-      );
-
-    return result;
+    return await Page.findByIdAndUpdate(
+      pageId,
+      { $set: pageData },
+      { new: true } // Retorna o documento já com as alterações
+    );
   }
 }
