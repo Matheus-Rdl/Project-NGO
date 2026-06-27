@@ -24,9 +24,7 @@ export default class UsersSystemDataAccess {
   }
 
   async getByName(name) {
-    console.log("Procurando por nome:", name);
     const user = await UserSystem.findOne({ user_system_name: name }).lean();
-    console.log("Resultado da busca:", user); // Retornou null ou o objeto?
     return user;
   }
 }
