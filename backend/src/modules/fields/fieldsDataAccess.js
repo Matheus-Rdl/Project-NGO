@@ -1,68 +1,46 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const collectionName = "fields";
+import Field from "../../models/Field.js";
 
 export default class FieldsDataAccess {
 
-  //Pega todos os usuários da base
   async getFields() {
-    const result = await Mongo.db.collection(collectionName).find({}).sort({ order: 1 }).toArray();
-
+    // Usamos o .lean() aqui para enviar um JSON puro para o React, igual ao Mongo nativo e mantendo a performance
+    const result = await Field.find({}).sort({ order: 1 }).lean();
     return result;
   }
 
-  //Adiciona um usuário no sistema
   async addField(fieldData) {
-
-    const result = await Mongo.db
-      .collection(collectionName)
-      .insertOne(fieldData);
-
+    const field = new Field(fieldData);
+    const result = await field.save();
     return result;
   }
 
-  //Deleta um usuário
   async deleteField(fieldId) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(fieldId) });
-
+    const result = await Field.findByIdAndDelete(fieldId);
     return result;
   }
 
-  //Atualiza dados do usuário
   async updateField(fieldId, fieldData) {
-    console.log("UPDATE FIELD:", fieldId);
-
-    try {
-      const result = await this.dataAccess.updateField(fieldId, fieldData);
-      return ok(result);
-    } catch (error) {
-      console.error(error);
-      return serverError(error);
-    }
+    // Código corrigido para retornar os dados da base de dados e não de um controller
+    const result = await Field.findByIdAndUpdate(
+      fieldId,
+      { $set: fieldData },
+      { new: true }
+    );
+    return result;
   }
 
   async updateFieldsOrder(fields) {
-
     const operations = fields.map(field => {
       return {
         updateOne: {
-          filter: {
-            _id: new ObjectId(field._id)
-          },
-          update: {
-            $set: {
-              order: field.order
-            }
-          }
+          filter: { _id: field._id }, // O Mongoose converte para ObjectId automaticamente
+          update: { $set: { order: field.order } }
         }
       };
     });
 
-    return await Mongo.db
-      .collection(collectionName)
-      .bulkWrite(operations);
+    // O Mongoose também suporta operações de bulkWrite nativamente
+    const result = await Field.bulkWrite(operations);
+    return result;
   }
 }
