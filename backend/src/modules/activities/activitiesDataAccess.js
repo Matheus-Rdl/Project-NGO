@@ -1,51 +1,38 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const collectionName = "activities";
+import Activity from "../../models/Activity.js";
 
 export default class ActivitiesDataAccess {
   async getActivities() {
-    const result = await Mongo.db.collection(collectionName).find({}).toArray();
-
+    // O Mongoose devolve os resultados de forma mais direta, dispensando o .toArray()
+    const result = await Activity.find({});
     return result;
   }
 
   async getActivitiesByMat(activitiesMats) {
-    const result = await Mongo.db
-    .collection(collectionName)
-    .find({activity_mat: {$in: activitiesMats} })
-    .toArray();
-
+    const result = await Activity.find({ activity_mat: { $in: activitiesMats } });
     return result;
   }
 
   async getActivitiesByType(activityType) {
-    const result = await Mongo.db
-    .collection(collectionName)
-    .find({activity_type: {$in: activityType} })
-    .toArray();
-
+    const result = await Activity.find({ activity_type: { $in: activityType } });
     return result;
   }
 
   async getNextActivityMat() {
-    const lastActivity = await Mongo.db
-      .collection(collectionName)
-      .aggregate([
-        {
-          $match: { activity_mat: { $exists: true } },
-        },
-        {
-          $addFields: { activityMatNumber: { $toInt: "$activity_mat" } },
-        },
-        {
-          $sort: { activityMatNumber: -1 },
-        },
-        {
-          $limit: 1,
-        },
-      ])
-      .toArray();
+    // Podemos manter a agregação quase intacta, o Mongoose suporta chamadas nativas como aggregate
+    const lastActivity = await Activity.aggregate([
+      {
+        $match: { activity_mat: { $exists: true } },
+      },
+      {
+        $addFields: { activityMatNumber: { $toInt: "$activity_mat" } },
+      },
+      {
+        $sort: { activityMatNumber: -1 },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
 
     let nextMat = "000001";
 
@@ -59,44 +46,25 @@ export default class ActivitiesDataAccess {
   }
 
   async addActivity(activityData) {
-
-    const normalizedData = {};
-    for (const key in activityData) {
-      normalizedData[key] =
-        typeof activityData[key] === "string"
-          ? activityData[key].toUpperCase()
-          : activityData[key];
-    }
-
-    const result = await Mongo.db
-      .collection(collectionName)
-      .insertOne(normalizedData);
-
+    // O Mongoose encarrega-se da normalização e formatação (uppercase, limpeza de campos indesejados, etc.)
+    const activity = new Activity(activityData);
+    const result = await activity.save();
     return result;
   }
 
   async deleteActivity(activityId) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(activityId) });
-
+    // findByIdAndDelete abstrai a necessidade de instanciar 'new ObjectId()'
+    const result = await Activity.findByIdAndDelete(activityId);
     return result;
   }
 
   async updateActivity(activityId, activityData) {
-
-    const normalizedData = {};
-    for (const key in activityData) {
-      normalizedData[key] =
-        typeof activityData[key] === "string"
-          ? activityData[key].toUpperCase()
-          : activityData[key];
-    }
-
-    const result = Mongo.db
-      .collection(collectionName)
-      .findOneAndUpdate({ _id: new ObjectId(activityId) }, { $set: normalizedData });
-
+    // A opção { new: true } devolve o documento já atualizado na resposta
+    const result = await Activity.findByIdAndUpdate(
+      activityId, 
+      { $set: activityData },
+      { new: true, runValidators: true } 
+    );
     return result;
   }
 }
