@@ -1,5 +1,6 @@
-import UsersSystemDataAccess from './usersSystemDataAccess.js'
-import { ok, serverError } from "../../helpers/httpResponse.js"
+import bcrypt from 'bcrypt';
+import UsersSystemDataAccess from './usersSystemDataAccess.js';
+import { ok, serverError } from "../../helpers/httpResponse.js";
 
 export default class UsersControllers {
   constructor() {
@@ -7,7 +8,7 @@ export default class UsersControllers {
   }
 
   async getByMat(mat) {
-    console.log(mat)
+    console.log(mat);
     try {
       const result = await this.dataAccess.getByMat(mat);
 
@@ -19,7 +20,7 @@ export default class UsersControllers {
         };
       }
 
-      return ok(result)
+      return ok(result);
     } catch (error) {
       return serverError(error);
     }
@@ -35,13 +36,14 @@ export default class UsersControllers {
   }
 
   async login(data) {
+    console.log("Tentativa de login para:", data.user_system_name);
     try {
-
       const { user_system_name, user_system_password } = data;
 
       const user = await this.dataAccess.getByName(user_system_name);
 
       if (!user) {
+        console.log("Usuário não encontrado no banco");
         return {
           success: false,
           statusCode: 401,
@@ -49,7 +51,10 @@ export default class UsersControllers {
         };
       }
 
-      if (user.user_system_password !== user_system_password) {
+      // CORREÇÃO AQUI: Comparação segura de hash com bcrypt
+      const isMatch = await bcrypt.compare(user_system_password, user.user_system_password);
+
+      if (!isMatch) {
         return {
           success: false,
           statusCode: 401,
@@ -63,6 +68,7 @@ export default class UsersControllers {
       });
 
     } catch (error) {
+      console.error("Erro no login:", error);
       return serverError(error);
     }
   }
