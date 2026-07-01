@@ -1,10 +1,10 @@
 import styles from "./page.module.css";
-import { CircularProgress } from "@mui/material";
+import { Spinner } from "@chakra-ui/react";
 
 export default function Loading() {
   return (
     <div className={styles.loadingPageContainer}>
-      <CircularProgress color="inherit"/>
+      <Spinner size="xl" color="brand.primary" />
     </div>
   );
 }

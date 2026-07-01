@@ -6,7 +6,7 @@ import CardList from "../../../components/cards/cardList/cardList";
 import FormTextArea from "../../../components/formTextArea/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
 import activitiesServices from "../../../services/activitiesServices";
-import { Snackbar, Alert } from "@mui/material";
+//import { Snackbar, Alert } from "@mui/material";
 import HandleBack from "../../../components/handleBack/handleBack";
 
 export default function ActivityManagementDetailed() {
