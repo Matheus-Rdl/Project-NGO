@@ -82,12 +82,12 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
     {
       label: "Tamanho mínimo",
       name: "minLength",
-      type: "text"
+      type: "number"
     },
     {
       label: "Tamanho maximo",
       name: "maxLength",
-      type: "text"
+      type: "number"
     },
     {
       label: "Modo de exibição",
@@ -227,6 +227,19 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
                           }}
                         />
                       )}
+                      {setting.type === "number" && (
+                        <input
+                          type="number"
+                          disabled
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
                       {setting.type === "select" && (
                         <input
                           type="text"
@@ -330,11 +343,146 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
         )}
 
         {typeDialog === "alter" && (
-          <div>
-            <div>
-              <h2 className="subtitle-page">Edição do campo</h2>
+          <div className={styles.dialogAlter}>
+            <div className={styles.textTitle}>
+              <h2 className="subtitle-page">Alteração do campo</h2>
               <h3 className="subtitle-page">{field.title}</h3>
             </div>
+
+            <div>
+              <h4>&bull; Dados do campo:</h4>
+              <div className={styles.dialogAlterContent}>
+                {fieldSettings.map(setting => {
+                  if (field[setting.name] === undefined) {
+                    return null;
+                  }
+                  return (
+                    <div key={setting.name}>
+                      <label>{setting.label}:</label>
+
+                      {setting.type === "text" && (
+                        <input
+                          type="text"
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "number" && (
+                        <input
+                          type="number"
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "select" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={formatProperNoun(getFormattedValue(setting.name, field[setting.name]).slice(3))}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              20
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "multiselect" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "mode" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={formatMode(field[setting.name])}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              20
+                            )}ch`
+                          }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <h4>&bull; Dados do menu e ordem:</h4>
+              <div className={styles.dialogAlterContent}>
+                {fieldSettingsMenu.map(setting => {
+                  if (field[setting.name] === undefined) {
+                    return null;
+                  }
+                  return (
+                    <div key={setting.name}>
+                      <label>{setting.label}:</label>
+
+                      {setting.type === "text" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "number" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={field[setting.name]}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                      {setting.type === "select" && (
+                        <input
+                          type="text"
+                          disabled
+                          value={getDisplayValue(setting, field[setting.name])}
+                          style={{
+                            width: `${Math.max(
+                              String(field[setting.name]).length + 2,
+                              10
+                            )}ch`
+                          }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
           </div>
         )}
       </div>
