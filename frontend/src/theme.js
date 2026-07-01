@@ -12,9 +12,9 @@ const brandColors = {
     tertiary: { value: '#2C5282' },
   },
   develop: {
-    primary: { value: '#22543D' },   // Tons de verde para Develop
-    secondary: { value: '#276749' },
-    tertiary: { value: '#2F855A' },
+    primary: { value: 'green' },   // Tons de verde para Develop
+    secondary: { value: 'greenyellow' },
+    tertiary: { value: 'rgb(228, 255, 188)' },
   }
 };
 
