@@ -74,6 +74,16 @@ async function main() {
   app.use("/pages", pagesRouter);
   app.use("/menus", menusRouter);
 
+  app.use((err, req, res, next) => {
+  console.error("🚨 Erro Global Capturado:", err.message);
+
+  res.status(500).json({
+    success: false,
+    statusCode: 500,
+    body: "Erro interno no servidor. A operação não pôde ser concluída."
+  });
+});
+
   // Start the server and listen on the defined port
   app.listen(port, "0.0.0.0", () => {
     console.log(`Server running on port: ${port}`);
