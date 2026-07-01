@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import fieldsServices from "../../../../../services/fieldsServices";
 import { selectOptions } from "../../../../../utils/userSelectOptions";
 import { formatProperNoun } from "../../../../../utils/formatters";
+import DialogMenu from "./DialogMenu";
 
 export default function DialogFieldManagementMenu({ open, onClose, typeDialog, field, fieldList, page, refreshFields, menusList }) {
 
@@ -158,330 +159,126 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
       .join(" | ");
   };
 
+  const isView = typeDialog === "view";
+  const isAlter = typeDialog === "alter";
+
+  const currentStyles = isView
+    ? styles.dialogViewContent
+    : styles.dialogAlterContent;
+
+  const renderInput = (setting, value) => {
+
+    switch (setting.type) {
+
+      case "text":
+
+        return (
+          <input
+            type="text"
+            value={value}
+            disabled={isView}
+            readOnly={isView}
+            style={{
+              width: `${Math.max(
+                String(field[setting.name]).length + 2,
+                10
+              )}ch`
+            }}
+          />
+        );
+
+      case "number":
+
+        return (
+          <input
+            type="number"
+            value={value}
+            disabled={isView}
+            readOnly={isView}
+          />
+        );
+
+      case "select":
+
+        return (
+          <input
+            type="text"
+            value={formatProperNoun(
+              getFormattedValue(setting.name, value)
+            )}
+            disabled
+          />
+        );
+
+      case "mode":
+
+        return (
+          <input
+            type="text"
+            value={formatMode(value)}
+            disabled
+          />
+        );
+
+      default:
+
+        return null;
+
+    }
+
+  };
+
+  const renderSection = (title, settings) => (
+    <>
+      <h4>&bull; {title}</h4>
+
+      <div className={currentStyles}>
+        {settings.map(setting => {
+
+          if (field[setting.name] === undefined) return null;
+
+          return (
+            <div key={setting.name}>
+              <label>{setting.label}:</label>
+              {renderInput(setting, field[setting.name])}
+            </div>
+          );
+
+        })}
+      </div>
+    </>
+  );
+
   return (
     <Dialog open={open} onClose={onClose} PaperProps={{ className: styles.dialogPaper }}>
       <div>
         {typeDialog === "menu" && (
-          <div className={styles.dialogMenu}>
-            <div className={styles.textTitle}>
-              <h2 className="subtitle-page">Alteração de posição do campo:</h2>
-              <h3 className="subtitle-page">{field.title}</h3>
-            </div>
-
-            <div className={styles.fieldListBox}>
-              {fieldsOrdered.map((data, index) => (
-                <div
-                  key={data._id}
-                  className={
-                    data._id === field._id
-                      ? `${styles.field} ${styles.fieldActive}`
-                      : styles.field
-                  }
-                >
-                  <p>{data.title}</p>
-
-                  <div className={styles.btnArrows}>
-                    <FaArrowAltCircleUp
-                      onClick={() => moveUp(index)}
-                    />
-                    <FaArrowAltCircleDown
-                      onClick={() => moveDown(index)}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button onClick={saveOrder}>Alterar ordenação</button>
-          </div>
+          <DialogMenu
+            field={field}
+            fieldList={fieldList}
+            page={page}
+            menusList={menusList}
+            refreshFields={refreshFields}
+            onClose={onClose}
+          />
         )}
 
-        {typeDialog === "view" && (
-          <div className={styles.dialogView}>
+        {(isView || isAlter) && (
+          <div className={isView ? styles.dialogView : styles.dialogAlter}>
+
             <div className={styles.textTitle}>
-              <h2 className="subtitle-page">Visualização do campo</h2>
-              <h3 className="subtitle-page">{field.title}</h3>
+              <h2 className="subtitle-page">
+                {isView ? "Visualização do campo" : "Alteração do campo"}
+              </h2>
+
+              <h3 className="subtitle-page">
+                {field.title}
+              </h3>
             </div>
 
-            <div>
-              <h4>&bull; Dados do campo:</h4>
-              <div className={styles.dialogViewContent}>
-                {fieldSettings.map(setting => {
-                  if (field[setting.name] === undefined) {
-                    return null;
-                  }
-                  return (
-                    <div key={setting.name}>
-                      <label>{setting.label}:</label>
+            {renderSection("Dados do campo", fieldSettings)}
 
-                      {setting.type === "text" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "number" && (
-                        <input
-                          type="number"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "select" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={formatProperNoun(getFormattedValue(setting.name, field[setting.name]).slice(3))}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              20
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "multiselect" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "mode" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={formatMode(field[setting.name])}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              20
-                            )}ch`
-                          }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <h4>&bull; Dados do menu e ordem:</h4>
-              <div className={styles.dialogViewContent}>
-                {fieldSettingsMenu.map(setting => {
-                  if (field[setting.name] === undefined) {
-                    return null;
-                  }
-                  return (
-                    <div key={setting.name}>
-                      <label>{setting.label}:</label>
-
-                      {setting.type === "text" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "number" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "select" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={getDisplayValue(setting, field[setting.name])}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-          </div>
-        )}
-
-        {typeDialog === "alter" && (
-          <div className={styles.dialogAlter}>
-            <div className={styles.textTitle}>
-              <h2 className="subtitle-page">Alteração do campo</h2>
-              <h3 className="subtitle-page">{field.title}</h3>
-            </div>
-
-            <div>
-              <h4>&bull; Dados do campo:</h4>
-              <div className={styles.dialogAlterContent}>
-                {fieldSettings.map(setting => {
-                  if (field[setting.name] === undefined) {
-                    return null;
-                  }
-                  return (
-                    <div key={setting.name}>
-                      <label>{setting.label}:</label>
-
-                      {setting.type === "text" && (
-                        <input
-                          type="text"
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "number" && (
-                        <input
-                          type="number"
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "select" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={formatProperNoun(getFormattedValue(setting.name, field[setting.name]).slice(3))}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              20
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "multiselect" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "mode" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={formatMode(field[setting.name])}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              20
-                            )}ch`
-                          }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <h4>&bull; Dados do menu e ordem:</h4>
-              <div className={styles.dialogAlterContent}>
-                {fieldSettingsMenu.map(setting => {
-                  if (field[setting.name] === undefined) {
-                    return null;
-                  }
-                  return (
-                    <div key={setting.name}>
-                      <label>{setting.label}:</label>
-
-                      {setting.type === "text" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "number" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={field[setting.name]}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                      {setting.type === "select" && (
-                        <input
-                          type="text"
-                          disabled
-                          value={getDisplayValue(setting, field[setting.name])}
-                          style={{
-                            width: `${Math.max(
-                              String(field[setting.name]).length + 2,
-                              10
-                            )}ch`
-                          }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            {renderSection("Dados do menu e ordem", fieldSettingsMenu)}
 
           </div>
         )}
