@@ -28,19 +28,19 @@
 
 * Passo 2.3: Refatoração Estrutural do Layout Base (App.jsx)
 
-    Importar os componentes Flex, Box e Text do Chakra UI.
+   ✅ Importar os componentes Flex, Box e Text do Chakra UI.
 
-    Substituir a tag <header> por um <Flex as="header">, aplicando as propriedades de estilo inline do Chakra (bg, color, p, align, justify).
+   ✅ Substituir a tag <header> por um <Flex as="header">, aplicando as propriedades de estilo inline do Chakra (bg, color, p, align, justify).
 
-    Substituir a tag <main> por um <Box as="main">.
+   ✅ Substituir a tag <main> por um <Box as="main">.
 
-    Garantir o espaçamento adequado para o <Outlet /> não sumir sob o header fixo.
+   ✅ Garantir o espaçamento adequado para o <Outlet /> não sumir sob o header fixo.
 
 * Passo 2.4: Faxina de Estilos Iniciais (App.css e index.css)
 
-    Deletar o arquivo App.css por completo (e remover o import "./App.css" do App.jsx).
+   ✅ Deletar o arquivo App.css por completo (e remover o import "./App.css" do App.jsx).
 
-    Abrir o index.css e remover estritamente os blocos de reset que conflitam com o Chakra (regras do *, :root, body e #root). Deixaremos os estilos de tabelas, forms e botões legados intactos para as próximas fases.
+   ✅ Abrir o index.css e remover estritamente os blocos de reset que conflitam com o Chakra (regras do *, :root, body e #root). Deixaremos os estilos de tabelas, forms e botões legados intactos para as próximas fases.
 
 ## Fase 3: Refatoração da Camada de Componentes Base (O Grande Gargalo)
 Aqui é onde o plano precisou mudar. Não podemos refatorar telas sem antes refatorar as peças de LEGO que as compõem. O Chakra UI muda a forma como lidamos com modais e inputs.
