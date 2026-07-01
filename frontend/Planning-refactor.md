@@ -10,19 +10,19 @@ Ação: Desinstalar @mui/material, instalar @chakra-ui/react, @emotion/react, @e
 ## Fase 2: Fundação e Tema Global
 * Passo 2.1: Criação do Arquivo de Tema Dinâmico (src/theme.js)
 
-    Configurar o Chakra UI para criar um tema personalizado.
+   ✅ Configurar o Chakra UI para criar um tema personalizado.
 
-    Ler a variável de ambiente import.meta.env.VITE_APP_ENV.
+   ✅ Ler a variável de ambiente import.meta.env.VITE_APP_ENV.
 
-    Mapear os tokens de cores (brand.primary, brand.secondary, brand.tertiary) chaveando os valores com base no ambiente (Azul para production, Verde para develop).
+   ✅ Mapear os tokens de cores (brand.primary, brand.secondary, brand.tertiary) chaveando os valores com base no ambiente (Azul para production, Verde para develop).
 
 * Passo 2.2: Ajuste e Envelopamento no main.jsx
 
-    Importar o ChakraProvider e o theme recém-criado.
+   ✅ Importar o ChakraProvider e o theme recém-criado.
 
-    Envolver o <RouterProvider> com o <ChakraProvider theme={theme}>.
+   ✅ Envolver o <RouterProvider> com o <ChakraProvider value={system}>.
 
-    Manter a linha do setAttribute('data-env') por enquanto, apenas para não quebrar estilos legados de tabelas que ainda dependem das variáveis CSS nas cores antigas.
+   ✅ Manter a linha do setAttribute('data-env') por enquanto, apenas para não quebrar estilos legados de tabelas que ainda dependem das variáveis CSS nas cores antigas.
 
 * Passo 2.3: Refatoração Estrutural do Layout Base (App.jsx)
 
