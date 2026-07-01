@@ -1,11 +1,13 @@
 # Planejamento de refatoração - Frontend
 
 ## Fase 1: Setup e Limpeza Inicial
-Exatamente como planejamos, focada na raiz do projeto.
+* Passo 1.1 - Setup inicial
 
-Arquivos afetados: package.json, package-lock.json.
+   ✅ Exatamente como planejamos, focada na raiz do projeto.
 
-Ação: Desinstalar @mui/material, instalar @chakra-ui/react, @emotion/react, @emotion/styled, framer-motion.
+   ✅ Arquivos afetados: package.json, package-lock.json.
+
+   ✅ Ação: Desinstalar @mui/material, instalar @chakra-ui/react, @emotion/react, @emotion/styled, framer-motion.
 
 ## Fase 2: Fundação e Tema Global
 * Passo 2.1: Criação do Arquivo de Tema Dinâmico (src/theme.js)
