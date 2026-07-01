@@ -1,68 +1,38 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const collectionName = "fields";
+import Field from "../../models/Field.js";
 
 export default class FieldsDataAccess {
 
-  //Pega todos os usuários da base
   async getFields() {
-    const result = await Mongo.db.collection(collectionName).find({}).sort({ order: 1 }).toArray();
-
-    return result;
+    // Busca todos os fields, ordena pela propriedade 'order' e retorna JSON puro
+    return await Field.find({}).sort({ order: 1 }).lean();
   }
 
-  //Adiciona um usuário no sistema
   async addField(fieldData) {
-
-    const result = await Mongo.db
-      .collection(collectionName)
-      .insertOne(fieldData);
-
-    return result;
+    const field = new Field(fieldData);
+    return await field.save();
   }
 
-  //Deleta um usuário
   async deleteField(fieldId) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(fieldId) });
-
-    return result;
+    return await Field.findByIdAndDelete(fieldId);
   }
 
-  //Atualiza dados do usuário
   async updateField(fieldId, fieldData) {
-    console.log("UPDATE FIELD:", fieldId);
-
-    try {
-      const result = await this.dataAccess.updateField(fieldId, fieldData);
-      return ok(result);
-    } catch (error) {
-      console.error(error);
-      return serverError(error);
-    }
+    // Atualiza o documento e retorna o novo, validando que o ID é válido
+    return await Field.findByIdAndUpdate(
+      fieldId,
+      { $set: fieldData },
+      { new: true }
+    );
   }
 
   async updateFieldsOrder(fields) {
+    const operations = fields.map(field => ({
+      updateOne: {
+        filter: { _id: field._id },
+        update: { $set: { order: field.order } }
+      }
+    }));
 
-    const operations = fields.map(field => {
-      return {
-        updateOne: {
-          filter: {
-            _id: new ObjectId(field._id)
-          },
-          update: {
-            $set: {
-              order: field.order
-            }
-          }
-        }
-      };
-    });
-
-    return await Mongo.db
-      .collection(collectionName)
-      .bulkWrite(operations);
+    return await Field.bulkWrite(operations);
   }
 }

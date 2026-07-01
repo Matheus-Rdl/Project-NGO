@@ -1,102 +1,48 @@
-import { Mongo } from "../../database/mongo.js";
-import { ObjectId } from "mongodb";
-
-const collectionName = "activities";
+import Activity from "../../models/Activity.js";
 
 export default class ActivitiesDataAccess {
   async getActivities() {
-    const result = await Mongo.db.collection(collectionName).find({}).toArray();
-
-    return result;
+    return await Activity.find({}).lean();
   }
 
   async getActivitiesByMat(activitiesMats) {
-    const result = await Mongo.db
-    .collection(collectionName)
-    .find({activity_mat: {$in: activitiesMats} })
-    .toArray();
-
-    return result;
+    return await Activity.find({ activity_mat: { $in: activitiesMats } }).lean();
   }
 
   async getActivitiesByType(activityType) {
-    const result = await Mongo.db
-    .collection(collectionName)
-    .find({activity_type: {$in: activityType} })
-    .toArray();
-
-    return result;
+    return await Activity.find({ activity_type: { $in: activityType } }).lean();
   }
 
   async getNextActivityMat() {
-    const lastActivity = await Mongo.db
-      .collection(collectionName)
-      .aggregate([
-        {
-          $match: { activity_mat: { $exists: true } },
-        },
-        {
-          $addFields: { activityMatNumber: { $toInt: "$activity_mat" } },
-        },
-        {
-          $sort: { activityMatNumber: -1 },
-        },
-        {
-          $limit: 1,
-        },
-      ])
-      .toArray();
+    const lastActivity = await Activity.aggregate([
+      { $match: { activity_mat: { $exists: true } } },
+      { $addFields: { activityMatNumber: { $toInt: "$activity_mat" } } },
+      { $sort: { activityMatNumber: -1 } },
+      { $limit: 1 }
+    ]);
 
     let nextMat = "000001";
-
     if (lastActivity.length > 0 && lastActivity[0].activity_mat) {
       const lastMatNumber = parseInt(lastActivity[0].activity_mat, 10);
-      const newMatNumber = lastMatNumber + 1;
-      nextMat = String(newMatNumber).padStart(6, "0");
+      nextMat = String(lastMatNumber + 1).padStart(6, "0");
     }
-
     return nextMat;
   }
 
   async addActivity(activityData) {
-
-    const normalizedData = {};
-    for (const key in activityData) {
-      normalizedData[key] =
-        typeof activityData[key] === "string"
-          ? activityData[key].toUpperCase()
-          : activityData[key];
-    }
-
-    const result = await Mongo.db
-      .collection(collectionName)
-      .insertOne(normalizedData);
-
-    return result;
+    const activity = new Activity(activityData);
+    return await activity.save();
   }
 
   async deleteActivity(activityId) {
-    const result = await Mongo.db
-      .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(activityId) });
-
-    return result;
+    return await Activity.findByIdAndDelete(activityId);
   }
 
   async updateActivity(activityId, activityData) {
-
-    const normalizedData = {};
-    for (const key in activityData) {
-      normalizedData[key] =
-        typeof activityData[key] === "string"
-          ? activityData[key].toUpperCase()
-          : activityData[key];
-    }
-
-    const result = Mongo.db
-      .collection(collectionName)
-      .findOneAndUpdate({ _id: new ObjectId(activityId) }, { $set: normalizedData });
-
-    return result;
+    return await Activity.findByIdAndUpdate(
+      activityId,
+      { $set: activityData },
+      { new: true, runValidators: true }
+    );
   }
 }

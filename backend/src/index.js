@@ -27,12 +27,6 @@ async function main() {
 
   const app = express(); // Create an instance of the Express application
 
-  //console.log("MONGO_CS:", process.env.MONGO_CS);
-  //console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
-
-  console.log("MONGO_CS:", process.env.MONGO_CS);
-  console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
-
   // Connect to MongoDB using custom module
   const mongoConnection = await Mongo.connect({
     mongoConnectionString: process.env.MONGO_CS,
@@ -79,6 +73,16 @@ async function main() {
   app.use("/users-system", usersSystemRouter);
   app.use("/pages", pagesRouter);
   app.use("/menus", menusRouter);
+
+  app.use((err, req, res, next) => {
+  console.error("🚨 Erro Global Capturado:", err.message);
+
+  res.status(500).json({
+    success: false,
+    statusCode: 500,
+    body: "Erro interno no servidor. A operação não pôde ser concluída."
+  });
+});
 
   // Start the server and listen on the defined port
   app.listen(port, "0.0.0.0", () => {
