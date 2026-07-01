@@ -12,6 +12,23 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   const [fieldsOrdered, setFieldsOrdered] = useState([]);
   const { updateFieldsOrder } = fieldsServices();
 
+  //Estado para armazenar o campo editado
+  const [editedField, setEditedField] = useState({});
+  //Atualiza o estado do campo editado quando o campo selecionado muda
+  useEffect(() => {
+    if (field) {
+      setEditedField(field);
+    }
+  }, [field]);
+  //Função para atualizar o estado do campo editado quando o usuário altera um valor
+  const handleChange = (name, value) => {
+    setEditedField(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  //Atualiza a lista de campos ordenados quando o campo selecionado ou a lista de campos muda
   useEffect(() => {
     if (!field) return;
 
@@ -159,25 +176,31 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
       .join(" | ");
   };
 
+  //Verifica se é para visualização ou alteração
   const isView = typeDialog === "view";
   const isAlter = typeDialog === "alter";
 
+  //Mostra o estilo de acordo com a tela, se é para visualização ou alteração
   const currentStyles = isView
     ? styles.dialogViewContent
     : styles.dialogAlterContent;
 
+  //Renderiza o input de acordo com o tipo de campo, se é texto, número ou seleção
   const renderInput = (setting, value) => {
 
+    const canEdit =
+      ["field", "order"].includes(setting.name) ||
+      isView;
+
     switch (setting.type) {
-
       case "text":
-
         return (
           <input
             type="text"
-            value={value}
-            disabled={isView}
-            readOnly={isView}
+            value={editedField[setting.name] ?? ""}
+            onChange={(e) => handleChange(setting.name, e.target.value)}
+            disabled={canEdit}
+            readOnly={canEdit}
             style={{
               width: `${Math.max(
                 String(field[setting.name]).length + 2,
@@ -188,35 +211,35 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
         );
 
       case "number":
-
         return (
           <input
             type="number"
-            value={value}
-            disabled={isView}
-            readOnly={isView}
+            value={editedField[setting.name] ?? ""}
+            onChange={(e) => handleChange(setting.name, Number(e.target.value))}
+            disabled={canEdit}
+            readOnly={canEdit}
           />
         );
 
       case "select":
-
         return (
           <input
             type="text"
             value={formatProperNoun(
               getFormattedValue(setting.name, value)
             )}
-            disabled
+            disabled={isView}
+            readOnly={isView}
           />
         );
 
       case "mode":
-
         return (
           <input
             type="text"
             value={formatMode(value)}
-            disabled
+            disabled={isView}
+            readOnly={isView}
           />
         );
 
@@ -228,6 +251,7 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
 
   };
 
+  //Renderiza a sessão nessa caso são as informações do campo e do menu, com os dados de cada um
   const renderSection = (title, settings) => (
     <>
       <h4>&bull; {title}</h4>

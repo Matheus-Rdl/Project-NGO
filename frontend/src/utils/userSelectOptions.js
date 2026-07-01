@@ -143,8 +143,8 @@ export const selectOptions = {
   },
 
   required: {
-    true: "1 - SIM",
-    false: "2 - NÃO",
+    true: "SIM",
+    false: "NÃO",
   },
 
 };
