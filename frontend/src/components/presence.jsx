@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dialog, NativeSelect, RadioGroup, Button, VStack, HStack, Box } from "@chakra-ui/react";
-import { generatePresenceReport } from "../../../services/reports/presences/generatePresenceReport";
+import { generatePresenceReport } from "../services/reports/presences/generatePresenceReport";
 
 export default function Presence({ open, onClose, activityData, usersList }) {
 	const [month, setMonth] = useState("");

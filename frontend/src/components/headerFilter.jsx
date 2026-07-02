@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { LuSearch, LuSearchX } from "react-icons/lu";
 import { Table, Input, Box, IconButton, NativeSelect } from "@chakra-ui/react";
-import { selectOptions as UserSelectOptions } from "../../../utils/userSelectOptions";
+import { selectOptions as UserSelectOptions } from "../utils/userSelectOptions";
 
 // Componente reutilizável de cabeçalho com filtros
 // Props:

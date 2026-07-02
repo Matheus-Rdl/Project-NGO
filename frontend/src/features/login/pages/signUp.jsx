@@ -7,7 +7,7 @@
 
 import styles from "../styles/signup.module.css";
 import { Link } from "react-router-dom";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import HeaderFilter from "../../../components/headerFilter";
 import List from "../../../components/list/list";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import { useEffect, useState } from "react";
