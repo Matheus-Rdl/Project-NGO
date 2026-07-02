@@ -291,11 +291,11 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
           <div className={isView ? styles.dialogView : styles.dialogAlter}>
 
             <div className={styles.textTitle}>
-              <h2 className="subtitle-page">
+              <h2>
                 {isView ? "Visualização do campo" : "Alteração do campo"}
               </h2>
 
-              <h3 className="subtitle-page">
+              <h3>
                 {field.title}
               </h3>
             </div>
