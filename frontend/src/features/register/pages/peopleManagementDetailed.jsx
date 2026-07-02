@@ -3,7 +3,7 @@ import styles from "../styles/peopleManagementDetailed.module.css";
 import CardList from "../../../components/cards/cardList";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
+import FormTextArea from "../../../components/formTextArea";
 import { getCurrentDate } from "../../../utils/dateFunctions";
 //import { Snackbar, Alert } from "@mui/material";
 import fieldsServices from "../../../services/fieldsServices";

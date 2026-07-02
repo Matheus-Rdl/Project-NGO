@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import fieldsServices from "../../../../../services/fieldsServices";
 import { selectOptions } from "../../../../../utils/userSelectOptions";
 import { formatProperNoun } from "../../../../../utils/formatters";
-import DialogMenu from "./DialogMenu";
+import DialogMenu from "./dialogMenu";
 
 export default function DialogFieldManagementMenu({ open, onClose, typeDialog, field, fieldList, page, refreshFields, menusList }) {
 

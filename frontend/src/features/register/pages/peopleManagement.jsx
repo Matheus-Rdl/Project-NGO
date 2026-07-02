@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import List from "../../../components/list/list";
 import styles from "../styles/peopleManagement.module.css";
 import { Link } from "react-router-dom";
-import Loading from "../../../components/loading/page";
+import Loading from "../../../components/loading";
 import usersServices from "../../../services/usersServices";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";

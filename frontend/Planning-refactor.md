@@ -57,11 +57,11 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 
 * Passo 3.2: Migração de Inputs e Feedback de Loading
 
-    [ ] Refatorar formTextArea para usar o componente Textarea do Chakra UI.
+    [✅] Refatorar formTextArea para usar o componente Textarea do Chakra UI.
 
-    [ ] Refatorar src/components/loading/page.jsx utilizando o componente Spinner nativo do Chakra.
+    [✅] Refatorar src/components/loading/page.jsx utilizando o componente Spinner nativo do Chakra.
 
-    [ ] Deletar os ficheiros .module.css destes componentes após a migração.
+    [✅] Deletar os ficheiros .module.css destes componentes após a migração.
 
 * Passo 3.3: Refatoração dos Modais (src/components/dialog/)
 

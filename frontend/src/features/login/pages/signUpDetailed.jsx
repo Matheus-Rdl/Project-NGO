@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import CardList from "../../../components/cards/cardList";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
+import FormTextArea from "../../../components/formTextArea";
 import userSystemServices from "../../../services/usersSystemServices";
 import {
   formatCPF,
