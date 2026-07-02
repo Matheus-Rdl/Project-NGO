@@ -9,6 +9,7 @@
 
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@chakra-ui/react";
 
 export default function HandleBack() {
   const navigate = useNavigate();
@@ -19,8 +20,14 @@ export default function HandleBack() {
   };
 
   return (
-    <div>
-      <IoIosArrowDropleftCircle className="arrowBack" onClick={handleBack} />
-    </div>
+    <Icon
+      as={IoIosArrowDropleftCircle}
+      color="brand.primary"
+      boxSize="8"
+      cursor="pointer"
+      onClick={handleBack}
+      _hover={{ opacity: 0.8, transform: "scale(1.05)" }}
+      transition="all 0.2s"
+    />
   );
 }

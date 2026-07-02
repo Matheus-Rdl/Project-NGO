@@ -7,7 +7,7 @@
 
 import { useState } from "react";
 import { LuSearch, LuSearchX } from "react-icons/lu";
-import styles from "./headerFilter.module.css";
+import { Table, Input, Box, IconButton, NativeSelect } from "@chakra-ui/react";
 import { selectOptions as UserSelectOptions } from "../../../utils/userSelectOptions";
 
 // Componente reutilizável de cabeçalho com filtros
@@ -50,95 +50,99 @@ export default function HeaderFilter({ columns, filters, onFilterChange }) {
   };
 
   return (
-    <thead>
-      <tr>
+    <Table.Header>
+      <Table.Row>
 
         {/* Percorre dinamicamente as colunas recebidas por props */}
         {columns.map((col) => (
           // Cada coluna do header recebe uma célula
-          <th key={col.dataKey}>
-            {/* Texto visível da coluna */}
-            <p>{col.text}</p>
+          <Table.ColumnHeader key={col.dataKey} p={4}>
+            <Box display="flex" alignItems="center" gap={2}>
+              {/* Texto visível da coluna */}
+              <Box as="p" flex="1" m={0}>{col.text}</Box>
 
-            {/* Se o filtro da coluna estiver aberto, renderiza o input correpondente */}
-            {openFilters[col.dataKey] && (
-              col.type === "multiselect" ? (
-                <select
-                  className={styles.multiSelectFilter}
-                  multiple
-                  value={filters[col.dataKey] || []}
-                  onChange={(e) => {
-                    const selectedValues = Array.from(
-                      e.target.selectedOptions,
-                      option => option.value
-                    );
-                    onFilterChange(col.dataKey, selectedValues);
-                  }}
-                >
-                  {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
-                    ([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
-                      </option>
-                    )
-                  )}
-                </select>
-              ) : col.type === "select" ? (
-                <select
-                  className={styles.selectFilter}
-                  autoFocus
-                  value={filters[col.dataKey] || ""}
-                  onChange={(e) =>
-                    onFilterChange(col.dataKey, e.target.value)
-                  }
-                >
-                  <option value="">Todos</option>
+              {/* Se o filtro da coluna estiver aberto, renderiza o input correpondente */}
+              {openFilters[col.dataKey] && (
+                col.type === "multiselect" ? (
+                  <NativeSelect.Root>
+                    <NativeSelect.Field
+                      multiple
+                      value={filters[col.dataKey] || []}
+                      onChange={(e) => {
+                        const selectedValues = Array.from(
+                          e.target.selectedOptions,
+                          option => option.value
+                        );
+                        onFilterChange(col.dataKey, selectedValues);
+                      }}
+                      size="sm"
+                    >
+                      {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
+                        ([key, value]) => (
+                          <option key={key} value={key}>
+                            {value}
+                          </option>
+                        )
+                      )}
+                    </NativeSelect.Field>
+                  </NativeSelect.Root>
+                ) : col.type === "select" ? (
+                  <NativeSelect.Root>
+                    <NativeSelect.Field
+                      autoFocus
+                      value={filters[col.dataKey] || ""}
+                      onChange={(e) =>
+                        onFilterChange(col.dataKey, e.target.value)
+                      }
+                      size="sm"
+                    >
+                      <option value="">Todos</option>
 
-                  {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
-                    ([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
-                      </option>
-                    )
-                  )}
-                </select>
-              ) : (
-                <input
-                  autoFocus
-                  type="text"
-                  placeholder={col.type === "date" ? "aaaa/mm/dd" : ""}
-                  value={filters[col.dataKey] || ""}
-                  onChange={(e) => {
-                    if (col.type === "date") {
-                      const formatted = formatYearDateInput(e.target.value);
-                      onFilterChange(col.dataKey, formatted);
-                    } else {
-                      onFilterChange(col.dataKey, e.target.value);
-                    }
-                  }}
-                />
-              )
-            )}
+                      {Object.entries(UserSelectOptions[col.optionsKey] || {}).map(
+                        ([key, value]) => (
+                          <option key={key} value={key}>
+                            {value}
+                          </option>
+                        )
+                      )}
+                    </NativeSelect.Field>
+                  </NativeSelect.Root>
+                ) : (
+                  <Input
+                    autoFocus
+                    size="sm"
+                    type="text"
+                    placeholder={col.type === "date" ? "aaaa/mm/dd" : ""}
+                    value={filters[col.dataKey] || ""}
+                    onChange={(e) => {
+                      if (col.type === "date") {
+                        const formatted = formatYearDateInput(e.target.value);
+                        onFilterChange(col.dataKey, formatted);
+                      } else {
+                        onFilterChange(col.dataKey, e.target.value);
+                      }
+                    }}
+                  />
+                )
+              )}
 
-            {/*
-              Alterna ícone dependendo do estado:
-              - Aberto -> ícone de fechar (X)
-              - fechado -> ícone de buscar
-            */}
-            {openFilters[col.dataKey] ? (
-              <LuSearchX
-                className={styles.searchIcon}
+              {/*
+                Alterna ícone dependendo do estado:
+                - Aberto -> ícone de fechar (X)
+                - fechado -> ícone de buscar
+              */}
+              <IconButton
+                aria-label={openFilters[col.dataKey] ? "Fechar filtro" : "Abrir filtro"}
+                variant="ghost"
+                size="sm"
                 onClick={() => toggleFilter(col.dataKey)}
-              />
-            ) : (
-              <LuSearch
-                className={styles.searchIcon}
-                onClick={() => toggleFilter(col.dataKey)}
-              />
-            )}
-          </th>
+              >
+                {openFilters[col.dataKey] ? <LuSearchX /> : <LuSearch />}
+              </IconButton>
+            </Box>
+          </Table.ColumnHeader>
         ))}
-      </tr>
-    </thead>
+      </Table.Row>
+    </Table.Header>
   )
 }

@@ -1,4 +1,4 @@
-import styles from "./list.module.css";
+import { Table } from "@chakra-ui/react";
 import {
   formatCPF,
   formatDate,
@@ -41,68 +41,80 @@ export default function List({ data, ativo, onClick, page, columns }) {
     return options?.[value] || value || "";
   };
 
+  const activeProps = ativo ? {
+    bg: "brand.primary",
+    color: "white",
+    _hover: { bg: "brand.primary", opacity: 0.8 },
+  } : {
+    _hover: { bg: "gray.100" },
+  };
+
   return (
     <>
       {page === "peopleManagement" ? (
 
-        <tr
-          className={ativo ? `${styles.listActive}` : `${styles.list}`}
+        <Table.Row
+          cursor="pointer"
           onClick={onClick}
+          {...activeProps}
         >
-          <td>{getFormattedValue("user_situation", data.user_situation)}</td>{/*.slice(3)}</td>*/}
-          <td>{data.user_mat}</td>
-          <td>{formatName(data.user_name)}</td>
-          <td>
+          <Table.Cell>{getFormattedValue("user_situation", data.user_situation)}</Table.Cell>
+          <Table.Cell>{data.user_mat}</Table.Cell>
+          <Table.Cell>{formatName(data.user_name)}</Table.Cell>
+          <Table.Cell>
             {data.user_type
-              .map((id) => getFormattedValue("user_type", id))//.slice(3))
+              .map((id) => getFormattedValue("user_type", id))
               .join(" | ")}
-          </td>
-          <td>{formatCPF(data.user_cpf)}</td>
-          <td>{formatRG(data.user_rg)}</td>
-          <td>{formatDate(data.user_registration_date)}</td>
-          <td>{formatDate(data.user_date_nasc)}</td>
-          <td>{formatProperNoun(data.user_district)}</td>
-          <td>{formatProperNoun(data.user_street)}</td>
-          <td>{formatName(data.user_mother_name)}</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>{formatCPF(data.user_cpf)}</Table.Cell>
+          <Table.Cell>{formatRG(data.user_rg)}</Table.Cell>
+          <Table.Cell>{formatDate(data.user_registration_date)}</Table.Cell>
+          <Table.Cell>{formatDate(data.user_date_nasc)}</Table.Cell>
+          <Table.Cell>{formatProperNoun(data.user_district)}</Table.Cell>
+          <Table.Cell>{formatProperNoun(data.user_street)}</Table.Cell>
+          <Table.Cell>{formatName(data.user_mother_name)}</Table.Cell>
+        </Table.Row>
 
       ) : page === "activityManagement" ? (
 
-        <tr
-          className={ativo ? `${styles.listActive}` : `${styles.list}`}
+        <Table.Row
+          cursor="pointer"
           onClick={onClick}
+          {...activeProps}
         >
-          <td>{data.activity_mat}</td>
-          <td>{formatProperNoun(data.activity_title)}</td>
-          <td>{getFormattedValue("activity_type", data.activity_type).slice(3)}</td>
-          <td>
+          <Table.Cell>{data.activity_mat}</Table.Cell>
+          <Table.Cell>{formatProperNoun(data.activity_title)}</Table.Cell>
+          <Table.Cell>{getFormattedValue("activity_type", data.activity_type).slice(3)}</Table.Cell>
+          <Table.Cell>
             {Array.isArray(data.activity_days)
               ? data.activity_days
                 .map(day => getFormattedValue("activity_days", day).slice(3))
                 .join(" | ")
               : getFormattedValue("activity_days", data.activity_days).slice(3)}
-          </td>
-          <td>{userListActivies.length}</td>
-          <td>{data.activity_time_start}</td>
-          <td>{data.activity_time_end}</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>{userListActivies.length}</Table.Cell>
+          <Table.Cell>{data.activity_time_start}</Table.Cell>
+          <Table.Cell>{data.activity_time_end}</Table.Cell>
+        </Table.Row>
 
       ) : page === "activityManagementUsers" ? (
 
-        <tr
-          className={ativo ? `${styles.listActive}` : `${styles.list}`}
+        <Table.Row
+          cursor="pointer"
           onClick={onClick}
+          {...activeProps}
         >
-          <td>{data.user_mat}</td>
-          <td>{formatName(data.user_name)}</td>
-          <td>{data.user_registration_date}</td>
-          <td>{data.user_date_nasc}</td>
-        </tr>
+          <Table.Cell>{data.user_mat}</Table.Cell>
+          <Table.Cell>{formatName(data.user_name)}</Table.Cell>
+          <Table.Cell>{data.user_registration_date}</Table.Cell>
+          <Table.Cell>{data.user_date_nasc}</Table.Cell>
+        </Table.Row>
 
       ) : (
-        <tr
-          className={ativo ? styles.listActive : styles.list}
+        <Table.Row
+          cursor="pointer"
           onClick={onClick}
+          {...activeProps}
         >
           {columns.map((col) => {
 
@@ -119,9 +131,9 @@ export default function List({ data, ativo, onClick, page, columns }) {
               }
             }
 
-            return <td key={col.dataKey}>{value}</td>;
+            return <Table.Cell key={col.dataKey}>{value}</Table.Cell>;
           })}
-        </tr>
+        </Table.Row>
       )}
     </>
   );
