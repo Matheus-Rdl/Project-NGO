@@ -6,12 +6,12 @@ import usersServices from "../../../services/usersServices";
 import { useEffect, useRef, useState } from "react";
 import List from "../../../components/list/list";
 import ActivityManagementUserActivity from "./activityManagementUserActivity";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import HeaderFilter from "../../../components/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
 import { generateExcelPresences } from "../../../services/reports/presences/excelPresences";
-import Presence from "../../../components/reports/presences/presence";
+import Presence from "../../../components/presence";
 
 export default function ActivityManagementUsers() {
   const location = useLocation();

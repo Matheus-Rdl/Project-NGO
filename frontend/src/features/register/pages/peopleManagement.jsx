@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../../components/loading";
 import usersServices from "../../../services/usersServices";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
 

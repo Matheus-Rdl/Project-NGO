@@ -13,7 +13,7 @@ import styles from "../styles/activityManagement.module.css";
 import { Link } from "react-router-dom";
 import List from "../../../components/list/list";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
 
