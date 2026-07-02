@@ -133,18 +133,18 @@ export const selectOptions = {
   },
 
   type: {
-    "text": "1 - TEXTO",
-    "number": "2 - NUMERO",
-    "select": "3 - SELEÇÃO",
-    "multiselect": "4 - MULTIPLA SELEÇÃO",
-    "date": "5 - DATA",
-    "rg": "6 - RG",
-    "cpf": "7 - CPF",
+    "text": "TEXTO",
+    "number": "NUMERO",
+    "select": "SELEÇÃO",
+    "multiselect": "MULTIPLA SELEÇÃO",
+    "date": "DATA",
+    "rg": "RG",
+    "cpf": "CPF",
   },
 
   required: {
-    true: "1 - SIM",
-    false: "2 - NÃO",
+    true: "SIM",
+    false: "NÃO",
   },
 
 };
