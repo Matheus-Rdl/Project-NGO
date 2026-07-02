@@ -19,7 +19,7 @@ import {
   formatRG,
   formatProperNoun,
 } from "../../../utils/formatters";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 
 export default function SignUpDetailed() {
 

@@ -15,7 +15,7 @@ import List from "../../../components/list/list";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 
 export default function ActivityManagement() {
   const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.

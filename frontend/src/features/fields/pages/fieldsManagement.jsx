@@ -8,7 +8,7 @@
 */
 
 import { Link } from "react-router-dom";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import styles from "../styles/fieldsManagement.module.css";
 import pagesServices from "../../../services/pagesServices"
 import { useEffect } from "react";

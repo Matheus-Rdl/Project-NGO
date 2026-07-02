@@ -3,26 +3,25 @@ import styles from "../styles/peopleManagementActivities.module.css";
 import ActivityManagementUserActivity from "../../activities/pages/activityManagementUserActivity";
 import activitiesServices from "../../../services/activitiesServices";
 import { useEffect, useState } from "react";
+import { useDisclosure } from "@chakra-ui/react"; // hook do Chakra UI
 import CardActivity from "../../../components/cards/cardActivity";
-import DialogAddActivity from "../../../components/dialog/dialogAddActivity/dialogAddActivity";
-import HandleBack from "../../../components/handleBack/handleBack";
+import DialogAddActivity from "../../../components/dialogAddActivity";
+import HandleBack from "../../../components/handleBack";
 
 export default function PeopleManagementActivities() {
   const location = useLocation();
   const { userData } = location.state || {};
   const { getActivitiesByMat, userActivitiesList, refetchActivities } =
     activitiesServices();
-  const [addActivity, setAddActivity] = useState(null);
+  
+  // Substitui useState por useDisclosure
+  const { open, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (refetchActivities) {
       getActivitiesByMat(userData.user_activities);
     }
   }, [refetchActivities]);
-
-  const handleAddActivity = () => {
-    setAddActivity(true)
-  }
 
   const handleSavedActivities = (activitiesMat) => {
     getActivitiesByMat(activitiesMat);
@@ -32,10 +31,10 @@ export default function PeopleManagementActivities() {
     <>
       <div className={`${styles.pageContainer} main-page`}>
         <div className={styles.pageContainerContent}>
-          <HandleBack/>
+          <HandleBack />
           <h1 className={styles.title}>Atividades do usuário</h1>
 
-          <button onClick={handleAddActivity}>Adicionar Atividade</button>
+          <button onClick={onOpen}>Adicionar Atividade</button>
 
           <div className={styles.pageContainerContentActivities}>
             {userActivitiesList.map((activity) => (
@@ -49,16 +48,14 @@ export default function PeopleManagementActivities() {
         <div className={styles.pageContainerActivityManagementUserActivity}>
           <ActivityManagementUserActivity />
         </div>
-        
       </div>
 
       <DialogAddActivity
-        open={addActivity}
-        onClose={() => setAddActivity(null)}
+        open={open}
+        onClose={onClose}
         userData={userData}
         onSaved={handleSavedActivities}
       />
-
     </>
   );
 }

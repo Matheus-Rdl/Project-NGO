@@ -8,7 +8,7 @@
 */
 
 import { useLocation } from "react-router-dom";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import styles from "../styles/fieldsManagementMenu.module.css";
 import menusServices from "../../../services/menusServices";
 import { useEffect, useState } from "react";

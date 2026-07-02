@@ -8,7 +8,7 @@ import { getCurrentDate } from "../../../utils/dateFunctions";
 //import { Snackbar, Alert } from "@mui/material";
 import fieldsServices from "../../../services/fieldsServices";
 import { validateField } from "../../../utils/fieldValidators";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import menusServices from "../../../services/menusServices";
 
 export default function PeopleManagementDetailed() {

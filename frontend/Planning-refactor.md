@@ -65,19 +65,33 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 
 * Passo 3.3: Refatoração dos Modais (src/components/dialog/)
 
-    [ ] Refatorar dialogAddActivity para utilizar o componente Modal nativo do Chakra UI.
+    [✅] Refatorar dialogAddActivity para utilizar o componente Modal nativo do Chakra UI.
 
-    [ ] Implementar o hook useDisclosure do Chakra para gerenciar a lógica de abrir/fechar (simplificando o estado local existente).
+    [✅] Implementar o hook useDisclosure do Chakra para gerenciar a lógica de abrir/fechar (simplificando o estado local existente).
 
-    [ ] Deletar o dialogAddActivity.module.css.
+    [✅] Deletar o dialogAddActivity.module.css.
 
-* Passo 3.4: Refatoração de Tabelas e Listas (src/components/table/ e src/components/list/)
+* Passo 3.4: Refatoração de Tabelas e Listas (src/components/list/ e src/components/table/)
+   [ ] Migrar list.jsx para a estrutura de tabelas do Chakra (Table.Row / Tr, Table.Cell / Td).
+   
+   [ ] Migrar headerFilter.jsx para a estrutura de cabeçalho do Chakra (Table.Header / Thead, Table.ColumnHeader / Th).  
+   
+   [ ] Substituir os filtros nativos (<input> e <select>) do headerFilter.jsx por componentes do Chakra (Input, NativeSelect).  
+   
+   [ ] Aplicar as propriedades de estilo para garantir responsividade.
+   
+   [ ] Deletar os arquivos .module.css associados.Passo 3.5: Componentes Adicionais (Ação, Relatórios e Limpeza)
+   
+   [ ] Limpeza: Deletar permanentemente o arquivo teste.jsx e seu respectivo teste.module.css, pois são apenas rascunhos de código morto.  
+   
+   [ ] Ação: Refatorar handleBack.jsx, substituindo a <div> genérica e a classe CSS por um componente <Icon> ou <IconButton> do Chakra UI, mapeando a cor para os tokens do tema.  
+   
+   [ ] Relatórios: Refatorar presence.jsx (src/components/reports/presences/). Transformá-lo em um componente Dialog nativo do Chakra UI.  
+   
+   [ ] Substituir os campos nativos de <select> (Mês e Ano) e os <input type="radio"> (Formato) do presence.jsx por NativeSelect e RadioGroup do Chakra UI.  
+   
+   [ ] Deletar o presence.module.css.  
 
-    [ ] Migrar list.jsx e headerFilter.jsx para a estrutura de tabelas do Chakra (Table, Thead, Tbody, Tr, Th, Td).
-
-    [ ] Aplicar as novas propriedades de estilo para garantir que o comportamento responsivo funcione como esperado.
-
-    [ ] Deletar os arquivos .module.css destas pastas.
 
 ## Fase 4: Navegação e Layout Estrutural
 A espinha dorsal por onde o usuário navega.

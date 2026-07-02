@@ -12,7 +12,7 @@ import List from "../../../components/list/list";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 
 export default function SignUp() {
   const [userActive, setuserActive] = useState(null);

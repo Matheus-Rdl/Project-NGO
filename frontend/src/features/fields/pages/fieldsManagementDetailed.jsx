@@ -7,7 +7,7 @@
     Last Edit: 21/04/2026
 */
 
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import styles from "../styles/fieldsManagementDetailed.module.css";
 
 export default function FieldsManagementDetailed() {

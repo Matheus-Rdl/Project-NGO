@@ -9,9 +9,8 @@ import ActivityManagementUserActivity from "./activityManagementUserActivity";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import { generateExcelPresences } from "../../../services/reports/presences/excelPresences";
-import DialogAddActivity from "../../../components/dialog/dialogAddActivity/dialogAddActivity";
 import Presence from "../../../components/reports/presences/presence";
 
 export default function ActivityManagementUsers() {

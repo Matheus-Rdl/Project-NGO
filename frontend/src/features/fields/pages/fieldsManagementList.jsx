@@ -8,7 +8,7 @@
 */
 
 import { useLocation } from "react-router-dom";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 import styles from "../styles/fieldsManagement.module.css";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import { peopleManagementTR, activitiesManagementTR, fieldsManagementTR } from "../../../utils/HeaderList.json";

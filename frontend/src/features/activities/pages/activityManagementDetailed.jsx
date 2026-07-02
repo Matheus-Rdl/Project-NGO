@@ -7,7 +7,7 @@ import FormTextArea from "../../../components/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
 import activitiesServices from "../../../services/activitiesServices";
 //import { Snackbar, Alert } from "@mui/material";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 
 export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});

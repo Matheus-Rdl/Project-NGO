@@ -16,7 +16,7 @@ import usersServices from "../../../services/usersServices";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
 
 export default function PeopleManagement() {
 
