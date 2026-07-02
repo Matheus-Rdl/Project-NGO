@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/activityManagementDetailed.module.css";
 import fieldsServices from "../../../services/fieldsServices";
 import { useEffect, useState } from "react";
-import CardList from "../../../components/cards/cardList/cardList";
+import CardList from "../../../components/cards/cardList";
 import FormTextArea from "../../../components/formTextArea/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
 import activitiesServices from "../../../services/activitiesServices";

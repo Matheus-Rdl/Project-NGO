@@ -47,13 +47,13 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 
 * Passo 3.1: Migração dos Cards (src/components/cards/)
 
-    [ ] Refatorar cardUser, cardList, cardActivity e cardActivitySelect utilizando Card, Box e Stack do Chakra UI.
+    [✅] Refatorar cardUser, cardList, cardActivity e cardActivitySelect utilizando Card, Box e Stack do Chakra UI.
 
-    [ ] Injetar estilos baseados nos tokens do theme.js (cores brand.primary e brand.secondary).
+    [✅] Injetar estilos baseados nos tokens do theme.js (cores brand.primary e brand.secondary).
 
-    [ ] Deletar os ficheiros .module.css associados a cada um desses cards.
+    [✅] Deletar os ficheiros .module.css associados a cada um desses cards.
 
-    [ ] Achatar a estrutura de pastas (mover componentes para a raiz de src/components/cards/) para facilitar a manutenção.
+    [✅] Achatar a estrutura de pastas (mover componentes para a raiz de src/components/cards/) para facilitar a manutenção.
 
 * Passo 3.2: Migração de Inputs e Feedback de Loading
 

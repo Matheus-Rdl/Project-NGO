@@ -7,7 +7,7 @@
 
 import styles from "../styles/signup.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import CardList from "../../../components/cards/cardList/cardList";
+import CardList from "../../../components/cards/cardList";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
 import FormTextArea from "../../../components/formTextArea/formTextArea";

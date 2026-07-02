@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/peopleManagementDetailed.module.css";
-import CardList from "../../../components/cards/cardList/cardList";
+import CardList from "../../../components/cards/cardList";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
 import FormTextArea from "../../../components/formTextArea/formTextArea";

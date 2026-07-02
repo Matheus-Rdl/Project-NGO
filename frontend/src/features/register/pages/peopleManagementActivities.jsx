@@ -3,7 +3,7 @@ import styles from "../styles/peopleManagementActivities.module.css";
 import ActivityManagementUserActivity from "../../activities/pages/activityManagementUserActivity";
 import activitiesServices from "../../../services/activitiesServices";
 import { useEffect, useState } from "react";
-import CardActivity from "../../../components/cards/cardActivity/cardActivity";
+import CardActivity from "../../../components/cards/cardActivity";
 import DialogAddActivity from "../../../components/dialog/dialogAddActivity/dialogAddActivity";
 import HandleBack from "../../../components/handleBack/handleBack";
 

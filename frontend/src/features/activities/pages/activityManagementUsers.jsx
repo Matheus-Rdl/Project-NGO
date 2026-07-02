@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/activityManagementUsers.module.css";
 import { formatProperNoun } from "../../../utils/formatters";
-import CardActivity from "../../../components/cards/cardActivity/cardActivity";
+import CardActivity from "../../../components/cards/cardActivity";
 import usersServices from "../../../services/usersServices";
 import { useEffect, useRef, useState } from "react";
 import List from "../../../components/list/list";
