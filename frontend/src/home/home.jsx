@@ -5,7 +5,6 @@
     Date: 23/02/2026
 */
 
-import NavBar from "../components/navbar/navbar";
 import { useState } from "react";
 import styles from "./home.module.css";
 import { Link } from "react-router-dom";
@@ -15,7 +14,6 @@ export default function Home() {
 
   return (
     <>
-      <NavBar setActiveScreen={setActiveScreen} />
       <div className="main">
         {activeScreen === "home" && (
           <>
