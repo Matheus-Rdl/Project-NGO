@@ -95,8 +95,8 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
    [✅] Deletar o presence.module.css.
 
 
-## Fase 4: Navegação e Layout Estrutural
-A espinha dorsal por onde o usuário navega.
+## Fase 4: Navegação e Layout Estrutural (O Dashboard)
+A espinha dorsal por onde o utilizador navega. Vamos transformar a estrutura num verdadeiro Dashboard Layout, dividindo o ecrã numa Sidebar retrátil e numa Área Principal com um Header rico.
 
 
 * Passo 4.1: O Novo Header (Topo)
