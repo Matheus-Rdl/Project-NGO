@@ -146,9 +146,47 @@ A espinha dorsal por onde o utilizador navega. Vamos transformar a estrutura num
 ## Fase 5: Migração das Features (Telas de Negócio)
 Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "encaixam" as peças.
 
-Pastas afetadas: src/features/ (activities, economic, fields, register) e src/home/.
+* Passo 5.1: Correção do Erro de Tabela (Table.Root)
 
-Ação: Substituir as divs com classes CSS (home.module.css, etc.) por layouts com Stack, VStack, HStack e Grid do Chakra. Cada tela refatorada tem seu .module.css deletado imediatamente.
+   [ ] Identificar todos os arquivos em src/features/ que renderizam listas (ex: activityManagement.jsx, peopleManagement.jsx, fieldsManagementList.jsx).
+
+   [ ] Envolver todas as tabelas nativas ou listas antigas no componente <Table.Root /> do Chakra UI v3.
+
+   [ ] Garantir que o Table.Header e Table.Body estejam dentro do Root para que o contexto de estilos (useTableStyles) seja injetado corretamente.
+
+* Passo 5.2: Refatoração da Home (src/home/home.jsx)
+
+   [ ] Remover dependências do home.module.css.
+
+   [ ] Implementar um layout com <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>.
+
+   [ ] Criar Cards de Dashboard (usando <Card.Root>) para exibir resumos dinâmicos (Cadastros, Atividades, Financeiro).
+
+   [ ] Adicionar seção de "Ações Rápidas" com botões estilizados.
+
+* Passo 5.3: Migração das Telas de Atividades (src/features/activities/)
+
+   [ ] Refatorar activityManagement.jsx, activityManagementDetailed.jsx, activityManagementUserActivity.jsx, activityManagementUsers.jsx.
+
+   [ ] Substituir containers genéricos (<div>) por <Stack>, <VStack> e <Box> do Chakra.
+
+   [ ] Deletar todos os arquivos .module.css desta pasta.
+
+* Passo 5.4: Migração das Telas de Campos/Campos Dinâmicos (src/features/fields/)
+
+   [ ] Refatorar os componentes de gerenciamento de campos (fieldsManagement, fieldsManagementDetailed, etc.).
+
+   [ ] Aplicar layouts com Grid do Chakra UI para alinhar os campos do formulário de maneira responsiva.
+
+   [ ] Deletar os arquivos .module.css desta pasta.
+
+* Passo 5.5: Migração das Telas de Cadastro (Pessoas) (src/features/register/)
+
+   [ ] Refatorar peopleManagement.jsx e telas de detalhamento.
+
+   [ ] Assegurar que os filtros (HeaderFilter já refatorado) estejam perfeitamente alinhados dentro da estrutura da Table.Root.
+
+   [ ] Deletar os arquivos .module.css desta pasta.
 
 ## Fase 6: O Épico do Login (Squamata-Login)
 Separar o Login é crucial porque envolve mudança de regra de negócio, não apenas de visual.
