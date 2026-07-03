@@ -101,47 +101,47 @@ A espinha dorsal por onde o utilizador navega. Vamos transformar a estrutura num
 
 * Passo 4.1: O Novo Header (Topo)
    
-   [ ] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.
+   [✅] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.
    
-   [ ] Adicionar Título/Logo da ONG em destaque à esquerda.
+   [✅] Adicionar Título/Logo da ONG em destaque à esquerda.
    
-   [ ] Renderizar a data atual formatada ao centro/direita (usando as tuas funções de `dateFunctions.js`).
+   [✅] Renderizar a data atual formatada ao centro/direita (usando as tuas funções de `dateFunctions.js`).
    
-   [ ] Implementar o componente nativo `Menu` do Chakra UI v3 (`Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`) no canto direito.
+   [✅] Implementar o componente nativo `Menu` do Chakra UI v3 (`Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`) no canto direito.
    
-   [ ] Adicionar as opções de dropdown no Menu: Configurar Perfil, Mudar Senha e Sair do Sistema (Logout).
+   [✅] Adicionar as opções de dropdown no Menu: Configurar Perfil, Mudar Senha e Sair do Sistema (Logout).
 
 * Passo 4.2: A Sidebar (Menu Lateral Expansível) - `navbar.jsx`
    
-   [ ] Refatorar o componente para ser uma Sidebar ancorada à esquerda (usando `<Box>` ou `<Flex>`).
+   [✅] Refatorar o componente para ser uma Sidebar ancorada à esquerda (usando `<Box>` ou `<Flex>`).
    
-   [ ] Adicionar transição suave de largura (`transition="width 0.3s"`) para alternar entre Expandida e Recolhida.
+   [✅] Adicionar transição suave de largura (`transition="width 0.3s"`) para alternar entre Expandida e Recolhida.
    
-   [ ] Ajustar o mapeamento do `menuItems`: quando recolhida, ocultar o texto e mostrar apenas ícones (com o nome num Tooltip); quando expandida, mostrar Ícone + Texto.
+   [✅] Ajustar o mapeamento do `menuItems`: quando recolhida, ocultar o texto e mostrar apenas ícones (com o nome num Tooltip); quando expandida, mostrar Ícone + Texto.
    
-   [ ] Fixar o botão de toggle (recolher/expandir) no topo ou no rodapé da Sidebar, eliminando a sobreposição visual.
+   [✅] Fixar o botão de toggle (recolher/expandir) no topo ou no rodapé da Sidebar, eliminando a sobreposição visual.
 
 * Passo 4.3: O Layout Mestre (`App.jsx`)
    
-   [ ] Transformar o contentor base do `App.jsx` num `<Flex h="100vh" w="100vw">`.
+   [✅] Transformar o contentor base do `App.jsx` num `<Flex h="100vh" w="100vw">`.
    
-   [ ] Renderizar a Sidebar à esquerda deste Flex.
+   [✅] Renderizar a Sidebar à esquerda deste Flex.
    
-   [ ] Configurar a Área Direita como `<Box flex="1" overflow="hidden">`.
+   [✅] Configurar a Área Direita como `<Box flex="1" overflow="hidden">`.
    
-   [ ] Posicionar o novo Header fixo no topo da Área Direita e o `<Outlet />` logo abaixo (com `overflowY="auto"` para permitir scroll apenas no conteúdo).
+   [✅] Posicionar o novo Header fixo no topo da Área Direita e o `<Outlet />` logo abaixo (com `overflowY="auto"` para permitir scroll apenas no conteúdo).
 
 * Passo 4.4: Lógica Dinâmica de Recolhimento da Sidebar
    
-   [ ] Implementar um `useEffect` para escutar a mudança do ecrã atual (via `useLocation` do react-router ou a prop `activeScreen`).
+   [✅] Implementar um `useEffect` para escutar a mudança do ecrã atual (via `useLocation` do react-router ou a prop `activeScreen`).
    
-   [ ] Adicionar a lógica: se o utilizador entrar num menu com tabelas pesadas ("cadastros", "atividades"), o estado da Sidebar muda automaticamente para recolhida (`setShowNav(false)`).
+   [✅] Adicionar a lógica: se o utilizador entrar num menu com tabelas pesadas ("cadastros", "atividades"), o estado da Sidebar muda automaticamente para recolhida (`setShowNav(false)`).
 
 * Passo 4.5: Limpeza e Ajustes Finais
    
-   [ ] Eliminar permanentemente o ficheiro `navbar.module.css`.
+   [✅] Eliminar permanentemente o ficheiro `navbar.module.css`.
    
-   [ ] Garantir que todas as rotas e navegações continuam a funcionar perfeitamente com a nova estrutura.
+   [✅] Garantir que todas as rotas e navegações continuam a funcionar perfeitamente com a nova estrutura.
 
 ## Fase 5: Migração das Features (Telas de Negócio)
 Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "encaixam" as peças.
