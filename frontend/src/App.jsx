@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react";
-import NavBar from "./components/navbar/navbar";
+import NavBar from "./components/navbar";
 import Header from "./components/header";
 
 export default function App() {

@@ -9,7 +9,7 @@
 */
 
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "./authContext";
 
 export default function ProtectedRoute() {
 

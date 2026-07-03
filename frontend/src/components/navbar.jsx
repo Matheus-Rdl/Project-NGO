@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Flex, Text, Box, Icon } from "@chakra-ui/react";
-import { Tooltip } from "../ui/tooltip";
+import { Tooltip } from "./ui/tooltip";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {

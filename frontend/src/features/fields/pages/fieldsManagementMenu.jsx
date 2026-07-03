@@ -9,13 +9,22 @@
 
 import { useLocation } from "react-router-dom";
 import HandleBack from "../../../components/handleBack";
-import styles from "../styles/fieldsManagementMenu.module.css";
 import menusServices from "../../../services/menusServices";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { MdEditSquare, MdOutlinePreview, MdOutlineViewList } from "react-icons/md";
-import DialogFieldManagementMenu from "./dialog/dialogFieldManagementMenu/dialogFieldManagementMenu";
+import DialogFieldManagementMenu from "./dialog/dialogFieldManagementMenu";
+import {
+  Accordion,
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Table,
+  Text,
+  VStack
+} from "@chakra-ui/react";
 
 export default function FieldsManagementMenu() {
   const location = useLocation();
@@ -56,12 +65,12 @@ export default function FieldsManagementMenu() {
   };
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack />
-      <h1 className="title-page">Campos - {name}</h1>
-      <h2 className="subtitle-page">Menus da página</h2>
+      <Heading size="lg" color="gray.600">Campos - {name}</Heading>
+      <Text color="gray.500" fontSize="md">Menus da página</Text>
 
-      <div className={styles.listMenu}>
+      <Accordion.Root collapsible mt={4}>
         {menusList
           .filter(menu => menu.pageId === page)
           .sort((a, b) => {
@@ -70,57 +79,62 @@ export default function FieldsManagementMenu() {
             return a.order - b.order;
           })
           .map((menu) => (
-            <details key={menu._id} className={styles.menu}>
-              <summary className={styles.menuSummary}>
-                <span>{menu.name}</span>
-                <IoMdArrowDroprightCircle className={styles.arrow} />
-              </summary>
+            <Accordion.Item key={menu._id} value={menu._id} border="3px solid" borderColor="brand.primary" borderRadius="lg" bg="white" mb={2}>
+              <Accordion.ItemTrigger cursor="pointer" _hover={{ bg: "gray.50" }} borderRadius="lg" px={4} py={2}>
+                <Flex align="center" gap={2} fontWeight="semibold" fontSize="lg">
+                  <IoMdArrowDroprightCircle style={{ transition: "transform 0.2s ease" }} />
+                  <span>{menu.name}</span>
+                </Flex>
+              </Accordion.ItemTrigger>
 
-              <div className={styles.menuContent}>
-                <table className={styles.fieldsList}>
-                  <tbody>
-                    {fieldsList
-                      .filter(field => field.menuId === menu.id)
-                      .map(field => (
-                        <tr key={field._id}>
-                          <td>
-                            <p>{field.title}</p>
-                            <div>
-                              <MdOutlineViewList
-                                onClick={() => {
-                                  setTypeDialog("menu");
-                                  setFieldSelected(field);
-                                  handleShowDialog();
-                                }}
-                              />
-
-                              <MdOutlinePreview
-                                onClick={() => {
-                                  setTypeDialog("view");
-                                  setFieldSelected(field);
-                                  handleShowDialog();
-                                }}
-                              />
-
-                              <MdEditSquare
-                                onClick={() => {
-                                  setTypeDialog("alter");
-                                  setFieldSelected(field);
-                                  handleShowDialog();
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-
-              </div>
-
-            </details>
+              <Accordion.ItemContent>
+                <Accordion.ItemBody borderTop="3px solid" borderColor="brand.primary" bg="blackAlpha.100" p={2}>
+                  <Box overflowX="auto">
+                    <Table.Root size="sm" whiteSpace="nowrap">
+                      <Table.Body>
+                        {fieldsList
+                          .filter(field => field.menuId === menu.id)
+                          .map(field => (
+                            <Table.Row key={field._id} cursor="pointer" _hover={{ bg: "blackAlpha.100" }}>
+                              <Table.Cell display="flex" justifyContent="space-between" alignItems="center" border="1px solid" borderColor="gray.300" px={4} py={2}>
+                                <Text>{field.title}</Text>
+                                <Flex gap={1} fontSize="1.4rem">
+                                  <MdOutlineViewList
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      setTypeDialog("menu");
+                                      setFieldSelected(field);
+                                      handleShowDialog();
+                                    }}
+                                  />
+                                  <MdOutlinePreview
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      setTypeDialog("view");
+                                      setFieldSelected(field);
+                                      handleShowDialog();
+                                    }}
+                                  />
+                                  <MdEditSquare
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      setTypeDialog("alter");
+                                      setFieldSelected(field);
+                                      handleShowDialog();
+                                    }}
+                                  />
+                                </Flex>
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
+                      </Table.Body>
+                    </Table.Root>
+                  </Box>
+                </Accordion.ItemBody>
+              </Accordion.ItemContent>
+            </Accordion.Item>
           ))}
-      </div>
+      </Accordion.Root>
 
       <DialogFieldManagementMenu
         open={fieldDialog}
@@ -132,7 +146,6 @@ export default function FieldsManagementMenu() {
         refreshFields={refreshFields}
         menusList={menusList}
       />
-
-    </div>
+    </VStack>
   );
 }

@@ -5,9 +5,9 @@ import {
   formatName,
   formatRG,
   formatProperNoun,
-} from "../../utils/formatters";
-import { selectOptions } from "../../utils/userSelectOptions";
-import usersServices from "../../services/usersServices";
+} from "../utils/formatters";
+import { selectOptions } from "../utils/userSelectOptions";
+import usersServices from "../services/usersServices";
 import { useEffect } from "react";
 
 export default function List({ data, ativo, onClick, page, columns }) {

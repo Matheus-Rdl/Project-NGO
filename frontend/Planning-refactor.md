@@ -101,54 +101,92 @@ A espinha dorsal por onde o utilizador navega. Vamos transformar a estrutura num
 
 * Passo 4.1: O Novo Header (Topo)
    
-   [ ] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.
+   [✅] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.
    
-   [ ] Adicionar Título/Logo da ONG em destaque à esquerda.
+   [✅] Adicionar Título/Logo da ONG em destaque à esquerda.
    
-   [ ] Renderizar a data atual formatada ao centro/direita (usando as tuas funções de `dateFunctions.js`).
+   [✅] Renderizar a data atual formatada ao centro/direita (usando as tuas funções de `dateFunctions.js`).
    
-   [ ] Implementar o componente nativo `Menu` do Chakra UI v3 (`Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`) no canto direito.
+   [✅] Implementar o componente nativo `Menu` do Chakra UI v3 (`Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`) no canto direito.
    
-   [ ] Adicionar as opções de dropdown no Menu: Configurar Perfil, Mudar Senha e Sair do Sistema (Logout).
+   [✅] Adicionar as opções de dropdown no Menu: Configurar Perfil, Mudar Senha e Sair do Sistema (Logout).
 
 * Passo 4.2: A Sidebar (Menu Lateral Expansível) - `navbar.jsx`
    
-   [ ] Refatorar o componente para ser uma Sidebar ancorada à esquerda (usando `<Box>` ou `<Flex>`).
+   [✅] Refatorar o componente para ser uma Sidebar ancorada à esquerda (usando `<Box>` ou `<Flex>`).
    
-   [ ] Adicionar transição suave de largura (`transition="width 0.3s"`) para alternar entre Expandida e Recolhida.
+   [✅] Adicionar transição suave de largura (`transition="width 0.3s"`) para alternar entre Expandida e Recolhida.
    
-   [ ] Ajustar o mapeamento do `menuItems`: quando recolhida, ocultar o texto e mostrar apenas ícones (com o nome num Tooltip); quando expandida, mostrar Ícone + Texto.
+   [✅] Ajustar o mapeamento do `menuItems`: quando recolhida, ocultar o texto e mostrar apenas ícones (com o nome num Tooltip); quando expandida, mostrar Ícone + Texto.
    
-   [ ] Fixar o botão de toggle (recolher/expandir) no topo ou no rodapé da Sidebar, eliminando a sobreposição visual.
+   [✅] Fixar o botão de toggle (recolher/expandir) no topo ou no rodapé da Sidebar, eliminando a sobreposição visual.
 
 * Passo 4.3: O Layout Mestre (`App.jsx`)
    
-   [ ] Transformar o contentor base do `App.jsx` num `<Flex h="100vh" w="100vw">`.
+   [✅] Transformar o contentor base do `App.jsx` num `<Flex h="100vh" w="100vw">`.
    
-   [ ] Renderizar a Sidebar à esquerda deste Flex.
+   [✅] Renderizar a Sidebar à esquerda deste Flex.
    
-   [ ] Configurar a Área Direita como `<Box flex="1" overflow="hidden">`.
+   [✅] Configurar a Área Direita como `<Box flex="1" overflow="hidden">`.
    
-   [ ] Posicionar o novo Header fixo no topo da Área Direita e o `<Outlet />` logo abaixo (com `overflowY="auto"` para permitir scroll apenas no conteúdo).
+   [✅] Posicionar o novo Header fixo no topo da Área Direita e o `<Outlet />` logo abaixo (com `overflowY="auto"` para permitir scroll apenas no conteúdo).
 
 * Passo 4.4: Lógica Dinâmica de Recolhimento da Sidebar
    
-   [ ] Implementar um `useEffect` para escutar a mudança do ecrã atual (via `useLocation` do react-router ou a prop `activeScreen`).
+   [✅] Implementar um `useEffect` para escutar a mudança do ecrã atual (via `useLocation` do react-router ou a prop `activeScreen`).
    
-   [ ] Adicionar a lógica: se o utilizador entrar num menu com tabelas pesadas ("cadastros", "atividades"), o estado da Sidebar muda automaticamente para recolhida (`setShowNav(false)`).
+   [✅] Adicionar a lógica: se o utilizador entrar num menu com tabelas pesadas ("cadastros", "atividades"), o estado da Sidebar muda automaticamente para recolhida (`setShowNav(false)`).
 
 * Passo 4.5: Limpeza e Ajustes Finais
    
-   [ ] Eliminar permanentemente o ficheiro `navbar.module.css`.
+   [✅] Eliminar permanentemente o ficheiro `navbar.module.css`.
    
-   [ ] Garantir que todas as rotas e navegações continuam a funcionar perfeitamente com a nova estrutura.
+   [✅] Garantir que todas as rotas e navegações continuam a funcionar perfeitamente com a nova estrutura.
 
 ## Fase 5: Migração das Features (Telas de Negócio)
 Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "encaixam" as peças.
 
-Pastas afetadas: src/features/ (activities, economic, fields, register) e src/home/.
+* Passo 5.1: Correção do Erro de Tabela (Table.Root)
 
-Ação: Substituir as divs com classes CSS (home.module.css, etc.) por layouts com Stack, VStack, HStack e Grid do Chakra. Cada tela refatorada tem seu .module.css deletado imediatamente.
+   [✅] Identificar todos os arquivos em src/features/ que renderizam listas (ex: activityManagement.jsx, peopleManagement.jsx, fieldsManagementList.jsx).
+
+   [✅] Envolver todas as tabelas nativas ou listas antigas no componente <Table.Root /> do Chakra UI v3.
+
+   [✅] Garantir que o Table.Header e Table.Body estejam dentro do Root para que o contexto de estilos (useTableStyles) seja injetado corretamente.
+
+* Passo 5.2: Refatoração da Home (src/home/home.jsx)
+
+   [✅] Remover dependências do home.module.css.
+
+   [✅] Implementar um layout com <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>.
+
+   [✅] Criar Cards de Dashboard (usando <Card.Root>) para exibir resumos dinâmicos (Cadastros, Atividades, Financeiro).
+
+   [✅] Adicionar seção de "Ações Rápidas" com botões estilizados.
+
+* Passo 5.3: Migração das Telas de Atividades (src/features/activities/)
+
+   [✅] Refatorar activityManagement.jsx, activityManagementDetailed.jsx, activityManagementUserActivity.jsx, activityManagementUsers.jsx.
+
+   [✅] Substituir containers genéricos (<div>) por <Stack>, <VStack> e <Box> do Chakra.
+
+   [✅] Deletar todos os arquivos .module.css desta pasta.
+
+* Passo 5.4: Migração das Telas de Campos/Campos Dinâmicos (src/features/fields/)
+
+   [✅] Refatorar os componentes de gerenciamento de campos (fieldsManagement, fieldsManagementDetailed, etc.).
+
+   [✅] Aplicar layouts com Grid do Chakra UI para alinhar os campos do formulário de maneira responsiva.
+
+   [✅] Deletar os arquivos .module.css desta pasta.
+
+* Passo 5.5: Migração das Telas de Cadastro (Pessoas) (src/features/register/)
+
+   [✅] Refatorar peopleManagement.jsx e telas de detalhamento.
+
+   [✅] Assegurar que os filtros (HeaderFilter já refatorado) estejam perfeitamente alinhados dentro da estrutura da Table.Root.
+
+   [✅] Deletar os arquivos .module.css desta pasta.
 
 ## Fase 6: O Épico do Login (Squamata-Login)
 Separar o Login é crucial porque envolve mudança de regra de negócio, não apenas de visual.
@@ -157,15 +195,44 @@ Pastas afetadas: src/features/login/.
 
 Ação: Refatorar a interface para o Chakra UI e acoplar a nova lógica de Single Sign-On (Google Auth, JWT) para conversar com o microsserviço Squamata.
 
+   [✅] signUp.jsx — corrigido Table.Root + migrado para Chakra (VStack, Heading, Button, HStack). Botão "Inserir" reativado.
+
+   [✅] signUpDetailed.jsx — migrado para Chakra (VStack, Heading, SimpleGrid, Button, HStack).
+
+   [✅] signup.module.css — apagado.
+
+   [✅] login.jsx — migrado para Chakra (Flex, Card, Heading, Input, Button, VStack).
+
+   [✅] login.module.css — apagado.
+
+   [✅] main.jsx — adicionada rota /SignUp/add → SignUpDetailed.
+
+   [⏭️] Integração Squamata (Google Auth, JWT) — adiada para projeto separado.
+
+## Fase 6.5: Correção de Rotas Quebradas (Relatórios, Financeiro, Configurações)
+As rotas /relatorios, /financeiro e /configuracoes não existiam no router, causando erro 404.
+
+   [✅] Criar componente UnderConstruction reutilizável (src/components/underConstruction.jsx).
+
+   [✅] Criar página Configurações como hub (src/features/configuracoes/pages/configuracoes.jsx).
+
+   [✅] Adicionar rotas no main.jsx: relatorios, financeiro (underConstruction) e configuracoes (hub).
+
 ## Fase 7: Faxina Final e QA (Quality Assurance)
 Garantir que nenhum lixo ficou para trás.
 
 Arquivos afetados: Toda a árvore.
 
-Ação: * Busca global no VS Code por import "*.css".
+Ação:
 
-Deletar o index.css de vez.
+   [✅] Busca global por import "*.css" — apenas login.jsx e index.css restavam.
 
-Rodar o eslint para garantir imports limpos.
+   [✅] Migrar login.jsx para Chakra UI (Flex, Card, Input, Button).
 
-Rodar npm run build (Vite) para ter certeza que a compilação não quebra por falta de algum arquivo apagado.
+   [✅] Apagar login.module.css, economic.module.css (órfão), index.css.
+
+   [✅] Remover import "./index.css" do main.jsx.
+
+   [✅] Rodar npm run build (Vite) — ✅ BUILD COM SUCESSO, zero erros.
+
+   [✅] Zero ficheiros .css na árvore src/. Zero imports de MUI (@mui). 100% Chakra UI v3.
