@@ -1,13 +1,23 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "../styles/activityManagementDetailed.module.css";
 import fieldsServices from "../../../services/fieldsServices";
 import { useEffect, useState } from "react";
-import CardList from "../../../components/cards/cardList/cardList";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
+import CardList from "../../../components/cards/cardList";
+import FormTextArea from "../../../components/formTextArea";
 import { validateField } from "../../../utils/fieldValidators";
 import activitiesServices from "../../../services/activitiesServices";
-import { Snackbar, Alert } from "@mui/material";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  VStack,
+  createToaster,
+  Flex,
+  SimpleGrid
+} from "@chakra-ui/react";
+
+const toaster = createToaster({ placement: "bottom", max: 1 });
 
 export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -25,11 +35,6 @@ export default function ActivityManagementDetailed() {
     refetchActivities,
     activityNextMat,
   } = activitiesServices();
-
-  //SnackBar
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
 
   const isViewMode = currentMode === "V";
   const isEditMode = currentMode === "E";
@@ -92,11 +97,13 @@ export default function ActivityManagementDetailed() {
     return newErrors;
   };
 
-  //Aparece o snackbar
-  const showSnackbar = (message, severity = "error") => {
-    setSnackbarMessage(message);
-    setSnackbarSeverity(severity);
-    setSnackbarOpen(true);
+  //Aparece o toast
+  const showSnackbar = (message, type = "error") => {
+    toaster.create({
+      title: message,
+      type: type,
+      duration: 4000,
+    });
   };
 
   // Verifica a mudança dos inputs
@@ -174,15 +181,15 @@ export default function ActivityManagementDetailed() {
   };
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
-      <HandleBack/>
-      <h1 className="title-page">
+    <VStack gap={4} align="stretch">
+      <HandleBack />
+      <Heading size="lg" color="gray.600">
         {isViewMode && "Gerenciar Atividades - Visualizar"}
         {isAddMode && "Gerenciar Atividades - Inserir"}
         {isEditMode && "Gerenciar Atividades - Alterar"}
-      </h1>
+      </Heading>
 
-      <div className="card-list-box-form">
+      <HStack gap={2} overflowX="auto" overflowY="hidden">
         {Object.entries(listItems).map(([key, label]) => (
           <CardList
             key={key}
@@ -191,15 +198,12 @@ export default function ActivityManagementDetailed() {
             onClick={() => setListActive(Number(key))}
           />
         ))}
-      </div>
+      </HStack>
 
-      <div>
-        <form
-          className="management-form"
-          onSubmit={handleSubmitForm}
-          autoComplete="off"
-        >
-          {/* ---------- DUMMY FIELDS PARA BLOQUEAR AUTOFILL ---------- */}
+      <Box>
+        <Box as="form" onSubmit={handleSubmitForm} autoComplete="off" mt={6}>
+
+          {/* DUMMY FIELDS PARA BLOQUEAR AUTOFILL */}
           <input
             type="text"
             name="fakeusernameremembered"
@@ -212,16 +216,12 @@ export default function ActivityManagementDetailed() {
             style={{ display: "none" }}
             autoComplete="new-password"
           />
-          {/* -------------------------------------------------------- */}
-          <div className="form-card">
+
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={4} alignItems="flex-start">
             {fieldsList.map((field) => (
-              <div
+              <Box
                 key={field._id}
-                className={
-                  field.folder === listActive
-                    ? `${styles.formField}`
-                    : `${styles.formFieldHidden}`
-                }
+                display={field.folder === listActive ? "block" : "none"}
               >
                 <FormTextArea
                   field={field}
@@ -233,45 +233,16 @@ export default function ActivityManagementDetailed() {
                   errors={errors}
                   nextMat={activityNextMat}
                 />
-              </div>
+              </Box>
             ))}
+          </SimpleGrid>
 
-            <div className="button-box">
-              <button onClick={handleBack}>Cancelar</button>
-              {!isViewMode && <button type="submit">Salvar</button>}
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={4000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={snackbarSeverity}
-          variant="filled"
-          sx={{
-            width: "100%",
-            fontSize: "1.1rem",
-            fontWeight: "600",
-            borderRadius: "12px",
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-            ...(snackbarSeverity === "success" && {
-              backgroundColor: "#00B050", // verde forte tipo Excel
-              color: "white",
-            }),
-            ...(snackbarSeverity === "error" && {
-              backgroundColor: "#D32F2F", // vermelho padrão do Material UI
-            }),
-          }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </div>
+          <HStack position="fixed" top="72px" right="12px" gap={2}>
+            <Button size="xs" variant="surface" onClick={handleBack}>Cancelar</Button>
+            {!isViewMode && <Button size="xs" variant="surface" type="submit">Salvar</Button>}
+          </HStack>
+        </Box>
+      </Box>
+    </VStack>
   );
 }

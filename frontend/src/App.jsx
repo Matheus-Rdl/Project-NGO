@@ -1,26 +1,27 @@
 import { Outlet } from "react-router-dom";
-import "./App.css";
-import { ImMenu3 } from "react-icons/im";
-import { getCurrentDate } from "./utils/dateFunctions";
-import { useAuth } from "./features/login/context/authContext";
+import { Box, Flex } from "@chakra-ui/react";
+import NavBar from "./components/navbar";
+import Header from "./components/header";
 
 export default function App() {
-
-  const { user } = useAuth();
-  const formattedDate = getCurrentDate();
-
   return (
-    <>
-      <header className="header">
-        <p>
-          Ong Amigos da Esperança | {formattedDate} | {user?.user_system_name}
-        </p>
-        <ImMenu3 />
-      </header>
+    <Flex h="100vh" w="100vw" overflow="hidden" bg="gray.50" color="gray.800">
+      
+      {/* Menu lateral de navegação */}
+      <NavBar />
 
-      <main>
-        <Outlet />
-      </main>
-    </>
+      {/* Área principal (direita) */}
+      <Flex direction="column" flex="1" overflow="hidden">
+
+        {/* HEADER NOVO */}
+        <Header />
+
+        {/* CONTEÚDO PRINCIPAL (Telas de negócio) */}
+        <Box flex="1" overflowY="auto" p={4} bg="gray.50">
+          <Outlet />
+        </Box>
+      </Flex>
+
+    </Flex>
   );
 }

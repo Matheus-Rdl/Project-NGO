@@ -5,12 +5,11 @@
     Date: 03/03/2026
 */
 
-import styles from "../styles/signup.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import CardList from "../../../components/cards/cardList/cardList";
+import CardList from "../../../components/cards/cardList";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
-import FormTextArea from "../../../components/formTextArea/formTextArea";
+import FormTextArea from "../../../components/formTextArea";
 import userSystemServices from "../../../services/usersSystemServices";
 import {
   formatCPF,
@@ -19,7 +18,16 @@ import {
   formatRG,
   formatProperNoun,
 } from "../../../utils/formatters";
-import HandleBack from "../../../components/handleBack/handleBack";
+import HandleBack from "../../../components/handleBack";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Text,
+  VStack
+} from "@chakra-ui/react";
 
 export default function SignUpDetailed() {
 
@@ -92,18 +100,20 @@ export default function SignUpDetailed() {
   };
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack/>
 
-      <h1 className="title-page">
+      <Heading size="lg" color="gray.600">
         {isViewMode && "Cadastro de usuários do sistema - Visualizar"}
         {isAddMode && "Cadastro de usuários do sistema - Inserir"}
         {isEditMode && "Cadastro de usuários do sistema - Alterar"}
-      </h1>
+      </Heading>
 
-      <h2 className="subtitle-page">{userData.user_mat} - {formatName(userData.user_name)}</h2>
+      <Text color="gray.500" fontSize="md">
+        {userData?.user_mat ? `${userData.user_mat} - ${formatName(userData.user_name)}` : "Novo registo"}
+      </Text>
 
-      <div className="cardListBox">
+      <HStack gap={2} overflowX="auto" overflowY="hidden">
         {Object.entries(listItems).map(([key, label]) => (
           <CardList
             key={key}
@@ -112,14 +122,11 @@ export default function SignUpDetailed() {
             onClick={() => setListActive(Number(key))}
           />
         ))}
-      </div>
+      </HStack>
 
-      <form
-        className="management-form"
-        onSubmit={handleSubmitForm}
-        autoComplete="off"
-      >
-        {/* ---------- DUMMY FIELDS PARA BLOQUEAR AUTOFILL ---------- */}
+      <Box as="form" onSubmit={handleSubmitForm} autoComplete="off" mt={6}>
+
+        {/* DUMMY FIELDS PARA BLOQUEAR AUTOFILL */}
         <input
           type="text"
           name="fakeusernameremembered"
@@ -132,16 +139,12 @@ export default function SignUpDetailed() {
           style={{ display: "none" }}
           autoComplete="new-password"
         />
-        {/* -------------------------------------------------------- */}
-        <div className="form-card">
+
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={4} alignItems="flex-start">
           {fieldsList.map((field) => (
-            <div
+            <Box
               key={field._id}
-              className={
-                field.folder === listActive
-                  ? styles.formField
-                  : styles.formFieldHidden
-              }
+              display={field.folder === listActive ? "block" : "none"}
             >
               <FormTextArea
                 field={field}
@@ -154,18 +157,15 @@ export default function SignUpDetailed() {
                 errors={""}
                 dateRegister={""}
               />
-            </div>
+            </Box>
           ))}
+        </SimpleGrid>
 
-          <div className="button-box">
-            <button onClick={handleBack}>Cancelar</button>
-            {!isViewMode && <button type="submit">Salvar</button>}
-          </div>
-        </div>
-      </form>
-
-
-
-    </div>
+        <HStack position="fixed" top="72px" right="12px" gap={2}>
+          <Button size="xs" variant="surface" onClick={handleBack}>Cancelar</Button>
+          {!isViewMode && <Button size="xs" variant="surface" type="submit">Salvar</Button>}
+        </HStack>
+      </Box>
+    </VStack>
   );
 }
