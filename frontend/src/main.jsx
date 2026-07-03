@@ -56,6 +56,7 @@ const pages = createHashRouter([
           { path: "/", element: <Home /> },
 
           { path: "/SignUp", element: <SignUp /> },
+          { path: "/SignUp/add", element: <SignUpDetailed /> },
           { path: "/SignUp/view", element: <SignUpDetailed /> },
           { path: "/SignUp/alter", element: <SignUpDetailed /> },
 

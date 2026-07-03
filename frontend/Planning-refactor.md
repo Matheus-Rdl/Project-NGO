@@ -195,13 +195,17 @@ Pastas afetadas: src/features/login/.
 
 Ação: Refatorar a interface para o Chakra UI e acoplar a nova lógica de Single Sign-On (Google Auth, JWT) para conversar com o microsserviço Squamata.
 
-   [✅] signUp.jsx — corrigido Table.Root (estava com <table> nativo causando erro useTableStyles). Migrado para VStack, Heading, Button, HStack.
+   [✅] signUp.jsx — corrigido Table.Root + migrado para Chakra (VStack, Heading, Button, HStack). Botão "Inserir" reativado.
 
-   [ ] signUpDetailed.jsx — ainda usa styles (signup.module.css) e classes globais. Migrar para Chakra.
+   [✅] signUpDetailed.jsx — migrado para Chakra (VStack, Heading, SimpleGrid, Button, HStack).
+
+   [✅] signup.module.css — apagado (não é mais referenciado por nenhum ficheiro).
+
+   [✅] main.jsx — adicionada rota /SignUp/add → SignUpDetailed.
 
    [ ] login.jsx — migrar para Chakra UI.
 
-   [ ] login.module.css, signup.module.css — apagar após migração completa.
+   [ ] login.module.css — apagar após migração do login.jsx.
 
 ## Fase 6.5: Correção de Rotas Quebradas (Relatórios, Financeiro, Configurações)
 As rotas /relatorios, /financeiro e /configuracoes não existiam no router, causando erro 404.

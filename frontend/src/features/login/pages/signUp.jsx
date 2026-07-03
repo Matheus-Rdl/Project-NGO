@@ -95,6 +95,17 @@ export default function SignUp() {
 
       <HStack gap={2}>
         <Link
+          to={"/SignUp/add"}
+          state={{
+            userId: userActive,
+            userData: usersByType.find((u) => u._id === userActive),
+            currentMode: "A",
+          }}
+        >
+          <Button size="xs" variant="surface">Inserir</Button>
+        </Link>
+
+        <Link
           to={"/SignUp/view"}
           state={{
             userId: userActive,
