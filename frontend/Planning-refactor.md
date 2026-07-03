@@ -182,11 +182,11 @@ Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "
 
 * Passo 5.5: Migração das Telas de Cadastro (Pessoas) (src/features/register/)
 
-   [ ] Refatorar peopleManagement.jsx e telas de detalhamento.
+   [✅] Refatorar peopleManagement.jsx e telas de detalhamento.
 
-   [ ] Assegurar que os filtros (HeaderFilter já refatorado) estejam perfeitamente alinhados dentro da estrutura da Table.Root.
+   [✅] Assegurar que os filtros (HeaderFilter já refatorado) estejam perfeitamente alinhados dentro da estrutura da Table.Root.
 
-   [ ] Deletar os arquivos .module.css desta pasta.
+   [✅] Deletar os arquivos .module.css desta pasta.
 
 ## Fase 6: O Épico do Login (Squamata-Login)
 Separar o Login é crucial porque envolve mudança de regra de negócio, não apenas de visual.
@@ -194,6 +194,15 @@ Separar o Login é crucial porque envolve mudança de regra de negócio, não ap
 Pastas afetadas: src/features/login/.
 
 Ação: Refatorar a interface para o Chakra UI e acoplar a nova lógica de Single Sign-On (Google Auth, JWT) para conversar com o microsserviço Squamata.
+
+## Fase 6.5: Correção de Rotas Quebradas (Relatórios, Financeiro, Configurações)
+As rotas /relatorios, /financeiro e /configuracoes não existiam no router, causando erro 404.
+
+   [✅] Criar componente UnderConstruction reutilizável (src/components/underConstruction.jsx).
+
+   [✅] Criar página Configurações como hub (src/features/configuracoes/pages/configuracoes.jsx).
+
+   [✅] Adicionar rotas no main.jsx: relatorios, financeiro (underConstruction) e configuracoes (hub).
 
 ## Fase 7: Faxina Final e QA (Quality Assurance)
 Garantir que nenhum lixo ficou para trás.

@@ -9,7 +9,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import List from "../../../components/list/list";
-import styles from "../styles/peopleManagement.module.css";
 import { Link } from "react-router-dom";
 import Loading from "../../../components/loading";
 import usersServices from "../../../services/usersServices";
@@ -17,7 +16,7 @@ import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
-import { Table, Box } from "@chakra-ui/react";
+import { Table, Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
 
 export default function PeopleManagement() {
 
@@ -73,13 +72,13 @@ export default function PeopleManagement() {
 
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack/>
 
-      <h1 className="title-page">Gestão de pessoas</h1>
+      <Heading size="lg" color="gray.600">Gestão de pessoas</Heading>
 
       {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
-      <div className="card-buttons">
+      <HStack gap={2}>
         <Link
           to={"/PeopleManagement/add"}
           state={{
@@ -88,7 +87,7 @@ export default function PeopleManagement() {
             currentMode: "A",
           }}
         >
-          <button>Inserir</button>
+          <Button size="xs" variant="surface">Inserir</Button>
         </Link>
 
         <Link
@@ -99,9 +98,9 @@ export default function PeopleManagement() {
             currentMode: "V",
           }}
         >
-          <button disabled={userActive === null}>
+          <Button size="xs" variant="surface" disabled={userActive === null}>
             Visualizar
-          </button>
+          </Button>
         </Link>
 
         <Link
@@ -112,29 +111,46 @@ export default function PeopleManagement() {
             currentMode: "E",
           }}
         >
-          <button disabled={userActive === null}>Alterar</button>
+          <Button size="xs" variant="surface" disabled={userActive === null}>Alterar</Button>
         </Link>
 
-        <div ref={menuRef}>
-          <button disabled={userActive === null} onClick={toggleMenu}>
+        <Box ref={menuRef} position="relative">
+          <Button size="xs" variant="surface" disabled={userActive === null} onClick={toggleMenu}>
             Outras opções ▼
-          </button>
+          </Button>
 
           {/* Renderização condicional: esse bloco só aparece quando o estado correspondente estiver ativo. */}
           {open && (
-            <ul className="other-option-btns">
+            <Box
+              as="ul"
+              listStyleType="none"
+              position="absolute"
+              top="100%"
+              left={0}
+              mt={1}
+              py={2}
+              px={3}
+              borderRadius="md"
+              border="1px solid"
+              borderColor="brand.primary"
+              bg="brand.secondary"
+              zIndex={100}
+              fontSize="xs"
+              color="black"
+              whiteSpace="nowrap"
+            >
               <Link
                 to={"/PeopleManagementActivities"}
-                state={{
-                  userData: selectedUser
-                }}
+                state={{ userData: selectedUser }}
               >
-                <li>Atividades</li>
+                <Box as="li" cursor="pointer" py={1} px={2} borderRadius="sm" _hover={{ filter: "brightness(0.92)" }}>
+                  Atividades
+                </Box>
               </Link>
-            </ul>
+            </Box>
           )}
-        </div>
-      </div>
+        </Box>
+      </HStack>
 
       <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
         <Table.Root variant="line" size="sm" whiteSpace="nowrap">
@@ -160,6 +176,6 @@ export default function PeopleManagement() {
           </Table.Body>
         </Table.Root>
       </Box>
-    </div>
+    </VStack>
   );
 }

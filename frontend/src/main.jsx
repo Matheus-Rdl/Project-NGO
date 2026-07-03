@@ -27,6 +27,8 @@ import FieldsManagementList from './features/fields/pages/fieldsManagementList.j
 import { AuthProvider } from './features/login/context/authContext.jsx'
 import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
 import FieldsManagementMenu from './features/fields/pages/fieldsManagementMenu.jsx'
+import UnderConstruction from './components/underConstruction.jsx'
+import Configuracoes from './features/configuracoes/pages/configuracoes.jsx'
 
 // 2. MANTIDO PARA COMPATIBILIDADE COM CSS LEGADO
 document.documentElement.setAttribute(
@@ -71,7 +73,11 @@ const pages = createHashRouter([
           
           { path: "/FieldsManagement", element: <FieldsManagement /> },
           { path: "/FieldsManagementList", element: <FieldsManagementList /> },
-          { path: "/FieldsManagementMenu", element: <FieldsManagementMenu /> }
+          { path: "/FieldsManagementMenu", element: <FieldsManagementMenu /> },
+
+          { path: "/relatorios", element: <UnderConstruction title="Relatórios" /> },
+          { path: "/financeiro", element: <UnderConstruction title="Financeiro" /> },
+          { path: "/configuracoes", element: <Configuracoes /> },
 
         ]
       }

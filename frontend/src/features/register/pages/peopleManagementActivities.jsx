@@ -1,12 +1,12 @@
 import { useLocation } from "react-router-dom";
-import styles from "../styles/peopleManagementActivities.module.css";
 import ActivityManagementUserActivity from "../../activities/pages/activityManagementUserActivity";
 import activitiesServices from "../../../services/activitiesServices";
 import { useEffect, useState } from "react";
-import { useDisclosure } from "@chakra-ui/react"; // hook do Chakra UI
+import { useDisclosure } from "@chakra-ui/react";
 import CardActivity from "../../../components/cards/cardActivity";
 import DialogAddActivity from "../../../components/dialogAddActivity";
 import HandleBack from "../../../components/handleBack";
+import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 
 export default function PeopleManagementActivities() {
   const location = useLocation();
@@ -29,26 +29,33 @@ export default function PeopleManagementActivities() {
 
   return (
     <>
-      <div className={`${styles.pageContainer} main-page`}>
-        <div className={styles.pageContainerContent}>
+      <Flex>
+        <Box flex="1" minW={0}>
           <HandleBack />
-          <h1 className={styles.title}>Atividades do usuário</h1>
+          <Heading size="lg" color="gray.600" mb={4}>Atividades do usuário</Heading>
 
-          <button onClick={onOpen}>Adicionar Atividade</button>
+          <Button size="xs" variant="surface" onClick={onOpen} mb={4}>
+            Adicionar Atividade
+          </Button>
 
-          <div className={styles.pageContainerContentActivities}>
+          <VStack gap={2} align="stretch">
             {userActivitiesList.map((activity) => (
-              <div key={activity._id} className={styles.activitiesBox}>
+              <Box
+                key={activity._id}
+                cursor="pointer"
+                transition="0.2s"
+                _hover={{ transform: "scale(1.01)", bg: "blackAlpha.100" }}
+              >
                 <CardActivity key={activity._id} data={activity} />
-              </div>
+              </Box>
             ))}
-          </div>
-        </div>
+          </VStack>
+        </Box>
 
-        <div className={styles.pageContainerActivityManagementUserActivity}>
+        <Box w="50%" ml={4} mt="-65px" mr="-1em">
           <ActivityManagementUserActivity />
-        </div>
-      </div>
+        </Box>
+      </Flex>
 
       <DialogAddActivity
         open={open}
