@@ -98,6 +98,7 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 ## Fase 4: Navegação e Layout Estrutural (O Dashboard)
 A espinha dorsal por onde o utilizador navega. Vamos transformar a estrutura num verdadeiro Dashboard Layout, dividindo o ecrã numa Sidebar retrátil e numa Área Principal com um Header rico.
 
+
 * Passo 4.1: O Novo Header (Topo)
    
    [ ] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.

@@ -1,12 +1,8 @@
-/*
-    Type: Componente
-    User: Matheus Rodrigues
-    Description: Componente para montar filtro de tabelas no sistema
-    Date: 23/02/2026
-*/
+import { useState, useEffect } from "react";
+import { Flex, Text, Box, Icon } from "@chakra-ui/react";
+import { Tooltip } from "../ui/tooltip";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import styles from "./navbar.module.css";
-import { useState } from "react";
 import {
   IoIosArrowDroprightCircle,
   IoIosArrowDropleftCircle,
@@ -18,64 +14,105 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BiHome } from "react-icons/bi";
 import { LuNewspaper } from "react-icons/lu";
 
-export default function NavBar({ setActiveScreen }) {
+export default function NavBar() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Estado interno para fechar e abrir o NAV
-  const [showNav, setShowNav] = useState(false);
+  // Verifica se a rota atual é de tabela para fechar a sidebar
+  useEffect(() => {
+    const currentPath = location.pathname.toLowerCase();
+    if (
+      currentPath.includes("peoplemanagement") ||
+      currentPath.includes("activitymanagement") ||
+      currentPath.includes("fieldsmanagement")
+    ) {
+      setIsExpanded(false);
+    }
+  }, [location]);
 
-  // Array de itens da NavBar ("Futuramente vai pegar o menuItems do banco de dados e os icones guardado na aplicação")
-  // O que vai ser fixo vai ser esses que já estão
   const menuItems = [
-    { label: "Pesquisar", icon: <IoMdSearch />, screen: null },
-    { label: "Início", icon: <BiHome />, screen: "home" },
-    { label: "Cadastros", icon: <PiUsersThree />, screen: "cadastros" },
-    { label: "Atividades", icon: <LiaGraduationCapSolid />, screen: "atividades" },
-    { label: "Relatórios", icon: <LuNewspaper />, screen: "relatorios" },
-    { label: "Financeiro", icon: <PiMoneyWavy />, screen: "financeiro" },
-    { label: "Configurações", icon: <IoSettingsOutline />, screen: "configuracoes" },
+    { label: "Pesquisar", icon: IoMdSearch, route: null },
+    { label: "Início", icon: BiHome, route: "/" },
+    { label: "Cadastros", icon: PiUsersThree, route: "/PeopleManagement" },
+    { label: "Atividades", icon: LiaGraduationCapSolid, route: "/ActivityManagement" },
+    { label: "Relatórios", icon: LuNewspaper, route: "/relatorios" },
+    { label: "Financeiro", icon: PiMoneyWavy, route: "/financeiro" },
+    { label: "Configurações", icon: IoSettingsOutline, route: "/configuracoes" },
   ];
 
   return (
+    <Flex
+      direction="column"
+      h="100vh"
+      bg="brand.primary"
+      color="brand.secondary"
+      transition="width 0.3s ease"
+      w={isExpanded ? "250px" : "80px"}
+      flexShrink={0}
+      zIndex={100}
+    >
+      <Flex direction="column" flex="1" overflowY="auto" overflowX="hidden" pt={4} pb={4} gap={2}>
+        {menuItems.map((item) => {
+          const isActive = item.route && location.pathname === item.route;
 
-    <div className={showNav ? `${styles.nav} ${styles.active}` : styles.nav}>
+          const MenuItemContent = (
+            <Flex
+              align="center"
+              justify={isExpanded ? "flex-start" : "center"}
+              px={isExpanded ? 6 : 0}
+              py={3}
+              cursor="pointer"
+              bg={isActive ? "brand.tertiary" : "transparent"}
+              color={isActive ? "brand.primary" : "brand.secondary"}
+              _hover={{ bg: "brand.tertiary", color: "brand.primary" }}
+              transition="all 0.2s"
+              onClick={() => {
+                if (item.route) {
+                  navigate(item.route);
+                }
+              }}
+              w="100%"
+            >
+              <Icon as={item.icon} boxSize={6} />
 
-      {/*  */}
-      {showNav ? (
-        <IoIosArrowDropleftCircle
-          className={styles.arrowMenu}
-          onClick={() => setShowNav(!showNav)}
-        />
-      ) : (
-        <IoIosArrowDroprightCircle
-          className={styles.arrowMenu}
-          onClick={() => setShowNav(!showNav)}
-        />
-      )}
-
-      <div className={styles.menu}>
-        {menuItems.map((item) => (
-          <div
-            key={item.label}
-            onClick={() => {
-              if (item.screen) {
-                setActiveScreen(item.screen);
-              }
-              setShowNav(false);
-            }}
-
-          >
-            <a>
-              {item.icon}
-              <p className={showNav ? `${styles.text} ${styles.textShow}` : styles.textNone}>
+              <Text
+                ml={4}
+                display={isExpanded ? "block" : "none"}
+                whiteSpace="nowrap"
+                fontWeight={isActive ? "bold" : "normal"}
+              >
                 {item.label}
-              </p>
-            </a>
-            <p className={showNav ? styles.textNone : `${styles.text} ${styles.textHover}`}>
-              {item.label}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
+              </Text>
+            </Flex>
+          );
+
+          if (!isExpanded) {
+            return (
+              <Tooltip key={item.label} content={item.label} positioning={{ placement: "right" }}>
+                <Box w="100%">{MenuItemContent}</Box>
+              </Tooltip>
+            );
+          }
+
+          return <Box key={item.label} w="100%">{MenuItemContent}</Box>;
+        })}
+      </Flex>
+
+      <Flex
+        mt="auto"
+        justify="center"
+        align="center"
+        py={4}
+        cursor="pointer"
+        _hover={{ color: "brand.tertiary" }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <Icon
+          as={isExpanded ? IoIosArrowDropleftCircle : IoIosArrowDroprightCircle}
+          boxSize={8}
+        />
+      </Flex>
+    </Flex>
   );
 }
