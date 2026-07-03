@@ -6,10 +6,10 @@
 */
 
 import { useState } from "react";
-import styles from "../styles/login.module.css";
 import userSystemServices from "../../../services/usersSystemServices";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { Box, Button, Card, Flex, Heading, Input, Text, VStack } from "@chakra-ui/react";
 
 export default function Login() {
 
@@ -44,36 +44,69 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.cardLogin}>
-        <div className={styles.cardLoginForm}>
-          <h1>Login</h1>
+    <Flex w="100%" h="100vh" align="center" justify="center" bg="gray.100">
 
-          <form onSubmit={handleLogin}>
+      <Card.Root
+        maxW="420px"
+        w="90%"
+        bg="brand.primary"
+        borderRadius="lg"
+        borderBottomRightRadius="lg"
+        borderTopRightRadius="lg"
+      >
+        <Card.Body p={0}>
+          <Flex
+            direction="column"
+            align="center"
+            justify="center"
+            py={12}
+            px={10}
+            bg="brand.secondary"
+            borderRadius="lg"
+            w="100%"
+          >
+            <Heading size="2xl" mb={12} color="brand.primary">Login</Heading>
 
-            <div>
-              <label>Usuário</label>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
+            <VStack as="form" onSubmit={handleLogin} gap={4} w="100%">
 
-            <div>
-              <label>Senha</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+              <Box w="100%">
+                <Text as="label" fontSize="sm" fontWeight="medium" mb={1} display="block">Usuário</Text>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  bg="white"
+                  required
+                />
+              </Box>
 
-            <button type="submit">Entrar</button>
+              <Box w="100%">
+                <Text as="label" fontSize="sm" fontWeight="medium" mb={1} display="block">Senha</Text>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  bg="white"
+                  required
+                />
+              </Box>
 
-          </form>
+              <Button
+                type="submit"
+                w="100%"
+                size="lg"
+                mt={6}
+                bg="brand.primary"
+                color="white"
+                _hover={{ opacity: 0.9 }}
+              >
+                Entrar
+              </Button>
 
-        </div>
-      </div>
-    </div>
+            </VStack>
+          </Flex>
+        </Card.Body>
+      </Card.Root>
+
+    </Flex>
   );
 }

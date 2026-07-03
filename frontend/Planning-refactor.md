@@ -199,13 +199,15 @@ Ação: Refatorar a interface para o Chakra UI e acoplar a nova lógica de Singl
 
    [✅] signUpDetailed.jsx — migrado para Chakra (VStack, Heading, SimpleGrid, Button, HStack).
 
-   [✅] signup.module.css — apagado (não é mais referenciado por nenhum ficheiro).
+   [✅] signup.module.css — apagado.
+
+   [✅] login.jsx — migrado para Chakra (Flex, Card, Heading, Input, Button, VStack).
+
+   [✅] login.module.css — apagado.
 
    [✅] main.jsx — adicionada rota /SignUp/add → SignUpDetailed.
 
-   [ ] login.jsx — migrar para Chakra UI.
-
-   [ ] login.module.css — apagar após migração do login.jsx.
+   [⏭️] Integração Squamata (Google Auth, JWT) — adiada para projeto separado.
 
 ## Fase 6.5: Correção de Rotas Quebradas (Relatórios, Financeiro, Configurações)
 As rotas /relatorios, /financeiro e /configuracoes não existiam no router, causando erro 404.
@@ -221,10 +223,16 @@ Garantir que nenhum lixo ficou para trás.
 
 Arquivos afetados: Toda a árvore.
 
-Ação: * Busca global no VS Code por import "*.css".
+Ação:
 
-Deletar o index.css de vez.
+   [✅] Busca global por import "*.css" — apenas login.jsx e index.css restavam.
 
-Rodar o eslint para garantir imports limpos.
+   [✅] Migrar login.jsx para Chakra UI (Flex, Card, Input, Button).
 
-Rodar npm run build (Vite) para ter certeza que a compilação não quebra por falta de algum arquivo apagado.
+   [✅] Apagar login.module.css, economic.module.css (órfão), index.css.
+
+   [✅] Remover import "./index.css" do main.jsx.
+
+   [✅] Rodar npm run build (Vite) — ✅ BUILD COM SUCESSO, zero erros.
+
+   [✅] Zero ficheiros .css na árvore src/. Zero imports de MUI (@mui). 100% Chakra UI v3.
