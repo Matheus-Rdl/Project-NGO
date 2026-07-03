@@ -12,6 +12,7 @@ import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
 import { generateExcelPresences } from "../../../services/reports/presences/excelPresences";
 import Presence from "../../../components/presence";
+import { Table, Box } from "@chakra-ui/react";
 
 export default function ActivityManagementUsers() {
   const location = useLocation();
@@ -134,29 +135,27 @@ export default function ActivityManagementUsers() {
 
         </div>
 
-        <div className="cardList">
-          <div className="tableWrapper">
-            <table>
-              <HeaderFilter
-                columns={peopleManagementTR}
-                filters={filters}
-                onFilterChange={handleFilterChange}
-              />
+        <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md">
+          <Table.Root variant="line" size="sm" whiteSpace="nowrap">
+            <HeaderFilter
+              columns={peopleManagementTR}
+              filters={filters}
+              onFilterChange={handleFilterChange}
+            />
 
-              <tbody>
-                {filteredUsers.map((data) => (
-                  <List
-                    key={data._id}
-                    data={data}
-                    columns={peopleManagementTR}
-                    ativo={userActivityActive === data._id}
-                    onClick={() => setUserActivityActive(data._id)}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+            <Table.Body>
+              {filteredUsers.map((data) => (
+                <List
+                  key={data._id}
+                  data={data}
+                  columns={peopleManagementTR}
+                  ativo={userActivityActive === data._id}
+                  onClick={() => setUserActivityActive(data._id)}
+                />
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Box>
 
       </div>
       <div className={styles.pageContainerActivityManagementUserActivity}>

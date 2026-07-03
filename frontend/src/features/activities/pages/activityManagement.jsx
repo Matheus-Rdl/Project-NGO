@@ -16,6 +16,7 @@ import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
+import { Table, Box } from "@chakra-ui/react";
 
 export default function ActivityManagement() {
   const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.
@@ -122,59 +123,32 @@ export default function ActivityManagement() {
         </div>
       </div>
 
-      <div className="cardList">
-        <div className="tableWrapper">
+      <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
+        <Table.Root variant="line" size="sm" whiteSpace="nowrap">
 
           {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
-          <table>
-            <HeaderFilter
-              columns={activitiesManagementTR}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+          <HeaderFilter
+            columns={activitiesManagementTR}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
 
-            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
-            <tbody>
-              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
-              {filteredActivities.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  columns={activitiesManagementTR}
-                  ativo={activityActive === data._id}
-                  onClick={() => setActivityActive(data._id)}
-                />
-              ))}
-            </tbody>
+          {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
+          <Table.Body>
+            {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
+            {filteredActivities.map((data) => (
+              <List
+                key={data._id}
+                data={data}
+                columns={activitiesManagementTR}
+                ativo={activityActive === data._id}
+                onClick={() => setActivityActive(data._id)}
+              />
+            ))}
+          </Table.Body>
 
-            {/*            <tbody>
-              {filteredActivities.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  ativo={activityActive === data._id}
-                  onClick={() => setActivityActive(data._id)}
-                  page={"activityManagement"}
-                />
-              ))}
-            </tbody>
-
-            <tbody>
-              {activitiesList.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  ativo={activityActive === data._id}
-                  onClick={() => setActivityActive(data._id)}
-                  columns={activitiesManagementTR}
-                  page={"activityManagement"}
-                />
-              ))}
-            </tbody>
- */}
-          </table>
-        </div>
-      </div>
+        </Table.Root>
+      </Box>
     </div>
   );
 }

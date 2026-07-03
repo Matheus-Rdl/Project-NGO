@@ -17,6 +17,7 @@ import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
+import { Table, Box } from "@chakra-ui/react";
 
 export default function PeopleManagement() {
 
@@ -135,32 +136,30 @@ export default function PeopleManagement() {
         </div>
       </div>
 
-      <div className="cardList">
-        <div className="tableWrapper">
+      <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
+        <Table.Root variant="line" size="sm" whiteSpace="nowrap">
           {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
-          <table>
-            <HeaderFilter
-              columns={peopleManagementTR}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+          <HeaderFilter
+            columns={peopleManagementTR}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
 
-            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
-            <tbody>
-              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
-              {filteredUsers.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  columns={peopleManagementTR}
-                  ativo={userActive === data._id}
-                  onClick={() => setuserActive(data._id)}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
+          <Table.Body>
+            {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
+            {filteredUsers.map((data) => (
+              <List
+                key={data._id}
+                data={data}
+                columns={peopleManagementTR}
+                ativo={userActive === data._id}
+                onClick={() => setuserActive(data._id)}
+              />
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Box>
     </div>
   );
 }

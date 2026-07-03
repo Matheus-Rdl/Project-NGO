@@ -148,21 +148,21 @@ Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "
 
 * Passo 5.1: Correção do Erro de Tabela (Table.Root)
 
-   [ ] Identificar todos os arquivos em src/features/ que renderizam listas (ex: activityManagement.jsx, peopleManagement.jsx, fieldsManagementList.jsx).
+   [✅] Identificar todos os arquivos em src/features/ que renderizam listas (ex: activityManagement.jsx, peopleManagement.jsx, fieldsManagementList.jsx).
 
-   [ ] Envolver todas as tabelas nativas ou listas antigas no componente <Table.Root /> do Chakra UI v3.
+   [✅] Envolver todas as tabelas nativas ou listas antigas no componente <Table.Root /> do Chakra UI v3.
 
-   [ ] Garantir que o Table.Header e Table.Body estejam dentro do Root para que o contexto de estilos (useTableStyles) seja injetado corretamente.
+   [✅] Garantir que o Table.Header e Table.Body estejam dentro do Root para que o contexto de estilos (useTableStyles) seja injetado corretamente.
 
 * Passo 5.2: Refatoração da Home (src/home/home.jsx)
 
-   [ ] Remover dependências do home.module.css.
+   [✅] Remover dependências do home.module.css.
 
-   [ ] Implementar um layout com <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>.
+   [✅] Implementar um layout com <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={6}>.
 
-   [ ] Criar Cards de Dashboard (usando <Card.Root>) para exibir resumos dinâmicos (Cadastros, Atividades, Financeiro).
+   [✅] Criar Cards de Dashboard (usando <Card.Root>) para exibir resumos dinâmicos (Cadastros, Atividades, Financeiro).
 
-   [ ] Adicionar seção de "Ações Rápidas" com botões estilizados.
+   [✅] Adicionar seção de "Ações Rápidas" com botões estilizados.
 
 * Passo 5.3: Migração das Telas de Atividades (src/features/activities/)
 
