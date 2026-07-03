@@ -98,9 +98,20 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 ## Fase 4: Navegação e Layout Estrutural
 A espinha dorsal por onde o usuário navega.
 
-Arquivos afetados: navbar/navbar.jsx, navbar.module.css, handleBack/handleBack.jsx.
+* Passo 4.1: O Layout Mestre (src/App.jsx)
+   [✅] Refatorar App.jsx para usar um Flex h="100vh" w="100vw".
+   [✅] Estruturar Sidebar à esquerda e conteúdo à direita.
 
-Ação: Transformar a NavBar usando o componente Drawer ou construindo uma Sidebar retrátil nativa com Flex e transition do Chakra. Deletar os .module.css relativos.
+* Passo 4.2: Criação do Novo Cabeçalho (src/components/header.jsx)
+   [✅] Criar componente Header com título, data e Menu de usuário.
+   [✅] Importar no App.jsx.
+
+* Passo 4.3: A Nova Sidebar (src/components/navbar.jsx)
+   [✅] Transformar em uma Sidebar retrátil com Flex e transições do Chakra.
+   [✅] Deletar permanentemente o navbar.module.css.
+
+* Passo 4.4: Lógica Dinâmica de Recolhimento da Sidebar
+   [✅] Adicionar useEffect baseando-se no useLocation para recolher a sidebar em telas de tabela.
 
 ## Fase 5: Migração das Features (Telas de Negócio)
 Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "encaixam" as peças.
