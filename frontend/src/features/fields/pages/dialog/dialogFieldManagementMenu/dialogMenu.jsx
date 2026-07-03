@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
-
-import styles from "./dialogFieldManagementMenu.module.css";
-
 import fieldsServices from "../../../../../services/fieldsServices";
+import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 
 export default function DialogMenu({ field, fieldList, refreshFields, onClose }) {
 
@@ -57,36 +55,42 @@ export default function DialogMenu({ field, fieldList, refreshFields, onClose })
   }
 
   return (
+    <Box w="70%" py={4} px="7.5%" mx="7.5%">
+      <Box textAlign="center">
+        <Heading size="md">Alteração de posição</Heading>
+        <Text color="brand.primary" mt={1}>{field.title}</Text>
+      </Box>
 
-    <div className={styles.dialogMenu}>
-      <div className={styles.textTitle}>
-        <h2>
-          Alteração de posição
-        </h2>
-
-        <h3>
-          {field.title}
-        </h3>
-      </div>
-
-      <div className={styles.fieldListBox}>
+      <VStack mt={4} h="50vh" w="100%" overflow="auto" overflowX="hidden" gap={0}>
         {fieldsOrdered.map((item, index) => {
           const isActive = item._id === field._id;
           const isFirst = index === 0;
           const isLast = index === fieldsOrdered.length - 1;
 
           return (
-            <div
+            <Flex
               key={item._id}
-              className={
-                isActive
-                  ? `${styles.field} ${styles.fieldActive}`
-                  : styles.field
-              }
+              justify="space-between"
+              align="center"
+              border="2px solid"
+              borderColor="gray.500"
+              py={2}
+              px={4}
+              mx={4}
+              mt={2}
+              w="100%"
+              transform={isActive ? "scale(1.05)" : "none"}
+              bg={isActive ? "blackAlpha.100" : "transparent"}
+              transition="transform 0.2s"
             >
-              <p>{item.title}</p>
+              <Text fontSize="sm">{item.title}</Text>
 
-              <div className={styles.btnArrows}>
+              <Flex
+                direction="column"
+                gap="2px"
+                fontSize="1.5rem"
+                display={isActive ? "flex" : "none"}
+              >
                 <FaArrowAltCircleUp
                   onClick={!isFirst ? () => moveUp(index) : undefined}
                   style={{
@@ -102,17 +106,23 @@ export default function DialogMenu({ field, fieldList, refreshFields, onClose })
                     cursor: isLast ? "default" : "pointer"
                   }}
                 />
-              </div>
-            </div>
+              </Flex>
+            </Flex>
           );
         })}
-      </div>
+      </VStack>
 
-      <button
+      <Button
         onClick={saveOrder}
+        bg="brand.primary"
+        color="white"
+        w="70%"
+        mx="15%"
+        mt={2}
+        borderRadius="md"
       >
         Salvar
-      </button>
-    </div>
+      </Button>
+    </Box>
   )
 }

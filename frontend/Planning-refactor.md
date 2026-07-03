@@ -174,11 +174,11 @@ Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "
 
 * Passo 5.4: Migração das Telas de Campos/Campos Dinâmicos (src/features/fields/)
 
-   [ ] Refatorar os componentes de gerenciamento de campos (fieldsManagement, fieldsManagementDetailed, etc.).
+   [✅] Refatorar os componentes de gerenciamento de campos (fieldsManagement, fieldsManagementDetailed, etc.).
 
-   [ ] Aplicar layouts com Grid do Chakra UI para alinhar os campos do formulário de maneira responsiva.
+   [✅] Aplicar layouts com Grid do Chakra UI para alinhar os campos do formulário de maneira responsiva.
 
-   [ ] Deletar os arquivos .module.css desta pasta.
+   [✅] Deletar os arquivos .module.css desta pasta.
 
 * Passo 5.5: Migração das Telas de Cadastro (Pessoas) (src/features/register/)
 

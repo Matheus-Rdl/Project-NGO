@@ -9,9 +9,9 @@
 
 import { Link } from "react-router-dom";
 import HandleBack from "../../../components/handleBack";
-import styles from "../styles/fieldsManagement.module.css";
 import pagesServices from "../../../services/pagesServices"
 import { useEffect } from "react";
+import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
 
 export default function FieldsManagement() {
   //Service que pega os dados da coleção -> "pages"
@@ -24,22 +24,30 @@ export default function FieldsManagement() {
   }, [refetchPages]);
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack />
-      <h1 className="title-page">Coleções dos campos</h1>
+      <Heading size="lg" color="gray.600">Coleções dos campos</Heading>
 
       {pagesList.map((page) => (
-        <div key={page._id} className="card-list-box-form">
+        <HStack key={page._id} gap={2} overflowX="auto" overflowY="hidden">
 
           <Link
             to={"/FieldsManagementMenu"}
             state={{ page: page.page, name: page.name , collection: page.collection}}
           >
-            <h2>&bull; {page.name}</h2>
+            <Text
+              fontSize="sm"
+              color="brand.primary"
+              cursor="pointer"
+              _hover={{ transform: "scale(1.1)" }}
+              transition="0.2s"
+            >
+              &bull; {page.name}
+            </Text>
           </Link>
 
-        </div>
+        </HStack>
       ))}
-    </div>
+    </VStack>
   );
 }

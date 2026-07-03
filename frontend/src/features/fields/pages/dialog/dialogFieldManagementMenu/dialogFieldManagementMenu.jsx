@@ -1,11 +1,19 @@
-//import { Dialog } from "@mui/material";
-import styles from "./dialogFieldManagementMenu.module.css"
-import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import fieldsServices from "../../../../../services/fieldsServices";
 import { selectOptions } from "../../../../../utils/userSelectOptions";
 import { formatProperNoun } from "../../../../../utils/formatters";
 import DialogMenu from "./dialogMenu";
+import {
+  Dialog,
+  Box,
+  Flex,
+  Heading,
+  Input,
+  Text,
+  VStack,
+  NativeSelect,
+  Portal
+} from "@chakra-ui/react";
 
 export default function DialogFieldManagementMenu({ open, onClose, typeDialog, field, fieldList, page, refreshFields, menusList }) {
 
@@ -77,55 +85,19 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   // Configurações de como vai mostrar na tela, tem dois para mostrar os dados e informação de posição
   // Dados
   const fieldSettings = [
-    {
-      label: "Título",
-      name: "title",
-      type: "text"
-    },
-    {
-      label: "Id",
-      name: "field",
-      type: "text"
-    },
-    {
-      label: "Tipo",
-      name: "type",
-      type: "select"
-    },
-    {
-      label: "Obrigátorio",
-      name: "required",
-      type: "select"
-    },
-    {
-      label: "Tamanho mínimo",
-      name: "minLength",
-      type: "number"
-    },
-    {
-      label: "Tamanho maximo",
-      name: "maxLength",
-      type: "number"
-    },
-    {
-      label: "Modo de exibição",
-      name: "mode",
-      type: "mode"
-    }
+    { label: "Título", name: "title", type: "text" },
+    { label: "Id", name: "field", type: "text" },
+    { label: "Tipo", name: "type", type: "select" },
+    { label: "Obrigátorio", name: "required", type: "select" },
+    { label: "Tamanho mínimo", name: "minLength", type: "number" },
+    { label: "Tamanho maximo", name: "maxLength", type: "number" },
+    { label: "Modo de exibição", name: "mode", type: "mode" },
   ];
 
   //Posição
   const fieldSettingsMenu = [
-    {
-      label: "Menu",
-      name: "menuId",
-      type: "select"
-    },
-    {
-      label: "Ordem",
-      name: "order",
-      type: "number"
-    }
+    { label: "Menu", name: "menuId", type: "select" },
+    { label: "Ordem", name: "order", type: "number" },
   ];
 
   //Monta um select com o tipo de menus
@@ -135,16 +107,15 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
       acc[menu.id] = menu.name;
       return acc;
     }, {});
+
   //Pega o valor dos menu para colocar no campo menuID
   const getDisplayValue = (setting, value) => {
     if (setting.name === "menuId") {
       return menuOptions[value] || value;
     }
-
     if (setting.type === "select") {
       return getFormattedValue(setting.name, value);
     }
-
     return value;
   };
 
@@ -160,7 +131,6 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   };
 
   //Configuração personalizada para o mode, que é o campo de modo que define a alteração nos modos
-  // Opções do menu
   const modeOptions = {
     V: "Visualização",
     E: "Edição",
@@ -180,134 +150,124 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   const isView = typeDialog === "view";
   const isAlter = typeDialog === "alter";
 
-  //Mostra o estilo de acordo com a tela, se é para visualização ou alteração
-  const currentStyles = isView
-    ? styles.dialogViewContent
-    : styles.dialogAlterContent;
-
-  //Renderiza o input de acordo com o tipo de campo, se é texto, número ou seleção
+  //Renderiza o input de acordo com o tipo de campo
   const renderInput = (setting, value) => {
-
-    const canEdit =
-      ["field", "order"].includes(setting.name) ||
-      isView;
+    const canEdit = ["field", "order"].includes(setting.name) || isView;
 
     switch (setting.type) {
       case "text":
         return (
-          <input
-            type="text"
+          <Input
+            size="xs"
             value={editedField[setting.name] ?? ""}
             onChange={(e) => handleChange(setting.name, e.target.value)}
             disabled={canEdit}
             readOnly={canEdit}
-            style={{
-              width: `${Math.max(
-                String(field[setting.name]).length + 2,
-                10
-              )}ch`
-            }}
+            bg="blackAlpha.100"
+            borderRadius="md"
+            w={`${Math.max(String(field[setting.name]).length + 2, 10)}ch`}
           />
         );
 
       case "number":
         return (
-          <input
+          <Input
+            size="xs"
             type="number"
             value={editedField[setting.name] ?? ""}
             onChange={(e) => handleChange(setting.name, Number(e.target.value))}
             disabled={canEdit}
             readOnly={canEdit}
+            bg="blackAlpha.100"
+            borderRadius="md"
           />
         );
 
       case "select":
         return (
-          <input
-            type="text"
-            value={formatProperNoun(
-              getFormattedValue(setting.name, value)
-            )}
+          <Input
+            size="xs"
+            value={formatProperNoun(getFormattedValue(setting.name, value))}
             disabled={isView}
             readOnly={isView}
+            bg="blackAlpha.100"
+            borderRadius="md"
           />
         );
 
       case "mode":
         return (
-          <input
-            type="text"
+          <Input
+            size="xs"
             value={formatMode(value)}
             disabled={isView}
             readOnly={isView}
+            bg="blackAlpha.100"
+            borderRadius="md"
           />
         );
 
       default:
-
         return null;
-
     }
-
   };
 
-  //Renderiza a sessão nessa caso são as informações do campo e do menu, com os dados de cada um
+  //Renderiza a sessão
   const renderSection = (title, settings) => (
-    <>
-      <h4>&bull; {title}</h4>
+    <Box>
+      <Text fontWeight="medium" ml={4} mt={6}>&bull; {title}</Text>
 
-      <div className={currentStyles}>
+      <Flex flexWrap="wrap" alignItems="flex-start" gap={2} mt={2}>
         {settings.map(setting => {
-
           if (field[setting.name] === undefined) return null;
-
           return (
-            <div key={setting.name}>
-              <label>{setting.label}:</label>
+            <Box key={setting.name} display="flex" flexDirection="column">
+              <Text as="label" fontWeight="bold" fontSize="xs">{setting.label}:</Text>
               {renderInput(setting, field[setting.name])}
-            </div>
+            </Box>
           );
-
         })}
-      </div>
-    </>
+      </Flex>
+    </Box>
   );
 
   return (
-    <Dialog open={open} onClose={onClose} PaperProps={{ className: styles.dialogPaper }}>
-      <div>
-        {typeDialog === "menu" && (
-          <DialogMenu
-            field={field}
-            fieldList={fieldList}
-            page={page}
-            menusList={menusList}
-            refreshFields={refreshFields}
-            onClose={onClose}
-          />
-        )}
+    <Dialog.Root open={!!open} onOpenChange={(details) => { if (!details.open) onClose(); }}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content maxW="90vw">
 
-        {(isView || isAlter) && (
-          <div className={isView ? styles.dialogView : styles.dialogAlter}>
+            {typeDialog === "menu" && (
+              <DialogMenu
+                field={field}
+                fieldList={fieldList}
+                page={page}
+                menusList={menusList}
+                refreshFields={refreshFields}
+                onClose={onClose}
+              />
+            )}
 
-            <div className={styles.textTitle}>
-              <h2 className="subtitle-page">
-                {isView ? "Visualização do campo" : "Alteração do campo"}
-              </h2>
+            {(isView || isAlter) && (
+              <Box w="80%" py={4} px="5%" mx="5%" mb={8}>
+                <Box textAlign="center">
+                  <Heading size="md" color="gray.600">
+                    {isView ? "Visualização do campo" : "Alteração do campo"}
+                  </Heading>
+                  <Text color="brand.primary" fontSize="md" mt={1}>
+                    {field.title}
+                  </Text>
+                </Box>
 
-              <h3 className="subtitle-page">
-                {field.title}
-              </h3>
-            </div>
+                {renderSection("Dados do campo", fieldSettings)}
+                {renderSection("Dados do menu e ordem", fieldSettingsMenu)}
+              </Box>
+            )}
 
-            {renderSection("Dados do campo", fieldSettings)}
-
-            {renderSection("Dados do menu e ordem", fieldSettingsMenu)}
-
-          </div>
-        )}
-      </div>
-    </Dialog>
-  )
-
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
 }
