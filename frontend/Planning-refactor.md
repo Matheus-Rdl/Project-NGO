@@ -98,20 +98,50 @@ Aqui é onde preparamos o terreno. Migraremos as peças de LEGO do sistema, gara
 ## Fase 4: Navegação e Layout Estrutural
 A espinha dorsal por onde o usuário navega.
 
-* Passo 4.1: O Layout Mestre (src/App.jsx)
-   [✅] Refatorar App.jsx para usar um Flex h="100vh" w="100vw".
-   [✅] Estruturar Sidebar à esquerda e conteúdo à direita.
 
-* Passo 4.2: Criação do Novo Cabeçalho (src/components/header.jsx)
-   [✅] Criar componente Header com título, data e Menu de usuário.
-   [✅] Importar no App.jsx.
+* Passo 4.1: O Novo Header (Topo)
+   
+   [ ] Criar a estrutura do cabeçalho no topo da Área Principal usando `<Flex w="100%">` do Chakra UI.
+   
+   [ ] Adicionar Título/Logo da ONG em destaque à esquerda.
+   
+   [ ] Renderizar a data atual formatada ao centro/direita (usando as tuas funções de `dateFunctions.js`).
+   
+   [ ] Implementar o componente nativo `Menu` do Chakra UI v3 (`Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`) no canto direito.
+   
+   [ ] Adicionar as opções de dropdown no Menu: Configurar Perfil, Mudar Senha e Sair do Sistema (Logout).
 
-* Passo 4.3: A Nova Sidebar (src/components/navbar.jsx)
-   [✅] Transformar em uma Sidebar retrátil com Flex e transições do Chakra.
-   [✅] Deletar permanentemente o navbar.module.css.
+* Passo 4.2: A Sidebar (Menu Lateral Expansível) - `navbar.jsx`
+   
+   [ ] Refatorar o componente para ser uma Sidebar ancorada à esquerda (usando `<Box>` ou `<Flex>`).
+   
+   [ ] Adicionar transição suave de largura (`transition="width 0.3s"`) para alternar entre Expandida e Recolhida.
+   
+   [ ] Ajustar o mapeamento do `menuItems`: quando recolhida, ocultar o texto e mostrar apenas ícones (com o nome num Tooltip); quando expandida, mostrar Ícone + Texto.
+   
+   [ ] Fixar o botão de toggle (recolher/expandir) no topo ou no rodapé da Sidebar, eliminando a sobreposição visual.
+
+* Passo 4.3: O Layout Mestre (`App.jsx`)
+   
+   [ ] Transformar o contentor base do `App.jsx` num `<Flex h="100vh" w="100vw">`.
+   
+   [ ] Renderizar a Sidebar à esquerda deste Flex.
+   
+   [ ] Configurar a Área Direita como `<Box flex="1" overflow="hidden">`.
+   
+   [ ] Posicionar o novo Header fixo no topo da Área Direita e o `<Outlet />` logo abaixo (com `overflowY="auto"` para permitir scroll apenas no conteúdo).
 
 * Passo 4.4: Lógica Dinâmica de Recolhimento da Sidebar
-   [✅] Adicionar useEffect baseando-se no useLocation para recolher a sidebar em telas de tabela.
+   
+   [ ] Implementar um `useEffect` para escutar a mudança do ecrã atual (via `useLocation` do react-router ou a prop `activeScreen`).
+   
+   [ ] Adicionar a lógica: se o utilizador entrar num menu com tabelas pesadas ("cadastros", "atividades"), o estado da Sidebar muda automaticamente para recolhida (`setShowNav(false)`).
+
+* Passo 4.5: Limpeza e Ajustes Finais
+   
+   [ ] Eliminar permanentemente o ficheiro `navbar.module.css`.
+   
+   [ ] Garantir que todas as rotas e navegações continuam a funcionar perfeitamente com a nova estrutura.
 
 ## Fase 5: Migração das Features (Telas de Negócio)
 Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "encaixam" as peças.
