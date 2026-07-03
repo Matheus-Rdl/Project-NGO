@@ -5,7 +5,6 @@
     Date: 03/03/2026
 */
 
-import styles from "../styles/signup.module.css";
 import { Link } from "react-router-dom";
 import HeaderFilter from "../../../components/headerFilter";
 import List from "../../../components/list/list";
@@ -13,6 +12,7 @@ import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import { useEffect, useState } from "react";
 import usersServices from "../../../services/usersServices";
 import HandleBack from "../../../components/handleBack";
+import { Table, Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
 
 export default function SignUp() {
   const [userActive, setuserActive] = useState(null);
@@ -88,25 +88,12 @@ export default function SignUp() {
 
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack/>
 
-      <h1 className="title-page">Cadastro de usuários do sistema</h1>
+      <Heading size="lg" color="gray.600">Cadastro de usuários do sistema</Heading>
 
-      <div className="card-buttons">
-        {/*
-        <Link
-          to={"/SignUp/add"}
-          state={{
-            userId: userActive,
-            userData: usersByType.find((u) => u._id === userActive),
-            currentMode: "A",
-          }}
-        >
-          <button>Inserir</button>
-        </Link>
-        */}
-
+      <HStack gap={2}>
         <Link
           to={"/SignUp/view"}
           state={{
@@ -115,10 +102,9 @@ export default function SignUp() {
             currentMode: "V",
           }}
         >
-          <button disabled={userActive === null}>
-            {/*className={userActive ? `${styles.btnOn}` : `${styles.btnOff}`}*/}
+          <Button size="xs" variant="surface" disabled={userActive === null}>
             Visualizar
-          </button>
+          </Button>
         </Link>
 
         <Link
@@ -129,34 +115,31 @@ export default function SignUp() {
             currentMode: "E",
           }}
         >
-          <button disabled={userActive === null}>Alterar</button>
+          <Button size="xs" variant="surface" disabled={userActive === null}>Alterar</Button>
         </Link>
-      </div>
+      </HStack>
 
-      <div className="cardList">
-        <div className="tableWrapper">
-          <table>
-            <HeaderFilter
-              columns={peopleManagementTR}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+      <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
+        <Table.Root variant="line" size="sm" whiteSpace="nowrap">
+          <HeaderFilter
+            columns={peopleManagementTR}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
 
-            <tbody>
-              {filteredUsers.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  columns={peopleManagementTR}
-                  ativo={userActive === data._id}
-                  onClick={() => setuserActive(data._id)}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
+          <Table.Body>
+            {filteredUsers.map((data) => (
+              <List
+                key={data._id}
+                data={data}
+                columns={peopleManagementTR}
+                ativo={userActive === data._id}
+                onClick={() => setuserActive(data._id)}
+              />
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Box>
+    </VStack>
   );
 }
