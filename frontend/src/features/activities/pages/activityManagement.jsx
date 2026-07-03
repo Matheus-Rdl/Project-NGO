@@ -9,14 +9,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import activitiesServices from "../../../services/activitiesServices";
-import styles from "../styles/activityManagement.module.css";
 import { Link } from "react-router-dom";
 import List from "../../../components/list/list";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
-import { Table, Box } from "@chakra-ui/react";
+import { Table, Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
 
 export default function ActivityManagement() {
   const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.
@@ -62,13 +61,13 @@ export default function ActivityManagement() {
   );
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack/>
       
-      <h1 className="title-page">Gerenciar Atividades</h1>
+      <Heading size="lg" color="gray.600">Gerenciar Atividades</Heading>
 
       {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
-      <div className="card-buttons">
+      <HStack gap={2}>
         <Link
           to={"/ActivityManagement/add"}
           state={{
@@ -77,7 +76,7 @@ export default function ActivityManagement() {
             currentMode: "A",
           }}
         >
-          <button>Inserir</button>
+          <Button size="xs" variant="surface">Inserir</Button>
         </Link>
 
         <Link
@@ -88,10 +87,9 @@ export default function ActivityManagement() {
             currentMode: "V",
           }}
         >
-          <button disabled={activityActive === null}>
-            {/*className={activityActive ? `${styles.btnOn}` : `${styles.btnOff}`}*/}
+          <Button size="xs" variant="surface" disabled={activityActive === null}>
             Visualizar
-          </button>
+          </Button>
         </Link>
 
         <Link
@@ -102,26 +100,45 @@ export default function ActivityManagement() {
             currentMode: "E",
           }}
         >
-          <button disabled={activityActive === null}>Alterar</button>
+          <Button size="xs" variant="surface" disabled={activityActive === null}>Alterar</Button>
         </Link>
 
-        <div ref={menuRef}>
-          <button disabled={activityActive === null} onClick={toggleMenu}>
+        <Box ref={menuRef} position="relative">
+          <Button size="xs" variant="surface" disabled={activityActive === null} onClick={toggleMenu}>
             Outras opções ▼
-          </button>
+          </Button>
 
           {/* Renderização condicional: esse bloco só aparece quando o estado correspondente estiver ativo. */}
           {open && (
-            <ul className="other-option-btns">
+            <Box
+              as="ul"
+              listStyleType="none"
+              position="absolute"
+              top="100%"
+              left={0}
+              mt={1}
+              py={2}
+              px={3}
+              borderRadius="md"
+              border="1px solid"
+              borderColor="brand.primary"
+              bg="brand.secondary"
+              zIndex={100}
+              fontSize="xs"
+              color="black"
+              whiteSpace="nowrap"
+            >
               <Link to={'/ActivityManagementUsers'} state={{
                 activityData: activitiesList.find((u) => u._id === activityActive)
               }}>
-                <li>Alunos</li>
+                <Box as="li" cursor="pointer" py={1} px={2} borderRadius="sm" _hover={{ filter: "brightness(0.92)" }}>
+                  Alunos
+                </Box>
               </Link>
-            </ul>
+            </Box>
           )}
-        </div>
-      </div>
+        </Box>
+      </HStack>
 
       <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
         <Table.Root variant="line" size="sm" whiteSpace="nowrap">
@@ -149,6 +166,6 @@ export default function ActivityManagement() {
 
         </Table.Root>
       </Box>
-    </div>
+    </VStack>
   );
 }

@@ -166,11 +166,11 @@ Agora que os componentes da Fase 3 estão prontos e em Chakra, as telas apenas "
 
 * Passo 5.3: Migração das Telas de Atividades (src/features/activities/)
 
-   [ ] Refatorar activityManagement.jsx, activityManagementDetailed.jsx, activityManagementUserActivity.jsx, activityManagementUsers.jsx.
+   [✅] Refatorar activityManagement.jsx, activityManagementDetailed.jsx, activityManagementUserActivity.jsx, activityManagementUsers.jsx.
 
-   [ ] Substituir containers genéricos (<div>) por <Stack>, <VStack> e <Box> do Chakra.
+   [✅] Substituir containers genéricos (<div>) por <Stack>, <VStack> e <Box> do Chakra.
 
-   [ ] Deletar todos os arquivos .module.css desta pasta.
+   [✅] Deletar todos os arquivos .module.css desta pasta.
 
 * Passo 5.4: Migração das Telas de Campos/Campos Dinâmicos (src/features/fields/)
 
