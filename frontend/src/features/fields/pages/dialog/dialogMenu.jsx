@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
-import fieldsServices from "../../../../../services/fieldsServices";
+import fieldsServices from "../../../../services/fieldsServices";
 import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 
 export default function DialogMenu({ field, fieldList, refreshFields, onClose }) {

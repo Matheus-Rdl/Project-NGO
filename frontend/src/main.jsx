@@ -23,11 +23,11 @@ import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
 import FieldsManagement from './features/fields/pages/fieldsManagement.jsx'
 import FieldsManagementList from './features/fields/pages/fieldsManagementList.jsx'
 
-import { AuthProvider } from './features/login/context/authContext.jsx'
-import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
+import { AuthProvider } from './features/login/authContext.jsx'
+import ProtectedRoute from './features/login/ProtectedRoute.jsx'
 import FieldsManagementMenu from './features/fields/pages/fieldsManagementMenu.jsx'
 import UnderConstruction from './components/underConstruction.jsx'
-import Configuracoes from './features/configuracoes/pages/configuracoes.jsx'
+import Configuracoes from './features/configuracoes.jsx'
 
 // 2. MANTIDO PARA COMPATIBILIDADE COM CSS LEGADO
 document.documentElement.setAttribute(

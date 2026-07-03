@@ -3,7 +3,7 @@ import { formatProperNoun } from "../../../utils/formatters";
 import CardActivity from "../../../components/cards/cardActivity";
 import usersServices from "../../../services/usersServices";
 import { useEffect, useRef, useState } from "react";
-import List from "../../../components/list/list";
+import List from "../../../components/list";
 import ActivityManagementUserActivity from "./activityManagementUserActivity";
 import HeaderFilter from "../../../components/headerFilter";
 import { peopleManagementTR } from "../../../utils/HeaderList.json";

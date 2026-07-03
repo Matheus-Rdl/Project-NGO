@@ -14,7 +14,7 @@ import { peopleManagementTR, activitiesManagementTR, fieldsManagementTR } from "
 import { useEffect, useState } from "react";
 import useTableFilter from "../../../hooks/useTableFilter";
 import usersServices from "../../../services/usersServices";
-import List from "../../../components/list/list";
+import List from "../../../components/list";
 import fieldsServices from "../../../services/fieldsServices";
 import { Table, Box, Heading, VStack } from "@chakra-ui/react";
 

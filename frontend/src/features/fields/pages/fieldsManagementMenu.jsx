@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import fieldsServices from "../../../services/fieldsServices";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 import { MdEditSquare, MdOutlinePreview, MdOutlineViewList } from "react-icons/md";
-import DialogFieldManagementMenu from "./dialog/dialogFieldManagementMenu/dialogFieldManagementMenu";
+import DialogFieldManagementMenu from "./dialog/dialogFieldManagementMenu";
 import {
   Accordion,
   Box,

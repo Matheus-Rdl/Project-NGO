@@ -10,7 +10,7 @@
 import { useEffect, useRef, useState } from "react";
 import activitiesServices from "../../../services/activitiesServices";
 import { Link } from "react-router-dom";
-import List from "../../../components/list/list";
+import List from "../../../components/list";
 import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";

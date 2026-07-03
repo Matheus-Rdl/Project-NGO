@@ -8,7 +8,7 @@
 import { useState } from "react";
 import userSystemServices from "../../../services/usersSystemServices";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../authContext";
 import { Box, Button, Card, Flex, Heading, Input, Text, VStack } from "@chakra-ui/react";
 
 export default function Login() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import fieldsServices from "../../../../../services/fieldsServices";
-import { selectOptions } from "../../../../../utils/userSelectOptions";
-import { formatProperNoun } from "../../../../../utils/formatters";
+import fieldsServices from "../../../../services/fieldsServices";
+import { selectOptions } from "../../../../utils/userSelectOptions";
+import { formatProperNoun } from "../../../../utils/formatters";
 import DialogMenu from "./dialogMenu";
 import {
   Dialog,

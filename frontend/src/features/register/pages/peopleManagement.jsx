@@ -8,7 +8,7 @@
 */
 
 import { useEffect, useRef, useState } from "react";
-import List from "../../../components/list/list";
+import List from "../../../components/list";
 import { Link } from "react-router-dom";
 import Loading from "../../../components/loading";
 import usersServices from "../../../services/usersServices";
