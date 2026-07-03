@@ -8,7 +8,7 @@ const env = import.meta.env.VITE_ENV || 'develop';
 const brandColors = {
   production: {
     primary: { value: '#1A365D' },   // Tons de azul para Produção
-    secondary: { value: '#2A4365' },
+    secondary: { value: '#DBEAFE' }, // Azul bem claro, quase branco, para ícones/textos
     tertiary: { value: '#2C5282' },
   },
   develop: {
