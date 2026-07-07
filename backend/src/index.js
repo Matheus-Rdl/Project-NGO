@@ -10,6 +10,7 @@ import activitiesRouter from "./modules/activities/activitiesRouter.js";
 import usersSystemRouter from "./modules/usersSystem/usersSystemRouter.js";
 import pagesRouter from "./modules/pages/pagesRouter.js";
 import menusRouter from "./modules/menus/menusRouter.js";
+import { authMiddleware } from "./middleware/index.js";
 
 // Em ES Modules, precisamos recriar as variáveis __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -66,7 +67,20 @@ async function main() {
     });
   });
 
-  // Routes
+  // Healthcheck (requisito do ecossistema Squamata)
+  app.get("/health", (req, res) => {
+    res.json({
+      status: "UP",
+      app: "project-ngo",
+      timestamp: new Date().toISOString()
+    });
+  });
+
+  // Middleware de autenticação JWT — aplicado a todas as rotas abaixo
+  // Rotas públicas: / e /health (declaradas acima do middleware)
+  app.use(authMiddleware);
+
+  // Routes (protegidas por JWT)
   app.use("/users", usersRouter);
   app.use("/fields", fieldsRouter);
   app.use("/activities", activitiesRouter);

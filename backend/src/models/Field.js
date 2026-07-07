@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const fieldSchema = new mongoose.Schema(
   {
     // Campo opcional para garantir ordenação
-    order: { type: Number, default: 0 }
+    order: { type: Number, default: 0 },
+
+    // Multi-tenancy (isolamento por tenant)
+    tenantId: { type: String, default: "default", index: true }
   },
   { 
     strict: false, // Fundamental: permite que campos dinâmicos (label, type, dependsOn, etc.) existam

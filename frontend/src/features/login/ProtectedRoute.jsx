@@ -1,28 +1,26 @@
 /*
     Type: Context
-    User: Matheus Rodrigues
+    User: Matheus Rodrigues / Refatorado para SSO Squamata
     Description: Componente responsável por proteger rotas da aplicação.
-    Ele verifica se existe um usuário autenticado no AuthContext.
-    Caso não exista, o usuário é redirecionado automaticamente para a
-    tela de login. Caso exista, a rota solicitada é renderizada normalmente.
-    Date: 10/03/2026
+    Verifica se existe um token JWT válido no AuthContext.
+    Caso não exista, o utilizador é redirecionado para o Squamata-Login (SSO).
+    Date: 06/07/2026
 */
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAuth } from "./authContext";
 
+const SQUAMATA_FRONTEND_URL = import.meta.env.VITE_SQUAMATA_FRONTEND_URL || "http://localhost:5174";
+
 export default function ProtectedRoute() {
+  const { user, token } = useAuth();
 
-  // Recupera o usuário autenticado do contexto global de autenticação
-  const { user } = useAuth();
-
-  // Se não existir usuário autenticado
-  // o sistema redireciona automaticamente para a página de login
-  if (!user) {
-    return <Navigate to="/Login" replace />;
+  if (!user || !token) {
+    const returnUrl = window.location.href;
+    const ssoUrl = `${SQUAMATA_FRONTEND_URL}/login?appSlug=project-ngo&tenantId=default&returnUrl=${encodeURIComponent(returnUrl)}`;
+    window.location.href = ssoUrl;
+    return null;
   }
 
-  // Caso exista usuário autenticado
-  // o Outlet renderiza a rota filha correspondente
   return <Outlet />;
 }

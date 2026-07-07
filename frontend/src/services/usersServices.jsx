@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "../utils/api.js";
 
 export default function usersServices() {
   const [usersByType, setUsersByType] = useState([]);
@@ -8,17 +9,11 @@ export default function usersServices() {
   const [userNextMat, setUserNextMat] = useState([]);
   const [userListActivies, setListUserActivies] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/users`;
-
   const addUser = (userData) => {
-    fetch(`${url}`, {
+    apiFetch("/users", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
       .then((result) => {
         console.log(result);
       })
@@ -30,13 +25,7 @@ export default function usersServices() {
   const getUsers = () => {
     setUsersLoading(true);
 
-    fetch(`${url}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/users")
       .then((result) => {
         if (result.success) {
           setUsersList(result.body);
@@ -54,13 +43,7 @@ export default function usersServices() {
   };
 
   const getUserNextMat = () => {
-    fetch(`${url}/nextMat`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/users/nextMat")
       .then((result) => {
         if (result.success) {
           setUserNextMat(result.body);
@@ -88,13 +71,7 @@ export default function usersServices() {
       return;
     }
 
-    fetch(`${url}/activity/${activityMat}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch(`/users/activity/${activityMat}`)
       .then((result) => {
         if (result.success) {
           setListUserActivies(result.body);
@@ -117,13 +94,7 @@ export default function usersServices() {
     // transforma [2,4] em "2,4"
     const typesQuery = typesArray.join(",");
 
-    fetch(`${url}/type?types=${typesQuery}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch(`/users/type?types=${typesQuery}`)
       .then((result) => {
         if (result.success) {
           setUsersByType(result.body);
@@ -145,14 +116,10 @@ export default function usersServices() {
     console.log(userData);
     console.log(JSON.stringify(userData));
 
-    fetch(`${url}/${userId}`, {
+    apiFetch(`/users/${userId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
       .then((result) => {
         if (!result.success) {
           console.log(result);

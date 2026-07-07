@@ -1,22 +1,16 @@
 import { useState } from "react";
+import { apiFetch } from "../utils/api.js";
 
 export default function examplesServices() {
   const [examplesLoading, setExamplesLoading] = useState(false);
   const [refetchExamples, setRefetchExamples] = useState(true);
   const [examplesList, setExamplesList] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/examples`;
-
   const addExample = (exampleData) => {
-
-    fetch(`${url}`, {
+    apiFetch("/examples", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(exampleData),
     })
-      .then((response) => response.json())
       .then((result) => {
         //if (result.success) {
         //  setTablesList(result.body);
@@ -34,13 +28,7 @@ export default function examplesServices() {
   const getExamples = () => {
     setExamplesLoading(true);
 
-    fetch(`${url}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/examples")
       .then((result) => {
         if (result.success) {
           setExamplesList(result.body);
@@ -62,14 +50,10 @@ export default function examplesServices() {
     console.log(exampleData)
     console.log(JSON.stringify(exampleData))
 
-    fetch(`${url}/${exampleId}`, {
+    apiFetch(`/examples/${exampleId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(exampleData)
     })
-      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
         } else {

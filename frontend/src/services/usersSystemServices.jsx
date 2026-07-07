@@ -1,31 +1,19 @@
-export default function userSystemServices() {
-  const url = `${import.meta.env.VITE_API_URL}/users-system`;
+import { apiFetch } from "../utils/api.js";
 
-  console.log(import.meta.env.VITE_API_URL)
+export default function userSystemServices() {
 
   const getUserSystemByMat = (mat) => {
-    return fetch(`${url}/mat/${mat}`).then(res => res.json());
+    return apiFetch(`/users-system/mat/${mat}`);
   };
 
   const upsertUserSystem = (mat, data) => {
-    return fetch(`${url}/mat/${mat}`, {
+    return apiFetch(`/users-system/mat/${mat}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
       body: JSON.stringify(data)
-    }).then(res => res.json());
+    });
   };
 
-  const login = (data) => {
-    return fetch(`${url}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(res => res.json());
-  };
+  // login() removido — autenticação migrada para Squamata-Login (SSO)
 
-  return { getUserSystemByMat, upsertUserSystem, login };
+  return { getUserSystemByMat, upsertUserSystem };
 }

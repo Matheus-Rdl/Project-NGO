@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
   // Contato
   user_email: { type: String, lowercase: true, maxlength: 80 }, 
   user_phone: { type: String, required: true, minlength: 10, maxlength: 13 },
+
+  // Multi-tenancy (isolamento por tenant)
+  tenantId: { type: String, default: "default", index: true }
   
   // Informações da ONG
   user_registration_date: { type: String, required: true },

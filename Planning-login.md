@@ -118,16 +118,16 @@ Para viabilizar o fluxo SSO completo **sem quebrar o `calango-food`** e mantendo
 > 🎯 Objetivo: Substituir o redirect hardcoded para `calango-food` por um redirect genérico baseado no parâmetro `returnUrl`.
 
 #### 0.1 — Capturar `returnUrl` dos query params no arranque
-- [ ] ⬜ **0.1.1** — No `useEffect` inicial do `Login.jsx`, adicionar leitura do `returnUrl`:
+- [x] ✅ **0.1.1** — No `useEffect` inicial do `Login.jsx`, adicionar leitura do `returnUrl`:
   ```js
   const returnUrl = params.get('returnUrl');
   if (returnUrl) localStorage.setItem('sso_return_url', returnUrl);
   ```
-- [ ] ⬜ **0.1.2** — Colocar **antes** do bloco `if (token)` (pista de pouso), para que o `returnUrl` esteja disponível quando o token chegar do Google OAuth
+- [x] ✅ **0.1.2** — Colocar **antes** do bloco `if (token)` (pista de pouso), para que o `returnUrl` esteja disponível quando o token chegar do Google OAuth
 
 #### 0.2 — Tornar o redirect pós-login genérico (Google OAuth callback)
-- [ ] ⬜ **0.2.1** — Localizar o bloco `if (finalSlug === 'calango-food')` dentro do `if (token)` (pista de pouso)
-- [ ] ⬜ **0.2.2** — Substituir por:
+- [x] ✅ **0.2.1** — Localizar o bloco `if (finalSlug === 'calango-food')` dentro do `if (token)` (pista de pouso)
+- [x] ✅ **0.2.2** — Substituir por:
   ```js
   // Antes (hardcoded apenas para calango-food):
   if (finalSlug === 'calango-food') {
@@ -147,11 +147,11 @@ Para viabilizar o fluxo SSO completo **sem quebrar o `calango-food`** e mantendo
     return;
   }
   ```
-- [ ] ⬜ **0.2.3** — Verificar que `calango-food` continua a funcionar (basta que passe `returnUrl` nos query params como qualquer outra app)
+- [x] ✅ **0.2.3** — Verificar que `calango-food` continua a funcionar (basta que passe `returnUrl` nos query params como qualquer outra app)
 
 #### 0.3 — Tornar o redirect pós-login genérico (Email/Senha)
-- [ ] ⬜ **0.3.1** — Localizar o bloco `if (appSlug === 'calango-food')` dentro do `handleAuth` (após `login()`/`register()` bem-sucedido)
-- [ ] ⬜ **0.3.2** — Substituir por:
+- [x] ✅ **0.3.1** — Localizar o bloco `if (appSlug === 'calango-food')` dentro do `handleAuth` (após `login()`/`register()` bem-sucedido)
+- [x] ✅ **0.3.2** — Substituir por:
   ```js
   // Antes (hardcoded apenas para calango-food):
   if (appSlug === 'calango-food') {
@@ -167,10 +167,10 @@ Para viabilizar o fluxo SSO completo **sem quebrar o `calango-food`** e mantendo
     return;
   }
   ```
-- [ ] ⬜ **0.3.3** — Testar: aceder a `http://localhost:5174/login?appSlug=project-ngo&tenantId=default&returnUrl=http://localhost:5173`, fazer login → deve redirecionar para `http://localhost:5173?token=...`
+- [x] ✅ **0.3.3** — Testar: aceder a `http://localhost:5174/login?appSlug=project-ngo&tenantId=default&returnUrl=http://localhost:5173`, fazer login → deve redirecionar para `http://localhost:5173?token=...`
 
 #### 0.4 — Limpeza da chave `sso_return_url` em caso de erro
-- [ ] ⬜ **0.4.1** — No bloco `if (error)` (captura de erros do Google OAuth), adicionar:
+- [x] ✅ **0.4.1** — No bloco `if (error)` (captura de erros do Google OAuth), adicionar:
   ```js
   localStorage.removeItem('sso_return_url');
   ```

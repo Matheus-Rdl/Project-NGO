@@ -2,9 +2,17 @@ import { Flex, Text, Box } from "@chakra-ui/react";
 import { MenuRoot, MenuTrigger, MenuContent, MenuItem } from "./ui/menu";
 import { getCurrentDateFormattedBR } from "../utils/dateFunctions";
 import { FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../features/login/authContext";
 
 export default function Header() {
   const currentDate = getCurrentDateFormattedBR();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    // Recarrega a página para limpar o estado e forçar redirect via ProtectedRoute
+    window.location.href = window.location.origin + window.location.pathname;
+  };
 
   return (
     <Flex
@@ -37,7 +45,7 @@ export default function Header() {
           <MenuItem value="password" onClick={() => console.log("Mudar Senha")}>
             Mudar Senha
           </MenuItem>
-          <MenuItem value="logout" onClick={() => console.log("Sair do Sistema")}>
+          <MenuItem value="logout" onClick={handleLogout}>
             Sair do Sistema
           </MenuItem>
         </MenuContent>

@@ -1,22 +1,16 @@
 import { useState } from "react";
+import { apiFetch } from "../utils/api.js";
 
 export default function pagesServices() {
   const [pagesLoading, setPagesLoading] = useState(false);
   const [refetchPages, setRefetchPages] = useState(true);
   const [pagesList, setPagesList] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/pages`;
-
   const addPage = (pageData) => {
-
-    fetch(`${url}`, {
+    apiFetch("/pages", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(pageData),
     })
-      .then((response) => response.json())
       .then((result) => {
         //if (result.success) {
         //  setTablesList(result.body);
@@ -34,13 +28,7 @@ export default function pagesServices() {
   const getPages = () => {
     setPagesLoading(true);
 
-    fetch(`${url}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/pages")
       .then((result) => {
         if (result.success) {
           setPagesList(result.body);
@@ -62,14 +50,10 @@ export default function pagesServices() {
     console.log(pageData)
     console.log(JSON.stringify(pageData))
 
-    fetch(`${url}/${pageId}`, {
+    apiFetch(`/pages/${pageId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(pageData)
     })
-      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
         } else {

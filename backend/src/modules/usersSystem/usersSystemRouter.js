@@ -17,11 +17,7 @@ usersSystemRouter.put('/mat/:mat', async (req, res) => {
   res.status(statusCode).send({ success, statusCode, body })
 });
 
-usersSystemRouter.post('/login', async (req, res) => {
-  const { success, statusCode, body } =
-    await usersSystemControllers.login(req.body);
-
-  res.status(statusCode).send({ success, statusCode, body });
-});
+// POST /login removido — autenticação migrada para Squamata-Login (SSO)
+// O Squamata emite JWT; o middleware authMiddleware valida-o no backend do Project-NGO
 
 export default usersSystemRouter

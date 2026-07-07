@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "../utils/api.js";
 
 export default function activitiesServices() {
   const [activitiesLoading, setActivitiesLoading] = useState(false);
@@ -8,18 +9,11 @@ export default function activitiesServices() {
   const [activityNextMat, setActivityNextMat] = useState([]);
   const [activityTypeList, setActivityTypeList] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/activities`;
-
   const addActivity = (activityData) => {
-
-    fetch(`${url}`, {
+    apiFetch("/activities", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(activityData),
     })
-      .then((response) => response.json())
       .then((result) => {
         //if (result.success) {
         //  setTablesList(result.body);
@@ -37,13 +31,7 @@ export default function activitiesServices() {
   const getActivities = () => {
     setActivitiesLoading(true);
 
-    fetch(`${url}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/activities")
       .then((result) => {
         if (result.success) {
           setActivitiesList(result.body);
@@ -63,14 +51,10 @@ export default function activitiesServices() {
   const getActivitiesByMat = (activities) => {
     setActivitiesLoading(true);
 
-    fetch(`${url}/activitiesByMat`, {
+    apiFetch("/activities/activitiesByMat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({ user_activities: activities }),
     })
-      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
           setUserActivitiesList(result.body);
@@ -90,14 +74,10 @@ export default function activitiesServices() {
   const getActivitiesByType = (type) => {
     setActivitiesLoading(true);
 
-    fetch(`${url}/activitiesByType`, {
+    apiFetch("/activities/activitiesByType", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({ activity_type: type }),
     })
-      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
           setActivityTypeList(result.body);
@@ -116,13 +96,7 @@ export default function activitiesServices() {
 
   const getActivityNextMat = () => {
 
-    fetch(`${url}/nextMat`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/activities/nextMat")
       .then((result) => {
         if (result.success) {
           setActivityNextMat(result.body);
@@ -144,14 +118,10 @@ export default function activitiesServices() {
     console.log(activityData)
     console.log(JSON.stringify(activityData))
 
-    fetch(`${url}/${activityId}`, {
+    apiFetch(`/activities/${activityId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(activityData)
     })
-      .then((response) => response.json())
       .then((result) => {
         if (result.success) {
         } else {

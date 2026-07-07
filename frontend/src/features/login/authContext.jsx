@@ -1,119 +1,105 @@
 /*
     Type: Context
-    User: Matheus Rodrigues
-    Description: Contexto global responsável por controlar a autenticação
-    do usuário no sistema. Ele permite acessar o usuário logado, realizar
-    login e logout em qualquer parte da aplicação.
-    Date: 10/03/2026
+    User: Matheus Rodrigues / Refatorado para SSO Squamata
+    Description: Contexto global de autenticação integrado com Squamata-Login.
+    Armazena token JWT + user em localStorage, suporta pista de pouso
+    (extração de ?token= da URL após redirect do SSO) e verifica expiração.
+    Date: 06/07/2026
 */
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-/*
-    Cria o contexto de autenticação.
-    Esse contexto será responsável por compartilhar os dados de login
-    entre todos os componentes do sistema.
-*/
 const AuthContext = createContext();
 
-/*
-    Provider do contexto de autenticação.
-
-    Esse componente envolve toda a aplicação e disponibiliza os dados
-    de autenticação para todos os componentes filhos.
-*/
 export function AuthProvider({ children }) {
-
-  /*
-      Estado que armazena o usuário atualmente logado.
-      Quando null significa que não existe usuário autenticado.
-  */
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   /*
-      Executa apenas uma vez quando o sistema inicia.
-
-      Verifica se existe um usuário salvo no sessionStorage.
-      Caso exista, ele restaura o usuário no estado global
-      permitindo manter a sessão ativa enquanto a aba estiver aberta.
+      Inicialização: restaura sessão do localStorage ou captura
+      token vindo do redirect do Squamata-Login (pista de pouso).
   */
   useEffect(() => {
+    // 1. Verifica se voltou do SSO com token na URL (pista de pouso)
+    const params = new URLSearchParams(window.location.search);
+    const tokenFromUrl = params.get("token");
 
-    // busca dados de autenticação armazenados na sessão da aba
-    const authData = sessionStorage.getItem("auth");
+    if (tokenFromUrl) {
+      try {
+        // Decodifica payload do JWT (sem verificar assinatura — só para extrair dados)
+        let base64 = tokenFromUrl.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+        while (base64.length % 4 !== 0) base64 += "=";
+        const payload = JSON.parse(window.atob(base64));
 
-    // se existir autenticação salva
-    if (authData) {
+        const userData = {
+          uid: payload.uid,
+          email: payload.email,
+          appSlug: payload.appSlug,
+          tenantId: payload.tenantId,
+        };
 
-      // converte o JSON salvo para objeto
-      const parsed = JSON.parse(authData);
+        localStorage.setItem("auth", JSON.stringify({ token: tokenFromUrl, user: userData }));
+        setUser(userData);
+        setToken(tokenFromUrl);
 
-      // define o usuário no estado global
-      setUser(parsed.user);
+        // Limpa o token da URL para segurança
+        window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+        return;
+      } catch (err) {
+        console.error("Erro ao processar token da URL:", err);
+      }
     }
 
+    // 2. Restaura sessão do localStorage
+    const stored = localStorage.getItem("auth");
+    if (stored) {
+      try {
+        const { token: storedToken, user: storedUser } = JSON.parse(stored);
+
+        // Verifica se o token ainda é válido (decode + check exp)
+        let base64 = storedToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+        while (base64.length % 4 !== 0) base64 += "=";
+        const payload = JSON.parse(window.atob(base64));
+
+        if (payload.exp * 1000 > Date.now()) {
+          setUser(storedUser);
+          setToken(storedToken);
+        } else {
+          // Token expirado — limpa
+          localStorage.removeItem("auth");
+        }
+      } catch {
+        localStorage.removeItem("auth");
+      }
+    }
   }, []);
 
   /*
-      Função responsável por realizar o login do usuário.
-
-      Ela salva os dados do usuário no sessionStorage e também
-      atualiza o estado global do contexto.
+      Função de login — chamada após autenticação bem-sucedida.
+      Recebe o token JWT e os dados do utilizador.
   */
-  function login(userData) {
-
-    // salva os dados do usuário na sessão da aba
-    sessionStorage.setItem(
-      "auth",
-      JSON.stringify({ user: userData })
-    );
-
-    // atualiza o estado global com o usuário logado
+  function login(newToken, userData) {
+    localStorage.setItem("auth", JSON.stringify({ token: newToken, user: userData }));
     setUser(userData);
+    setToken(newToken);
   }
 
   /*
-      Função responsável por realizar logout.
-
-      Remove os dados da sessão e limpa o estado global,
-      fazendo o sistema voltar ao estado de não autenticado.
+      Função de logout — limpa sessão e estado global.
   */
   function logout() {
-
-    // remove a autenticação da sessão
-    sessionStorage.removeItem("auth");
-
-    // limpa o usuário do estado global
+    localStorage.removeItem("auth");
     setUser(null);
+    setToken(null);
   }
 
-  /*
-      Provider do contexto.
-
-      Ele disponibiliza para toda aplicação:
-      - user → dados do usuário logado
-      - login() → função de autenticação
-      - logout() → função de sair do sistema
-  */
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        logout
-      }}
-    >
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-/*
-    Hook personalizado para acessar o contexto de autenticação.
-
-    Permite que qualquer componente use facilmente:
-    const { user, login, logout } = useAuth();
-*/
 export function useAuth() {
   return useContext(AuthContext);
 }

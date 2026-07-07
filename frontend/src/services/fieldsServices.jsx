@@ -1,20 +1,13 @@
 import { useState } from "react";
+import { apiFetch } from "../utils/api.js";
 
 export default function fieldsServices() {
   const [refetchFields, setRefetchFields] = useState(true);
   const [fieldsList, setFieldsList] = useState([]);
 
-  const url = `${import.meta.env.VITE_API_URL}/fields`;
-
   const getFieldsByTitle = (fieldTitle) => {
 
-    fetch(`${url}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    apiFetch("/fields")
       .then((result) => {
         if (result.success) {
           const fields = result.body.filter(
@@ -32,17 +25,10 @@ export default function fieldsServices() {
   };
 
   const updateFieldsOrder = async (fields) => {
-    const response = await fetch(`${url}/order`, {
+    return apiFetch("/fields/order", {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(fields),
     });
-
-    const result = await response.json();
-
-    return result;
   };
 
   return { getFieldsByTitle, updateFieldsOrder, refetchFields, fieldsList };

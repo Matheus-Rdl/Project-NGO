@@ -19,7 +19,10 @@ const userSystemSchema = new mongoose.Schema(
       type: String, 
       required: true, 
       minlength: 8 
-    }
+    },
+
+    // Multi-tenancy (isolamento por tenant)
+    tenantId: { type: String, default: "default", index: true }
   }, 
   { 
     timestamps: true,

@@ -28,6 +28,10 @@ const activitySchema = new mongoose.Schema(
     },
     activity_time_start: {
       type: String,
+    },
+
+    // Multi-tenancy (isolamento por tenant)
+    tenantId: { type: String, default: "default", index: true }
       required: true
     },
     activity_time_end: {
