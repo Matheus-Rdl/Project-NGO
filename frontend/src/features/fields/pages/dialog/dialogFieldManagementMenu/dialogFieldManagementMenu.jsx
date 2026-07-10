@@ -16,10 +16,16 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   const [editedField, setEditedField] = useState({});
   //Atualiza o estado do campo editado quando o campo selecionado muda
   useEffect(() => {
-    if (field) {
+    if (open && field) {
       setEditedField(field);
     }
-  }, [field]);
+  }, [open, field]);
+
+  useEffect(() => {
+    if (!open) {
+      setEditedField({});
+    }
+  }, [open]);
   //Função para atualizar o estado do campo editado quando o usuário altera um valor
   const handleChange = (name, value) => {
     setEditedField(prev => ({
@@ -119,7 +125,7 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
     {
       label: "Menu",
       name: "menuId",
-      type: "select"
+      type: "menu"
     },
     {
       label: "Ordem",
@@ -179,7 +185,6 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   //Verifica se é para visualização ou alteração
   const isView = typeDialog === "view";
   const isAlter = typeDialog === "alter";
-
   //Mostra o estilo de acordo com a tela, se é para visualização ou alteração
   const currentStyles = isView
     ? styles.dialogViewContent
@@ -192,7 +197,9 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
       ["field", "order"].includes(setting.name) ||
       isView;
 
+    console.log(getSelectOptions(  ));
     switch (setting.type) {
+
       case "text":
         return (
           <input
@@ -223,14 +230,34 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
 
       case "select":
         return (
-          <input
-            type="text"
-            value={formatProperNoun(
-              getFormattedValue(setting.name, value)
+          <>
+            {isView ? (
+              <input
+                type="text"
+                value={editedField[setting.name] ?? ""}
+                disabled={canEdit}
+                readOnly={canEdit}
+              />
+            ) : (
+              <select
+                id={field.field}
+                name={field.field}
+                value={editedField[setting.name] ?? ""}
+                onChange={(e) => handleChange(setting.name, e.target.value)}
+                disabled={canEdit}
+                readOnly={canEdit}
+              >
+                <option value="">Selecione uma opção</option>
+                {Object.entries(getSelectOptions(setting.name)).map(
+                  ([key, value]) => (
+                    <option key={key} value={key}>
+                      {formatProperNoun(value)}
+                    </option>
+                  )
+                )}
+              </select>
             )}
-            disabled={isView}
-            readOnly={isView}
-          />
+          </>
         );
 
       case "mode":
@@ -243,6 +270,22 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
           />
         );
 
+      case "menu":
+        return (
+          <input
+            type="text"
+            value={editedField[setting.name] ?? ""}
+            onChange={(e) => handleChange(setting.name, e.target.value)}
+            disabled={canEdit}
+            readOnly={canEdit}
+            style={{
+              width: `${Math.max(
+                String(field[setting.name]).length + 2,
+                10
+              )}ch`
+            }}
+          />
+        );
       default:
 
         return null;
