@@ -1,9 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.jsx'
 
 import { createHashRouter, RouterProvider } from 'react-router-dom'
+
+// 1. IMPORTAÇÕES DO CHAKRA UI
+import { ChakraProvider } from '@chakra-ui/react'
+import system from './theme.js'
 
 import Home from './home/home.jsx'
 import PeopleManagement from './features/register/pages/peopleManagement.jsx'
@@ -20,10 +23,13 @@ import SignUpDetailed from './features/login/pages/signUpDetailed.jsx'
 import FieldsManagement from './features/fields/pages/fieldsManagement.jsx'
 import FieldsManagementList from './features/fields/pages/fieldsManagementList.jsx'
 
-import { AuthProvider } from './features/login/context/authContext.jsx'
-import ProtectedRoute from './features/login/routes/ProtectedRoute.jsx'
+import { AuthProvider } from './features/login/authContext.jsx'
+import ProtectedRoute from './features/login/ProtectedRoute.jsx'
 import FieldsManagementMenu from './features/fields/pages/fieldsManagementMenu.jsx'
+import UnderConstruction from './components/underConstruction.jsx'
+import Configuracoes from './features/configuracoes.jsx'
 
+// 2. MANTIDO PARA COMPATIBILIDADE COM CSS LEGADO
 document.documentElement.setAttribute(
   "data-env",
   import.meta.env.VITE_ENV
@@ -49,6 +55,7 @@ const pages = createHashRouter([
           { path: "/", element: <Home /> },
 
           { path: "/SignUp", element: <SignUp /> },
+          { path: "/SignUp/add", element: <SignUpDetailed /> },
           { path: "/SignUp/view", element: <SignUpDetailed /> },
           { path: "/SignUp/alter", element: <SignUpDetailed /> },
 
@@ -66,7 +73,11 @@ const pages = createHashRouter([
           
           { path: "/FieldsManagement", element: <FieldsManagement /> },
           { path: "/FieldsManagementList", element: <FieldsManagementList /> },
-          { path: "/FieldsManagementMenu", element: <FieldsManagementMenu /> }
+          { path: "/FieldsManagementMenu", element: <FieldsManagementMenu /> },
+
+          { path: "/relatorios", element: <UnderConstruction title="Relatórios" /> },
+          { path: "/financeiro", element: <UnderConstruction title="Financeiro" /> },
+          { path: "/configuracoes", element: <Configuracoes /> },
 
         ]
       }
@@ -78,7 +89,10 @@ const pages = createHashRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={pages} />
+      {/* 3. ENVELOPAMENTO COM O CHAKRAPROVIDER USANDO O NOVO SISTEMA */}
+      <ChakraProvider value={system}>
+        <RouterProvider router={pages} />
+      </ChakraProvider>
     </AuthProvider>
   </StrictMode>
 )

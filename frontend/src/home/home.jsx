@@ -1,61 +1,95 @@
 /*
-    Type: Fonte
-    User: Matheus Rodrigues
-    Description: Tela principal do sistema, Home da página
-    Date: 23/02/2026
+    Type: Page
+    Description: Dashboard principal do sistema — resumos e ações rápidas
+    Last Edit: 03/07/2026
 */
 
-import NavBar from "../components/navbar/navbar";
-import { useState } from "react";
-import styles from "./home.module.css";
+import { Box, Card, Flex, Heading, SimpleGrid, Text, VStack, Icon } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { PiUsersThree, PiMoneyWavy } from "react-icons/pi";
+import { LiaGraduationCapSolid } from "react-icons/lia";
+import { LuNewspaper } from "react-icons/lu";
+import { IoSettingsOutline } from "react-icons/io5";
+
+const summaryCards = [
+  { label: "Cadastros", description: "Gestão de pessoas", icon: PiUsersThree, to: "/PeopleManagement", color: "blue.500" },
+  { label: "Atividades", description: "Gerenciar atividades", icon: LiaGraduationCapSolid, to: "/ActivityManagement", color: "green.500" },
+  { label: "Financeiro", description: "Visão financeira", icon: PiMoneyWavy, to: "/financeiro", color: "orange.500" },
+  { label: "Relatórios", description: "Relatórios do sistema", icon: LuNewspaper, to: "/relatorios", color: "purple.500" },
+];
+
+const quickActions = [
+  { label: "Nova Pessoa", to: "/PeopleManagement/add", variant: "solid" },
+  { label: "Nova Atividade", to: "/ActivityManagement/add", variant: "surface" },
+  { label: "Campos do Sistema", to: "/FieldsManagement", variant: "surface" },
+  { label: "Cadastro de Usuários", to: "/SignUp", variant: "surface" },
+];
 
 export default function Home() {
-  const [activeScreen, setActiveScreen] = useState("home");
-
   return (
-    <>
-      <NavBar setActiveScreen={setActiveScreen} />
-      <div className="main">
-        {activeScreen === "home" && (
-          <>
-            <h1>Home</h1>
-          </>
-        )}
-        {activeScreen === "cadastros" && (
-          <>
-            <h1>Cadastros</h1>
-            <Link to={"/PeopleManagement"}>
-              <h2>&bull; Gestão de Pessoas</h2>
+    <VStack gap={8} align="stretch">
+
+      {/* Cabeçalho de boas-vindas */}
+      <Box>
+        <Heading size="2xl" color="brand.primary">Painel Principal</Heading>
+        <Text color="gray.500" mt={1}>Bem-vindo ao sistema de gestão da ONG</Text>
+      </Box>
+
+      {/* Cards de resumo */}
+      <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={6}>
+        {summaryCards.map((card) => (
+          <Link to={card.to} key={card.label} style={{ textDecoration: "none" }}>
+            <Card.Root
+              variant="elevated"
+              _hover={{ transform: "translateY(-4px)", shadow: "lg" }}
+              transition="all 0.2s"
+              cursor="pointer"
+            >
+              <Card.Body>
+                <Flex align="center" gap={4}>
+                  <Flex
+                    w={12}
+                    h={12}
+                    borderRadius="md"
+                    bg={card.color}
+                    align="center"
+                    justify="center"
+                  >
+                    <Icon as={card.icon} boxSize={6} color="white" />
+                  </Flex>
+                  <Box>
+                    <Text fontWeight="bold" fontSize="lg">{card.label}</Text>
+                    <Text color="gray.500" fontSize="sm">{card.description}</Text>
+                  </Box>
+                </Flex>
+              </Card.Body>
+            </Card.Root>
+          </Link>
+        ))}
+      </SimpleGrid>
+
+      {/* Ações Rápidas */}
+      <Box>
+        <Heading size="lg" color="brand.primary" mb={4}>Ações Rápidas</Heading>
+        <Flex gap={3} wrap="wrap">
+          {quickActions.map((action) => (
+            <Link to={action.to} key={action.label}>
+              <Card.Root
+                as="span"
+                variant={action.variant}
+                _hover={{ transform: "scale(1.03)" }}
+                transition="all 0.2s"
+                cursor="pointer"
+              >
+                <Card.Body py={3} px={6}>
+                  <Text fontWeight="medium" fontSize="sm">{action.label}</Text>
+                </Card.Body>
+              </Card.Root>
             </Link>
-            <h2>&bull; Layout de Formulário</h2>
-          </>
-        )}
-        {activeScreen === "financeiro" && <h1>Financeiro</h1>}
-        {activeScreen === "atividades" && (
-          <>
-            <h1>Atividades</h1>
-            <Link to={"/ActivityManagement"}>
-              <h2>&bull; Gerenciar Atividades</h2>
-            </Link>
-          </>
-        )}
-        {activeScreen === "relatorios" && <h1>Relatórios</h1>}
-        {activeScreen === "configuracoes" && (
-          <>
-            <h1>Configurações</h1>
-            <Link to={"/SignUp"}>
-              <h2>&bull; Cadastro de usuários do sistema</h2>
-            </Link>
-            <Link to={"/FieldsManagement"}>
-              <h2>&bull; Campos do sistema</h2>
-            </Link>
-            <Link to={"/SignUp"}>
-              <h2>&bull; Ordenação de campos</h2>
-            </Link>
-          </>
-        )}
-      </div>
-    </>
+          ))}
+        </Flex>
+      </Box>
+
+    </VStack>
   );
 }

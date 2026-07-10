@@ -7,15 +7,15 @@
     Last Edit: 21/04/2026
 */
 
-import HandleBack from "../../../components/handleBack/handleBack";
-import styles from "../styles/fieldsManagementDetailed.module.css";
+import HandleBack from "../../../components/handleBack";
+import { Heading, VStack } from "@chakra-ui/react";
 
 export default function FieldsManagementDetailed() {
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack />
-      <h1 className="title-page">Campo - - </h1>
-    </div>
+      <Heading size="lg" color="gray.600">Campo - - </Heading>
+    </VStack>
   );
 }

@@ -8,15 +8,15 @@
 */
 
 import { useLocation } from "react-router-dom";
-import HandleBack from "../../../components/handleBack/handleBack";
-import styles from "../styles/fieldsManagement.module.css";
-import HeaderFilter from "../../../components/table/headerFilter/headerFilter";
+import HandleBack from "../../../components/handleBack";
+import HeaderFilter from "../../../components/headerFilter";
 import { peopleManagementTR, activitiesManagementTR, fieldsManagementTR } from "../../../utils/HeaderList.json";
 import { useEffect, useState } from "react";
 import useTableFilter from "../../../hooks/useTableFilter";
 import usersServices from "../../../services/usersServices";
-import List from "../../../components/list/list";
+import List from "../../../components/list";
 import fieldsServices from "../../../services/fieldsServices";
+import { Table, Box, Heading, VStack } from "@chakra-ui/react";
 
 export default function FieldsManagementList() {
 
@@ -77,36 +77,34 @@ export default function FieldsManagementList() {
   );
 
   return (
-    <div className={`${styles.pageContainer} main-page`}>
+    <VStack gap={4} align="stretch">
       <HandleBack />
-      <h1 className="title-page">Campos - {label}</h1>
+      <Heading size="lg" color="gray.600">Campos - {label}</Heading>
 
-      <div className="cardList">
-        <div className="tableWrapper">
+      <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
+        <Table.Root variant="line" size="sm" whiteSpace="nowrap">
           {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
-          <table>
-            <HeaderFilter
-              columns={fieldsManagementTR}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+          <HeaderFilter
+            columns={fieldsManagementTR}
+            filters={filters}
+            onFilterChange={handleFilterChange}
+          />
 
-            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
-            <tbody>
-              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
-              {filteredUsers.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  columns={fieldsManagementTR}
-                  ativo={userActive === data._id}
-                  onClick={() => setuserActive(data._id)}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+          {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
+          <Table.Body>
+            {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
+            {filteredUsers.map((data) => (
+              <List
+                key={data._id}
+                data={data}
+                columns={fieldsManagementTR}
+                ativo={userActive === data._id}
+                onClick={() => setuserActive(data._id)}
+              />
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Box>
+    </VStack>
   );
 }
