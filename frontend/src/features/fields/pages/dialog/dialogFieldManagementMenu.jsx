@@ -163,10 +163,18 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
   //Verifica se é para visualização ou alteração
   const isView = typeDialog === "view";
   const isAlter = typeDialog === "alter";
-  //Mostra o estilo de acordo com a tela, se é para visualização ou alteração
-  const currentStyles = isView
-    ? styles.dialogViewContent
-    : styles.dialogAlterContent;
+
+  // Estilos padronizados
+  const commonInputProps = {
+    bg: "rgba(156, 155, 155, 0.3)",
+    borderColor: "gray.500",
+    _hover: { bg: "rgba(156, 155, 155, 0.4)" },
+    _focus: {
+      bg: "rgba(156, 155, 155, 0.5)",
+      borderColor: "black",
+      boxShadow: "1px 1px 2px black",
+    },
+  };
 
   //Renderiza o input de acordo com o tipo de campo, se é texto, número ou seleção
   const renderInput = (setting, value) => {
@@ -175,7 +183,7 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
       ["field", "order"].includes(setting.name) ||
       isView;
 
-    console.log(getSelectOptions(  ));
+    console.log(getSelectOptions());
     switch (setting.type) {
 
       case "text":
@@ -188,7 +196,8 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
             readOnly={canEdit}
             bg="blackAlpha.100"
             borderRadius="md"
-            w={`${Math.max(String(field[setting.name]).length + 2, 10)}ch`}
+            w={`${Math.max(String(field[setting.name]).length + 3, 15)}ch`}
+            {...commonInputProps}
           />
         );
 
@@ -203,37 +212,42 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
             readOnly={canEdit}
             bg="blackAlpha.100"
             borderRadius="md"
+            {...commonInputProps}
           />
         );
 
       case "select":
         return (
           <>
+            {console.log(value)}
             {isView ? (
-              <input
+              <Input
+                size="xs"
                 type="text"
-                value={editedField[setting.name] ?? ""}
+                value={formatProperNoun(getDisplayValue(setting, editedField[setting.name]))}
                 disabled={canEdit}
                 readOnly={canEdit}
+                {...commonInputProps}
               />
             ) : (
-              <select
-                id={field.field}
-                name={field.field}
-                value={editedField[setting.name] ?? ""}
-                onChange={(e) => handleChange(setting.name, e.target.value)}
-                disabled={canEdit}
-                readOnly={canEdit}
-              >
-                <option value="">Selecione uma opção</option>
-                {Object.entries(getSelectOptions(setting.name)).map(
-                  ([key, value]) => (
+              <NativeSelect.Root size="xs">
+                <NativeSelect.Field
+                  value={editedField[setting.name] ?? ""}
+                  onChange={(e) => handleChange(setting.name, e.target.value)}
+                  disabled={canEdit}
+                  {...commonInputProps}
+                >
+                  <option value="">Selecione uma opção</option>
+
+                  {Object.entries(getSelectOptions(setting.name)).map(([key, value]) => (
                     <option key={key} value={key}>
                       {formatProperNoun(value)}
                     </option>
-                  )
-                )}
-              </select>
+                  ))}
+                </NativeSelect.Field>
+
+                <NativeSelect.Indicator />
+              </NativeSelect.Root>
             )}
           </>
         );
@@ -247,13 +261,14 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
             readOnly={isView}
             bg="blackAlpha.100"
             borderRadius="md"
+            {...commonInputProps}
           />
         );
 
       case "menu":
         return (
-          <input
-            type="text"
+          <Input
+            size="xs"
             value={editedField[setting.name] ?? ""}
             onChange={(e) => handleChange(setting.name, e.target.value)}
             disabled={canEdit}
@@ -264,6 +279,7 @@ export default function DialogFieldManagementMenu({ open, onClose, typeDialog, f
                 10
               )}ch`
             }}
+            {...commonInputProps}
           />
         );
       default:

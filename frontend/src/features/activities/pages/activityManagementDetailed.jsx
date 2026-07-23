@@ -16,8 +16,7 @@ import {
   Flex,
   SimpleGrid
 } from "@chakra-ui/react";
-
-const toaster = createToaster({ placement: "bottom", max: 1 });
+import { toaster } from "../../../components/ui/toaster";
 
 export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -217,7 +216,7 @@ export default function ActivityManagementDetailed() {
             autoComplete="new-password"
           />
 
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={4} alignItems="flex-start">
+          <Flex gap={4} flexWrap="wrap">
             {fieldsList.map((field) => (
               <Box
                 key={field._id}
@@ -235,7 +234,7 @@ export default function ActivityManagementDetailed() {
                 />
               </Box>
             ))}
-          </SimpleGrid>
+          </Flex>
 
           <HStack position="fixed" top="72px" right="12px" gap={2}>
             <Button size="xs" variant="surface" onClick={handleBack}>Cancelar</Button>

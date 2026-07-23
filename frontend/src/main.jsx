@@ -29,6 +29,8 @@ import FieldsManagementMenu from './features/fields/pages/fieldsManagementMenu.j
 import UnderConstruction from './components/underConstruction.jsx'
 import Configuracoes from './features/configuracoes.jsx'
 
+import { Toaster } from "./components/ui/toaster.jsx";
+
 // 2. MANTIDO PARA COMPATIBILIDADE COM CSS LEGADO
 document.documentElement.setAttribute(
   "data-env",
@@ -92,6 +94,7 @@ createRoot(document.getElementById('root')).render(
       {/* 3. ENVELOPAMENTO COM O CHAKRAPROVIDER USANDO O NOVO SISTEMA */}
       <ChakraProvider value={system}>
         <RouterProvider router={pages} />
+        <Toaster />
       </ChakraProvider>
     </AuthProvider>
   </StrictMode>

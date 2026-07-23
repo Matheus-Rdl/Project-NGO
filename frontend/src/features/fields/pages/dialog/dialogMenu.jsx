@@ -55,7 +55,7 @@ export default function DialogMenu({ field, fieldList, refreshFields, onClose })
   }
 
   return (
-    <Box w="70%" py={4} px="7.5%" mx="7.5%">
+    <Box w="100%" py={4} px="25%">
       <Box textAlign="center">
         <Heading size="md">Alteração de posição</Heading>
         <Text color="brand.primary" mt={1}>{field.title}</Text>
@@ -78,7 +78,7 @@ export default function DialogMenu({ field, fieldList, refreshFields, onClose })
               px={4}
               mx={4}
               mt={2}
-              w="100%"
+              w="80%"
               transform={isActive ? "scale(1.05)" : "none"}
               bg={isActive ? "blackAlpha.100" : "transparent"}
               transition="transform 0.2s"

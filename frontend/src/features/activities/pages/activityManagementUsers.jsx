@@ -25,6 +25,7 @@ export default function ActivityManagementUsers() {
 
   useEffect(() => {
     if (refetchUsers && activityData?.activity_mat) {
+      //console.log("Buscando atividade:", activityData.activity_mat);
       getUsersByActivity(activityData.activity_mat);
     }
   }, [refetchUsers, activityData]);
@@ -53,6 +54,7 @@ export default function ActivityManagementUsers() {
   // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
   const toggleMenu = () => setOpen((prev) => !prev);
 
+
   //Função principal que vai filtrar na tela
   const filteredUsers = useTableFilter(
     userListActivies,
@@ -65,6 +67,14 @@ export default function ActivityManagementUsers() {
   const handlePresence = () => {
     setPresence(true)
   }
+
+  //console.log(userListActivies);
+  //console.log(activityData);
+
+  //console.log("Todos:", userListActivies);
+  //console.log("Filtrados:", filteredUsers);
+  console.log(activityData);
+  console.log(activityData.activity_mat);
 
   return (
     <Flex>

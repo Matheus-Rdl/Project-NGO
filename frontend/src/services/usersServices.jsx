@@ -78,36 +78,19 @@ export default function usersServices() {
   };
 
   const getUsersByActivity = (activityMat) => {
+    console.log("activityMat:", activityMat);
 
-    // Validação para impedir chamadas com undefined
-    if (!activityMat) {
-      console.warn(
-        "getUsersByActivity recebeu activityMat inválido:",
-        activityMat
-      );
-      return;
-    }
-
-    fetch(`${url}/activity/${activityMat}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
+    fetch(`${url}/activity/${activityMat}`)
+      .then((response) => {
+        console.log("Status:", response.status);
+        return response.json();
+      })
       .then((result) => {
+        console.log("Resultado:", result);
+
         if (result.success) {
           setListUserActivies(result.body);
-        } else {
-          console.log(result);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setUsersLoading(false);
-        setRefetchUsers(false);
       });
   };
 

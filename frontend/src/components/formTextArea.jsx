@@ -7,6 +7,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function FormTextArea({
   field,
@@ -19,6 +20,9 @@ export default function FormTextArea({
   errors,
   dateRegister,
 }) {
+
+  console.log(field.required);
+
   // Função segura para obter as opções
   const getSelectOptions = (fieldName) => {
     return selectOptions?.[fieldName] || {};
@@ -35,14 +39,12 @@ export default function FormTextArea({
   const isFieldEnabled = field.mode?.includes(currentMode);
 
   // Define a largura com base no tamanho máximo do campo
-  const getFieldWidth = (maxLength, isViewMode) => {
-    if (isViewMode) return "500px";
-    if (!maxLength) return "auto";
-    if (maxLength < 10) return "150px";
-    if (maxLength <= 20) return "300px";
-    if (maxLength <= 40) return "450px";
-    if (maxLength <= 80) return "500px";
-    return "500px";
+  const getFieldWidth = (maxLength) => {
+    if (!maxLength) return "600px";
+
+    const width = maxLength * 8; // aproximadamente 8px por caractere
+
+    return `${Math.min(Math.max(width, 300), 600)}px`;
   };
 
   // Estilos padronizados
@@ -62,14 +64,18 @@ export default function FormTextArea({
       {/* Frente 1: Input de Texto e Datas */}
       {field.input === 1 && (
         <Field.Root invalid={!!errors[field.field]}>
-          <Box w={getFieldWidth(field.maxLength, false)} minW="100px">
+          <Box
+            w={`${field.maxLength}ch`}
+            minW="250px"
+            maxW="500px">
             <Field.Label fontWeight="bold" htmlFor={field.field}>
-              {field.title}
+              {field.title}{field.required && <Text color="red.500">*</Text>}
             </Field.Label>
             <Input
               id={field.field}
               name={field.field}
               type={field.type}
+              maxLength={field.maxLength}
               value={
                 addMode && field.field === "user_mat"
                   ? nextMat
@@ -91,9 +97,9 @@ export default function FormTextArea({
       {/* Frente 2: Select Simples */}
       {field.input === 2 && (
         <Field.Root invalid={!!errors[field.field]}>
-          <Box w="auto">
+          <Box w="100%" maxW={getFieldWidth(field.maxLength)}>
             <Field.Label fontWeight="bold" htmlFor={field.field}>
-              {field?.title}
+              {field?.title}{field.required && <Text color="red.500">*</Text>}
             </Field.Label>
             {viewMode ? (
               <Input
@@ -103,7 +109,16 @@ export default function FormTextArea({
                 {...commonInputProps}
               />
             ) : (
-              <NativeSelect.Root>
+              <NativeSelect.Root position="relative">
+                <Box
+                  position="absolute"
+                  right="10px"
+                  top="50%"
+                  transform="translateY(-50%)"
+                  pointerEvents="none"
+                >
+                  <IoIosArrowDown />
+                </Box>
                 <NativeSelect.Field
                   id={field.field}
                   name={field.field}
@@ -135,9 +150,9 @@ export default function FormTextArea({
       {/* Frente 3: React Select (Multi Select) */}
       {field.input === 3 && (
         <Field.Root invalid={!!errors[field.field]}>
-          <Box w={getFieldWidth(field.maxLength, viewMode)}>
+          <Box w="100%" maxW={getFieldWidth(field.maxLength)}>
             <Field.Label fontWeight="bold" htmlFor={field.field}>
-              {field?.title}
+              {field?.title}{field.required && <Text color="red.500">*</Text>}
             </Field.Label>
             {viewMode ? (
               <Input
@@ -146,8 +161,8 @@ export default function FormTextArea({
                 value={
                   Array.isArray(data?.[field.field])
                     ? data[field.field]
-                        .map((id) => getFormattedValue(field.field, id).slice(3))
-                        .join("  |  ")
+                      .map((id) => getFormattedValue(field.field, id).slice(3))
+                      .join("  |  ")
                     : getFormattedValue(field.field, data?.[field.field])
                 }
                 {...commonInputProps}
@@ -161,11 +176,11 @@ export default function FormTextArea({
                   value={
                     Array.isArray(data?.[field.field])
                       ? data[field.field]
-                          .sort((a, b) => a - b)
-                          .map((id) => ({
-                            value: String(id),
-                            label: getFormattedValue(field.field, id),
-                          }))
+                        .sort((a, b) => a - b)
+                        .map((id) => ({
+                          value: String(id),
+                          label: getFormattedValue(field.field, id),
+                        }))
                       : []
                   }
                   onChange={(selectedOptions) => {
