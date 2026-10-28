@@ -15,19 +15,25 @@ import { activitiesManagementTR } from "../../../utils/HeaderList.json";
 import HeaderFilter from "../../../components/headerFilter";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
-import { Table, Box, Button, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Table, Box, Button, Heading, HStack, VStack, Flex } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
+import fieldsServices from "../../../services/fieldsServices";
+import Loading from "../../../components/loading";
 
 export default function ActivityManagement() {
+
   const [activityActive, setActivityActive] = useState(null); // Estado local responsável por controlar "activityActive" durante o ciclo de vida do componente.
-  const { getActivities, refetchActivities, activitiesList } = activitiesServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
+  const { getActivities, refetchActivities, activitiesList, activitiesLoading } = activitiesServices(); // Serviço/hook de integração com a API, centralizando busca, envio e atualização de dados.
   const [open, setOpen] = useState(false); // Estado local responsável por controlar "open" durante o ciclo de vida do componente.
   const menuRef = useRef(null); // Referência persistente usada para acessar "menuRef" sem provocar nova renderização.
-  const toggleMenu = () => setOpen((prev) => !prev); // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
   const [filters, setFilters] = useState({}); // Estado local responsável por controlar "filters" durante o ciclo de vida do componente.
+  const selectedActivity = activitiesList?.find((a) => a._id === activityActive);
+
+  const toggleMenu = () => setOpen((prev) => !prev); // Função utilitária "toggleMenu" usada para alternar estados booleanos na interface.
 
   // Fecha o menu se clicar fora
   useEffect(() => {
-  // Função de evento "handleClickOutside". Normalmente é acionada por clique, submit ou interação do usuário.
+    // Função de evento "handleClickOutside". Normalmente é acionada por clique, submit ou interação do usuário.
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
@@ -52,19 +58,61 @@ export default function ActivityManagement() {
     }));
   };
 
+  //Inicializa a busca de campos do banco de dados
+  const {
+    fieldsLoading,
+    fieldsListByCollectionAndPage,
+    getFieldsByCollectionAndPage
+  } = fieldsServices();
+
+  //Pega os campos do banco de dados e atualiza a lista de filtros
+  useEffect(() => {
+    getFieldsByCollectionAndPage(
+      "activities",
+      "activitiesManagement"
+    );
+  }, []);
+
+
+  // Ordena os campos recebidos do banco de dados
+  const sortedDataFields = [...fieldsListByCollectionAndPage].sort((a, b) => {
+    const folderA = a.folder === 0 ? 999 : a.folder;
+    const folderB = b.folder === 0 ? 999 : b.folder;
+
+    if (folderA !== folderB) {
+      return folderA - folderB;
+    }
+
+    return a.order - b.order;
+  });
+
+  const sortedFields = [...sortedDataFields]
+    .map((field) => ({
+      text: field.title,
+      type: field.filterType || field.type || "text",
+      input: field.input,
+      dataKey: field.field,
+      optionsKey: field.field,
+      minWidth: field.minWidth || "300px",
+      maxWidth: field.maxWidth || "400px",
+    }));
+
   //Função principal que vai filtrar na tela
   // Aplica a regra de filtro em memória antes da renderização, mantendo a tabela desacoplada da lógica de busca.
   const filteredActivities = useTableFilter(
     activitiesList,
     filters,
-    activitiesManagementTR
+    sortedFields
   );
+
+  if (activitiesLoading || fieldsLoading) {
+    return <Loading />;
+  }
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack/>
-      
-      <Heading size="lg" color="gray.600">Gerenciar Atividades</Heading>
+
+      <HeadingPage content={"Gerenciar Atividades"} />
 
       {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
       <HStack gap={2}>
@@ -72,7 +120,7 @@ export default function ActivityManagement() {
           to={"/ActivityManagement/add"}
           state={{
             activityId: activityActive,
-            activityData: activitiesList.find((u) => u._id === activityActive),
+            activityData: selectedActivity,
             currentMode: "A",
           }}
         >
@@ -83,7 +131,7 @@ export default function ActivityManagement() {
           to={"/ActivityManagement/view"}
           state={{
             activityId: activityActive,
-            activityData: activitiesList.find((u) => u._id === activityActive),
+            activityData: selectedActivity,
             currentMode: "V",
           }}
         >
@@ -96,7 +144,7 @@ export default function ActivityManagement() {
           to={"/ActivityManagement/alter"}
           state={{
             activityId: activityActive,
-            activityData: activitiesList.find((u) => u._id === activityActive),
+            activityData: selectedActivity,
             currentMode: "E",
           }}
         >
@@ -140,31 +188,45 @@ export default function ActivityManagement() {
         </Box>
       </HStack>
 
-      <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
-        <Table.Root variant="line" size="sm" whiteSpace="nowrap">
+      <Box
+        mt={4}
+        border="1px solid"
+        borderColor="gray.200"
+        borderRadius="md"
+        maxW="100%"
+        overflow="hidden"
+      >
+        <Box
+          maxH="calc(100vh - 220px)"
+          minH="calc(100vh - 220px)"
+          overflow="auto"
+        >
+          <Table.Root variant="line" size="sm" whiteSpace="nowrap">
 
-          {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
-          <HeaderFilter
-            columns={activitiesManagementTR}
-            filters={filters}
-            onFilterChange={handleFilterChange}
-          />
+            {/* Estrutura tabular principal onde o cabeçalho e as linhas são montados dinamicamente. */}
+            <HeaderFilter
+              fields={sortedFields}
+              filters={filters}
+              onFilterChange={handleFilterChange}
+            />
 
-          {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
-          <Table.Body>
-            {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
-            {filteredActivities.map((data) => (
-              <List
-                key={data._id}
-                data={data}
-                columns={activitiesManagementTR}
-                ativo={activityActive === data._id}
-                onClick={() => setActivityActive(data._id)}
-              />
-            ))}
-          </Table.Body>
+            {/* Corpo da tabela: percorre os dados já filtrados e instancia uma linha por item. */}
+            <Table.Body>
+              {/* Mapeamento da lista para JSX: cada elemento do array gera um componente visual independente. */}
+              {filteredActivities.map((data) => (
+                <List
+                  pageId="activityManagement"
+                  data={data}
+                  fields={sortedFields}
+                  ativo={activityActive === data._id}
+                  onClick={() => setActivityActive(data._id)}
+                  key={data._id}
+                />
+              ))}
+            </Table.Body>
 
-        </Table.Root>
+          </Table.Root>
+        </Box>
       </Box>
     </VStack>
   );

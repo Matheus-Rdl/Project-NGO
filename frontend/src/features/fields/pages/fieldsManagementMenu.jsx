@@ -25,6 +25,7 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
 
 export default function FieldsManagementMenu() {
   const location = useLocation();
@@ -66,8 +67,9 @@ export default function FieldsManagementMenu() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">Campos - {name}</Heading>
+
+      <HeadingPage content={`Campos - ${name}`} />
+
       <Text color="gray.500" fontSize="md">Menus da página</Text>
 
       <Accordion.Root collapsible mt={4}>

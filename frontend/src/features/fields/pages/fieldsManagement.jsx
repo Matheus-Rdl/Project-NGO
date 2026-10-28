@@ -11,7 +11,8 @@ import { Link } from "react-router-dom";
 import HandleBack from "../../../components/handleBack";
 import pagesServices from "../../../services/pagesServices"
 import { useEffect } from "react";
-import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Heading, HStack, Text, VStack, Flex } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
 
 export default function FieldsManagement() {
   //Service que pega os dados da coleção -> "pages"
@@ -25,15 +26,15 @@ export default function FieldsManagement() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">Coleções dos campos</Heading>
+
+      <HeadingPage content={"Coleções dos campos"}/>
 
       {pagesList.map((page) => (
         <HStack key={page._id} gap={2} overflowX="auto" overflowY="hidden">
 
           <Link
             to={"/FieldsManagementMenu"}
-            state={{ page: page.page, name: page.name , collection: page.collection}}
+            state={{ page: page.page, name: page.name, collection: page.collection }}
           >
             <Text
               fontSize="sm"

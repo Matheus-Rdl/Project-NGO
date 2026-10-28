@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   user_gender: { type: Number, required: true }, 
   user_civil_status: { type: Number, required: true },
   user_date_nasc: { type: String, required: true }, 
-  user_age: { type: Number, required: true },
+  //user_age: { type: Number, required: true },
   
   // Documentos
   user_cpf: { type: String, required: true, minlength: 11, maxlength: 11 },
@@ -34,7 +34,8 @@ const userSchema = new mongoose.Schema({
   user_education: { type: Number, required: true },
   user_type: [{ type: Number, required: true }], 
   user_free_period: [{ type: Number, required: true }], 
-  user_activities: [{ type: Number }], 
+  user_activities: [{ type: String }], 
+  user_activity_types: [{ type: String }], 
   
   // Diversidade / Saúde
   user_color: { type: Number, required: true },

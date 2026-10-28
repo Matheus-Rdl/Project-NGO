@@ -36,7 +36,7 @@ export default function NavBar() {
     { label: "Início", icon: BiHome, route: "/" },
     { label: "Cadastros", icon: PiUsersThree, route: "/PeopleManagement" },
     { label: "Atividades", icon: LiaGraduationCapSolid, route: "/ActivityManagement" },
-    { label: "Relatórios", icon: LuNewspaper, route: "/relatorios" },
+    //{ label: "Relatórios", icon: LuNewspaper, route: "/relatorios" },
     { label: "Financeiro", icon: PiMoneyWavy, route: "/financeiro" },
     { label: "Configurações", icon: IoSettingsOutline, route: "/configuracoes" },
   ];
@@ -51,6 +51,7 @@ export default function NavBar() {
       w={isExpanded ? "250px" : "80px"}
       flexShrink={0}
       zIndex={100}
+      position={"relative"}
     >
       <Flex direction="column" flex="1" overflowY="auto" overflowX="hidden" pt={4} pb={4} gap={2}>
         {menuItems.map((item) => {
@@ -98,21 +99,31 @@ export default function NavBar() {
           return <Box key={item.label} w="100%">{MenuItemContent}</Box>;
         })}
       </Flex>
-
-      <Flex
-        mt="auto"
-        justify="center"
-        align="center"
-        py={4}
+      <Icon
+        right={0}
+        marginRight={-4}
+        marginTop={6}
+        borderRadius={"100%"}
+        position="absolute"
         cursor="pointer"
-        _hover={{ color: "brand.tertiary" }}
+        color="brand.secondary"
+        backgroundColor={"brand.primary"}
         onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <Icon
-          as={isExpanded ? IoIosArrowDropleftCircle : IoIosArrowDroprightCircle}
-          boxSize={8}
-        />
-      </Flex>
+        as={isExpanded ? IoIosArrowDropleftCircle : IoIosArrowDroprightCircle}
+        boxSize={8}
+      />
+
+      {/*
+        <Flex
+          mt="auto"
+          justify="center"
+          align="center"
+          py={4}
+          _hover={{ color: "brand.tertiary" }}
+
+        >
+        </Flex>
+      */}
     </Flex>
   );
 }

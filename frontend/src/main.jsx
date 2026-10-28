@@ -9,6 +9,8 @@ import { ChakraProvider } from '@chakra-ui/react'
 import system from './theme.js'
 
 import Home from './home/home.jsx'
+import RegisterHome from './features/register/registerHome.jsx'
+
 import PeopleManagement from './features/register/pages/peopleManagement.jsx'
 import PeopleManagementDetailed from './features/register/pages/peopleManagementDetailed.jsx'
 import ActivityManagement from './features/activities/pages/activityManagement.jsx'
@@ -55,6 +57,8 @@ const pages = createHashRouter([
         children: [
 
           { path: "/", element: <Home /> },
+
+          { path: "/RegisterHome", element: <RegisterHome /> },
 
           { path: "/SignUp", element: <SignUp /> },
           { path: "/SignUp/add", element: <SignUpDetailed /> },

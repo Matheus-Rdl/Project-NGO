@@ -10,8 +10,10 @@ import { peopleManagementTR } from "../../../utils/HeaderList.json";
 import useTableFilter from "../../../hooks/useTableFilter";
 import HandleBack from "../../../components/handleBack";
 import { generateExcelPresences } from "../../../services/reports/presences/excelPresences";
-import Presence from "../../../components/presence";
+import DialogPresence from "./dialog/dialogPresence";
 import { Table, Box, Button, Flex, Heading, HStack, Text } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
+import fieldsServices from "../../../services/fieldsServices";
 
 export default function ActivityManagementUsers() {
   const location = useLocation();
@@ -55,11 +57,50 @@ export default function ActivityManagementUsers() {
   const toggleMenu = () => setOpen((prev) => !prev);
 
 
+  //Inicializa a busca de campos do banco de dados
+  const {
+    fieldsLoading,
+    fieldsListByCollectionAndPage,
+    getFieldsByCollectionAndPage
+  } = fieldsServices();
+
+  //Pega os campos do banco de dados e atualiza a lista de filtros
+  useEffect(() => {
+    getFieldsByCollectionAndPage(
+      "users",
+      "peopleManagement"
+    );
+  }, []);
+
+  // Ordena os campos recebidos do banco de dados
+  const sortedDataFields = [...fieldsListByCollectionAndPage].sort((a, b) => {
+    const folderA = a.folder === 0 ? 999 : a.folder;
+    const folderB = b.folder === 0 ? 999 : b.folder;
+
+    if (folderA !== folderB) {
+      return folderA - folderB;
+    }
+
+    return a.order - b.order;
+  });
+
+  const sortedFields = [...sortedDataFields]
+    .map((field) => ({
+      text: field.title,
+      type: field.filterType || field.type || "text",
+      input: field.input,
+      dataKey: field.field,
+      optionsKey: field.field,
+      minWidth: field.minWidth || "300px",
+      maxWidth: field.maxWidth || "400px",
+    }));
+
   //Função principal que vai filtrar na tela
+  // Aplica a regra de filtro em memória antes da renderização, mantendo a tabela desacoplada da lógica de busca.
   const filteredUsers = useTableFilter(
     userListActivies,
     filters,
-    peopleManagementTR
+    sortedFields
   );
 
   const [presence, setPresence] = useState(null);
@@ -68,21 +109,12 @@ export default function ActivityManagementUsers() {
     setPresence(true)
   }
 
-  //console.log(userListActivies);
-  //console.log(activityData);
-
-  //console.log("Todos:", userListActivies);
-  //console.log("Filtrados:", filteredUsers);
-  console.log(activityData);
-  console.log(activityData.activity_mat);
-
   return (
     <Flex>
       <Box flex="1" minW={0}>
-        <HandleBack />
-        <Heading size="lg" color="gray.600">
-          {formatProperNoun(activityData.activity_title)}
-        </Heading>
+
+        <HeadingPage content={formatProperNoun(activityData.activity_title)} />
+
         <Text color="gray.500" fontSize="md" mt={1}>Informações da atividade:</Text>
 
         <CardActivity data={activityData} />
@@ -148,26 +180,39 @@ export default function ActivityManagementUsers() {
 
         </HStack>
 
-        <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={3}>
-          <Table.Root variant="line" size="sm" whiteSpace="nowrap">
-            <HeaderFilter
-              columns={peopleManagementTR}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+        <Box
+          mt={4}
+          border="1px solid"
+          borderColor="gray.200"
+          borderRadius="md"
+          maxW="100%"
+          overflow="hidden"
+        >
+          <Box
+            maxH="calc(100vh - 375px)"
+            minH="calc(100vh - 375px)"
+            overflow="auto"
+          >
+            <Table.Root variant="line" size="sm" whiteSpace="nowrap">
+              <HeaderFilter
+                fields={sortedFields}
+                filters={filters}
+                onFilterChange={handleFilterChange}
+              />
 
-            <Table.Body>
-              {filteredUsers.map((data) => (
-                <List
-                  key={data._id}
-                  data={data}
-                  columns={peopleManagementTR}
-                  ativo={userActivityActive === data._id}
-                  onClick={() => setUserActivityActive(data._id)}
-                />
-              ))}
-            </Table.Body>
-          </Table.Root>
+              <Table.Body>
+                {filteredUsers.map((data) => (
+                  <List
+                    pageId="peopleManagement"
+                    data={data}
+                    fields={sortedFields}
+                    ativo={userActivityActive === data._id}
+                    onClick={() => setUserActivityActive(data._id)}
+                  />
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </Box>
         </Box>
 
       </Box>
@@ -175,7 +220,7 @@ export default function ActivityManagementUsers() {
         <ActivityManagementUserActivity />
       </Box>
 
-      <Presence
+      <DialogPresence
         open={presence}
         onClose={() => setPresence(null)}
         activityData={activityData}

@@ -6,6 +6,7 @@ import {
   HStack,
   VStack,
   Heading,
+  Portal,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { selectOptions } from "../utils/userSelectOptions";
@@ -57,10 +58,22 @@ export default function DialogAddActivity({ open, onClose, userData, onSaved }) 
   };
 
   const handleSave = async () => {
-    await updateUserActivities(userData._id, selectedActivities);
+    console.log("1 - CLICOU EM SALVAR");
+
+    console.log("2 - userData:", userData);
+    console.log("3 - selectedActivities:", selectedActivities);
+
+    const result = await updateUserActivities(
+      userData._id,
+      selectedActivities
+    );
+
+    console.log("4 - RESULTADO:", result);
+
     if (typeof onSaved === "function") {
       onSaved(selectedActivities);
     }
+
     onClose();
   };
 
@@ -68,58 +81,93 @@ export default function DialogAddActivity({ open, onClose, userData, onSaved }) 
     (activity) => activity.activity_type === String(listActive)
   );
 
+  /*useEffect(() => {
+    console.log(activityTypeList);
+  }, [activityTypeList]);*/
+
   return (
-    <Dialog.Root open={open} onClose={onClose} size="lg">
-      <Dialog.Content>
-        <Dialog.Header>
-          <Heading size="md">Adicionar atividade</Heading>
-        </Dialog.Header>
-        <Dialog.CloseTrigger />
+    <Dialog.Root
+      open={open}
+      onOpenChange={(details) => {
+        if (!details.open) {
+          onClose();
+        }
+      }}
+      size="lg"
+    >
+      <Portal>
+        <Dialog.Backdrop />
 
-        <Dialog.Body pb={6}>
-          <HStack spacing={2} mb={4} wrap="wrap">
-            {Object.entries(activity_type).map(([key, label]) => (
-              <CardList
-                key={key}
-                text={label.slice(3)}
-                active={listActive === Number(key)}
-                onClick={() => setListActive(Number(key))}
-              />
-            ))}
-          </HStack>
+        <Dialog.Positioner>
+          <Dialog.Content
+            w="80vw"
+            maxW="700px"
+            maxH="80vh"
+          >
+            <Dialog.Header size="md" color="gray.600">
+              Adicionar atividade
+            </Dialog.Header>
 
-          <VStack align="stretch" spacing={2} maxH="400px" overflowY="auto">
-            {filteredActivities.map((activity) => (
-              <HStack
-                key={activity._id}
-                spacing={3}
-                p={2}
-                borderWidth="1px"
-                borderRadius="md"
-                borderColor="gray.200"
-              >
-                <Checkbox
-                  checked={selectedActivities.includes(activity.activity_mat)}
-                  onCheckedChange={() => handleToggle(activity.activity_mat)}
-                  colorScheme="blue"
-                />
-                <Box flex="1">
-                  <CardActivitySelect data={activity} />
-                </Box>
+            <Dialog.CloseTrigger />
+
+            <Dialog.Body overflowY="auto" pb={4}>
+              <HStack spacing={2} mb={6} wrap="wrap">
+                {Object.entries(activity_type).map(([key, label]) => (
+                  <CardList
+                    key={key}
+                    text={label.slice(3)}
+                    active={listActive === Number(key)}
+                    onClick={() => setListActive(Number(key))}
+                  />
+                ))}
               </HStack>
-            ))}
-          </VStack>
-        </Dialog.Body>
 
-        <Dialog.Footer>
-          <Button variant="ghost" mr={3} onClick={onClose}>
-            Cancelar
-          </Button>
-          <Button colorScheme="blue" onClick={handleSave}>
-            Salvar
-          </Button>
-        </Dialog.Footer>
-      </Dialog.Content>
+              <VStack
+                align="stretch"
+                spacing={2}
+                maxH="400px"
+              >
+                {filteredActivities.map((activity) => (
+                  <HStack
+                    key={activity._id}
+                    spacing={3}
+                    p={2}
+                    borderWidth="1px"
+                    borderRadius="md"
+                    borderColor="gray.200"
+                  >
+                    <Checkbox.Root
+                      checked={selectedActivities.includes(
+                        activity.activity_mat
+                      )}
+                      onCheckedChange={() =>
+                        handleToggle(activity.activity_mat)
+                      }
+                    >
+                      <Checkbox.HiddenInput />
+                      <Checkbox.Control />
+                    </Checkbox.Root>
+
+                    <Box flex="1">
+                      <CardActivitySelect data={activity} />
+                    </Box>
+                  </HStack>
+                ))}
+              </VStack>
+            </Dialog.Body>
+
+            <Dialog.Footer>
+              <Button variant="ghost" mr={3} onClick={onClose}>
+                Cancelar
+              </Button>
+
+              <Button colorScheme="blue" onClick={handleSave}>
+                Salvar
+              </Button>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
     </Dialog.Root>
   );
 }

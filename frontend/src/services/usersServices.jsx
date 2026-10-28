@@ -78,15 +78,14 @@ export default function usersServices() {
   };
 
   const getUsersByActivity = (activityMat) => {
-    console.log("activityMat:", activityMat);
 
     fetch(`${url}/activity/${activityMat}`)
       .then((response) => {
-        console.log("Status:", response.status);
+        //console.log("Status:", response.status);
         return response.json();
       })
       .then((result) => {
-        console.log("Resultado:", result);
+        //console.log("Resultado:", result);
 
         if (result.success) {
           setListUserActivies(result.body);

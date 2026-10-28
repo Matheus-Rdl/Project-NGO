@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 export default function fieldsServices() {
-  const [refetchFields, setRefetchFields] = useState(true);
   const [fieldsList, setFieldsList] = useState([]);
+  const [fieldsListByCollectionAndPage, setFieldsListByCollectionAndPage] = useState([]);
+  const [fieldsLoading, setFieldsLoading] = useState(false);
+  const [refetchFields, setRefetchFields] = useState(true);
 
   const url = `${import.meta.env.VITE_API_URL}/fields`;
 
@@ -31,6 +33,31 @@ export default function fieldsServices() {
       });
   };
 
+  const getFieldsByCollectionAndPage = async (collection, pageId) => {
+    try {
+      setFieldsLoading(true);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/fields/by-page?collection=${collection}&pageId=${pageId}`
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFieldsListByCollectionAndPage(data.body);
+      } else {
+        console.error("Erro ao buscar fields:", data);
+        setFieldsListByCollectionAndPage([]);
+      }
+
+    } catch (error) {
+      console.error("Erro ao buscar fields:", error);
+      setFieldsListByCollectionAndPage([]);
+    } finally {
+      setFieldsLoading(false);
+    }
+  };
+
   const updateFieldsOrder = async (fields) => {
     const response = await fetch(`${url}/order`, {
       method: "PUT",
@@ -45,5 +72,5 @@ export default function fieldsServices() {
     return result;
   };
 
-  return { getFieldsByTitle, updateFieldsOrder, refetchFields, fieldsList };
+  return { fieldsList, fieldsLoading, refetchFields, fieldsListByCollectionAndPage, getFieldsByCollectionAndPage, getFieldsByTitle, updateFieldsOrder };
 }

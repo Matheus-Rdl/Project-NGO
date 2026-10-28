@@ -15,6 +15,19 @@ export default class FieldsControllers {
     }
   }
 
+  async getFieldsByCollectionAndPage(collection, pageId) {
+    try {
+      const fields = await this.dataAccess.getFieldsByCollectionAndPage(
+        collection,
+        pageId
+      );
+
+      return ok(fields);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
   async addField(fieldData) {
     try {
       const result = await this.dataAccess.addField(fieldData);

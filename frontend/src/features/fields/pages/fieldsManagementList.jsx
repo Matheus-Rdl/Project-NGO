@@ -17,6 +17,7 @@ import usersServices from "../../../services/usersServices";
 import List from "../../../components/list";
 import fieldsServices from "../../../services/fieldsServices";
 import { Table, Box, Heading, VStack } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
 
 export default function FieldsManagementList() {
 
@@ -78,8 +79,8 @@ export default function FieldsManagementList() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">Campos - {label}</Heading>
+
+      <HeadingPage content={`Campos - ${label}`} />
 
       <Box overflowX="auto" border="1px solid" borderColor="gray.200" borderRadius="md" mt={4}>
         <Table.Root variant="line" size="sm" whiteSpace="nowrap">

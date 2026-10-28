@@ -23,7 +23,7 @@ const activitySchema = new mongoose.Schema(
       maxlength: 150
     },
     activity_type: {
-      type: Number,
+      type: String,
       required: true
     },
     activity_time_start: {
@@ -43,8 +43,8 @@ const activitySchema = new mongoose.Schema(
       required: true
     }
   },
-  { 
-    timestamps: true,strict: false
+  {
+    timestamps: true, strict: false
   }
 );
 

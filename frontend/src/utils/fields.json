@@ -90,17 +90,6 @@
     },
     {
       "collection": "users",
-      "title": "Idade",
-      "field": "user_age",
-      "type": "number",
-      "order": 8,
-      "input": 1,
-      "folder": 1,
-      "mode": "",
-      "required": true
-    },
-    {
-      "collection": "users",
       "title": "Data de registro",
       "field": "user_registration_date",
       "type": "date",

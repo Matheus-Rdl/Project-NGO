@@ -9,7 +9,14 @@ fieldsRouter.get('/', async (req, res) => {
     const { success, statusCode, body } = await fieldsControllers.getFields()
 
     res.status(statusCode).send({ success, statusCode, body })
-})
+});
+
+fieldsRouter.get('/by-page', async (req, res) => {
+    const { collection, pageId } = req.query;
+    const { success, statusCode, body } = await fieldsControllers.getFieldsByCollectionAndPage(collection, pageId);
+
+    res.status(statusCode).send({ success, statusCode, body });
+});
 
 fieldsRouter.post('/', async (req, res) => {
     const { success, statusCode, body } = await fieldsControllers.addField(req.body)

@@ -62,10 +62,14 @@ export const selectOptions = {
   },
 
   user_activities: {
-    1: "1 - NENHUM",
-    2: "2 - INGLÊS",
-    3: "3 - ESPANHOL",
-    4: "4 - FOTOGRAFIA",
+    "000001": "1 - OXFORD",
+    "000002": "2 - CAMBRIDGE",
+    "000003": "3 - MIAMI",
+    "000004": "4 - ORLANDO",
+    "000005": "5 - LIVERPOOL",
+    "000006": "6 - SALVADOR",
+    "000007": "7 - HARVARD",
+    "000008": "8 - CHICAGO",
   },
 
   user_physically_disabled: {
@@ -74,13 +78,12 @@ export const selectOptions = {
   },
 
   user_type_physically_disabled: {
-    1: "1 - NÃO É PORTADOR DE DEFICIENCIA",
-    2: "2 - FISICA",
-    3: "3 - AUDITIVA",
-    4: "4 - VISUAL",
-    5: "5 - INTELECTUAL (MENTAL)",
-    6: "6 - MULTIPLA",
-    7: "7 - REABILITADO",
+    1: "1 - FISICA",
+    2: "2 - AUDITIVA",
+    3: "3 - VISUAL",
+    4: "4 - INTELECTUAL (MENTAL)",
+    5: "5 - MULTIPLA",
+    6: "6 - REABILITADO",
   },
 
   user_minor: {
@@ -107,14 +110,21 @@ export const selectOptions = {
     4: "4 - COMPROVANTE DE ENDEREÇO",
     5: "5 - DECLARAÇÃO ESCOLAR",
     6: "6 - AUTORIZAÇÃO DO USO DE IMAGEM",
-    7: "7 - AUTORIZAÇÃO DO MANUAL DO ALUNO (INGLÊS)",
+    7: "7 - AUTOR IZAÇÃO DO MANUAL DO ALUNO (INGLÊS)",
   },
 
   activity_type: {
-    1: "1 - INGLÊS",
-    2: "2 - ESPANHOL",
-    3: "3 - FOTOGRAFIA",
-    4: "4 - GENÉRICO",
+    "1": "1 - INGLÊS",
+    "2": "2 - ESPANHOL",
+    "3": "3 - FOTOGRAFIA",
+    "4": "4 - GENÉRICO",
+  },
+
+  user_activity_types: {
+    "1": "1 - INGLÊS",
+    "2": "2 - ESPANHOL",
+    "3": "3 - FOTOGRAFIA",
+    "4": "4 - GENÉRICO",
   },
 
   activity_active: {

@@ -9,13 +9,15 @@
 
 import HandleBack from "../../../components/handleBack";
 import { Heading, VStack } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
 
 export default function FieldsManagementDetailed() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">Campo - - </Heading>
+
+      <HeadingPage content={"Campo - - "}/>
+
     </VStack>
   );
 }

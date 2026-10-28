@@ -8,32 +8,26 @@ import fieldsServices from "../../../services/fieldsServices";
 import { validateField } from "../../../utils/fieldValidators";
 import HandleBack from "../../../components/handleBack";
 import menusServices from "../../../services/menusServices";
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  SimpleGrid,
-  VStack,
-  createToaster,
-  Flex
-} from "@chakra-ui/react";
+import activitiesServices from "../../../services/activitiesServices";
+import { Box, Button, Heading, HStack, SimpleGrid, VStack, createToaster, Flex } from "@chakra-ui/react";
 import { toaster } from "../../../components/ui/toaster";
+import HeadingPage from "../../../components/headingPage";
 
 export default function PeopleManagementDetailed() {
+
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const { userId, userData, currentMode } = location.state || {};
 
-  //Lista de menus
+  // Lista de menus
   const [listActive, setListActive] = useState(1 /*"Cadastrais"*/);
 
-  //Utils
+  // Utils
   const formattedDate = getCurrentDate();
 
-  //Service que pega os dados das coleções -> "menus", "fields", "users"
+  // Service que pega os dados das coleções -> "menus", "fields", "users"
   const { addUser, getUserNextMat, updateUser, refetchUsers, userNextMat } =
     usersServices();
   const { getFieldsByTitle, fieldsList } = fieldsServices();
@@ -42,8 +36,6 @@ export default function PeopleManagementDetailed() {
   const isViewMode = currentMode === "V";
   const isEditMode = currentMode === "E";
   const isAddMode = currentMode === "A";
-
-  // PeopleManagementDetailed.js
 
   const initializeFormData = () => {
     const initialData = {};
@@ -126,7 +118,6 @@ export default function PeopleManagementDetailed() {
   //Valida os campos
   const validateFields = (fieldsList, formData) => {
     const newErrors = {};
-
 
     fieldsList.forEach((field) => {
 
@@ -287,12 +278,10 @@ export default function PeopleManagementDetailed() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">
-        {isViewMode && "Gestão de pessoas - Visualizar"}
-        {isAddMode && "Gestão de pessoas - Inserir"}
-        {isEditMode && "Gestão de pessoas - Alterar"}
-      </Heading>
+
+      {isViewMode && <HeadingPage content={"Gestão de pessoas - Visualizar"} />}
+      {isAddMode && <HeadingPage content={"Gestão de pessoas - Inserir"} />}
+      {isEditMode && <HeadingPage content={"Gestão de pessoas - Alterar"} />}
 
       {/* MONTA a distribuição de menus recebido pelo banco e somente da página "people Management"*/}
       <HStack gap={2} overflowX="auto" overflowY="hidden">

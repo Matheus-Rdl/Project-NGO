@@ -7,6 +7,29 @@ export default class FieldsDataAccess {
     return await Field.find({}).sort({ order: 1 }).lean();
   }
 
+  async getFieldsByCollectionAndPage(collection, pageId) {
+    return await Field.find(
+      {
+        collection,
+        pageId
+      },
+      {
+        title: 1,
+        field: 1,
+        input: 1,
+        order: 1,
+        folder: 1,
+        type: 1,
+        optionsKey: 1
+      }
+    )
+      .sort({
+        folder: 1,
+        order: 1
+      })
+      .lean();
+  }
+
   async addField(fieldData) {
     const field = new Field(fieldData);
     return await field.save();

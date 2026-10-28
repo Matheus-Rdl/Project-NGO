@@ -110,7 +110,7 @@ export function generatePdfPresences({
 	*/
 
 	const doc = new jsPDF({
-		orientation: "landscape",
+		orientation: "portrait",//"landscape",
 		unit: "pt",
 		format: "a4",
 	});
@@ -237,5 +237,5 @@ export function generatePdfPresences({
 	|--------------------------------------------------------------------------
 	*/
 
-	doc.save(`Lista_${turma.activity_title}.pdf`);
+	doc.save(`Lista_${turma.activity_title}-${monthNames[mes - 1]}.pdf`);
 }

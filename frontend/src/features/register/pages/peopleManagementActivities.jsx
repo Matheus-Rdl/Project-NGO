@@ -7,13 +7,14 @@ import CardActivity from "../../../components/cards/cardActivity";
 import DialogAddActivity from "../../../components/dialogAddActivity";
 import HandleBack from "../../../components/handleBack";
 import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
+import HeadingPage from "../../../components/headingPage";
 
 export default function PeopleManagementActivities() {
   const location = useLocation();
   const { userData } = location.state || {};
   const { getActivitiesByMat, userActivitiesList, refetchActivities } =
     activitiesServices();
-  
+
   // Substitui useState por useDisclosure
   const { open, onOpen, onClose } = useDisclosure();
 
@@ -30,11 +31,11 @@ export default function PeopleManagementActivities() {
   return (
     <>
       <Flex>
-        <Box flex="1" minW={0}>
-          <HandleBack />
-          <Heading size="lg" color="gray.600" mb={4}>Atividades do usuário</Heading>
+        <Box flex="1" minW={0} display={"flex"} flexDirection={"column"} gap={4}>
 
-          <Button size="xs" variant="surface" onClick={onOpen} mb={4}>
+          <HeadingPage content={"Atividades do usuário"} />
+
+          <Button size="xs" variant="surface" onClick={onOpen}>
             Adicionar Atividade
           </Button>
 

@@ -347,6 +347,6 @@ export async function generateExcelPresences({
   */
   saveAs(
     new Blob([buffer]),
-    `Lista_${turma.activity_title}.xlsx`
+    `Lista_${turma.activity_title}-${mes}.xlsx`
   );
 }

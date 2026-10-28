@@ -1,9 +1,10 @@
 import User from '../../models/User.js';
+import Activity from '../../models/Activity.js';
 
 export default class UsersDataAccess {
   // Pega todos os usuários
   async getUsers() {
-    return await User.find({}).lean(); 
+    return await User.find({}).lean();
   }
 
   // Pega usuário específico
@@ -35,8 +36,7 @@ export default class UsersDataAccess {
 
   // Busca usuários por atividade
   async getUsersByActivity(activityMat) {
-    // Como os IDs das atividades geralmente vêm como strings do param da URL, passamos para int
-    return await User.find({ user_activities: parseInt(activityMat, 10) }).lean();
+    return await User.find({ user_activities: String(activityMat) }).lean();
   }
 
   // Busca usuários por tipo
@@ -52,10 +52,29 @@ export default class UsersDataAccess {
 
   // Atualiza um usuário
   async updateUser(id, userData) {
+    if (userData.user_activities) {
+      const activities = await Activity.find({
+        activity_mat: {
+          $in: userData.user_activities
+        }
+      }).lean();
+      const user_activity_types = [
+        ...new Set(
+          activities.map(
+            activity => activity.activity_type
+          )
+        )
+      ];
+      userData.user_activity_types = user_activity_types;
+    }
+
     return await User.findByIdAndUpdate(
-      id, 
-      { $set: userData }, 
-      { new: true, runValidators: true }
+      id,
+      { $set: userData },
+      {
+        new: true,
+        runValidators: true
+      }
     );
   }
 

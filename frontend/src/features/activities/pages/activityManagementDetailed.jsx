@@ -17,6 +17,7 @@ import {
   SimpleGrid
 } from "@chakra-ui/react";
 import { toaster } from "../../../components/ui/toaster";
+import HeadingPage from "../../../components/headingPage";
 
 export default function ActivityManagementDetailed() {
   const [formData, setFormData] = useState({});
@@ -181,12 +182,10 @@ export default function ActivityManagementDetailed() {
 
   return (
     <VStack gap={4} align="stretch">
-      <HandleBack />
-      <Heading size="lg" color="gray.600">
-        {isViewMode && "Gerenciar Atividades - Visualizar"}
-        {isAddMode && "Gerenciar Atividades - Inserir"}
-        {isEditMode && "Gerenciar Atividades - Alterar"}
-      </Heading>
+
+      {isViewMode && <HeadingPage content={"Gerenciar Atividades - Visualizar"} />}
+      {isAddMode && <HeadingPage content={"Gerenciar Atividades - Inserir"} />}
+      {isEditMode && <HeadingPage content={"Gerenciar Atividades - Alterar"} />}
 
       <HStack gap={2} overflowX="auto" overflowY="hidden">
         {Object.entries(listItems).map(([key, label]) => (
