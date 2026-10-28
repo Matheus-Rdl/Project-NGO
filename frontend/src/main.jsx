@@ -66,9 +66,9 @@ const pages = createHashRouter([
           { path: "/SignUp/alter", element: <SignUpDetailed /> },
 
           { path: "/PeopleManagement", element: <PeopleManagement /> },
-          { path: "/PeopleManagement/add", element: <PeopleManagementDetailed /> },
-          { path: "/PeopleManagement/view", element: <PeopleManagementDetailed /> },
-          { path: "/PeopleManagement/alter", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagementDetailed", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagementDetailed", element: <PeopleManagementDetailed /> },
+          { path: "/PeopleManagementDetailed", element: <PeopleManagementDetailed /> },
           { path: "/PeopleManagementActivities", element: <PeopleManagementActivities /> },
 
           { path: "/ActivityManagement", element: <ActivityManagement /> },

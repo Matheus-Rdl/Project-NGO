@@ -12,6 +12,7 @@ import activitiesServices from "../../../services/activitiesServices";
 import { Box, Button, Heading, HStack, SimpleGrid, VStack, createToaster, Flex } from "@chakra-ui/react";
 import { toaster } from "../../../components/ui/toaster";
 import HeadingPage from "../../../components/headingPage";
+import UserProfileHeader from "../../../components/users/userProfileHeader";
 
 export default function PeopleManagementDetailed() {
 
@@ -282,6 +283,16 @@ export default function PeopleManagementDetailed() {
       {isViewMode && <HeadingPage content={"Gestão de pessoas - Visualizar"} />}
       {isAddMode && <HeadingPage content={"Gestão de pessoas - Inserir"} />}
       {isEditMode && <HeadingPage content={"Gestão de pessoas - Alterar"} />}
+
+      {/* NAVEGAÇÃO - DADOS DE USUÁRIO */}
+      {/* MOSTRA SOMENTE EM MODO DE VISUALIZAÇÃO E EDIÇÃO !!!*/}
+      {!isAddMode && (
+        <UserProfileHeader
+          userId={userId}
+          userData={userData}
+          activeTab="Visão geral"
+        />
+      )}
 
       {/* MONTA a distribuição de menus recebido pelo banco e somente da página "people Management"*/}
       <HStack gap={2} overflowX="auto" overflowY="hidden">

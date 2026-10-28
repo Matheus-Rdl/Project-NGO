@@ -107,7 +107,7 @@ export default function SignUp() {
       {/* Ações principais da tela: inserir, visualizar, alterar e demais operações relacionadas ao registro selecionado. */}
       <HStack gap={2}>
         <Link
-          to={"/PeopleManagement/add"}
+          to={"/PeopleManagementDetailed"}
           state={{
             userId: userActive,
             userData: selectedUser,
@@ -173,7 +173,7 @@ export default function SignUp() {
         </Box>
 
         <Link
-          to={"/PeopleManagement/view"}
+          to={"/PeopleManagementDetailed"}
           state={{
             userId: userActive,
             userData: selectedUser,
@@ -186,7 +186,7 @@ export default function SignUp() {
         </Link>
 
         <Link
-          to={"/PeopleManagement/alter"}
+          to={"/PeopleManagementDetailed"}
           state={{
             userId: userActive,
             userData: selectedUser,

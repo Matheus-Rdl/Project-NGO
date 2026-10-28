@@ -19,7 +19,7 @@ const summaryCards = [
 ];
 
 const quickActions = [
-  { label: "Nova Pessoa", to: "/PeopleManagement/add", variant: "solid" },
+  { label: "Nova Pessoa", to: "/PeopleManagementDetailed", variant: "solid" },
   { label: "Nova Atividade", to: "/ActivityManagement/add", variant: "surface" },
   { label: "Campos do Sistema", to: "/FieldsManagement", variant: "surface" },
   { label: "Cadastro de Usuários", to: "/SignUp", variant: "surface" },

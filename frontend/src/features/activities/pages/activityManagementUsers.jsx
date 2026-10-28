@@ -121,7 +121,7 @@ export default function ActivityManagementUsers() {
 
         <HStack gap={2} mt={2}>
           <Link
-            to={"/PeopleManagement/view"}
+            to={"/PeopleManagementDetailed"}
             state={{
               userId: userActivityActive,
               userData: selectedUser,
@@ -134,7 +134,7 @@ export default function ActivityManagementUsers() {
           </Link>
 
           <Link
-            to={"/PeopleManagement/alter"}
+            to={"/PeopleManagementDetailed"}
             state={{
               userId: userActivityActive,
               userData: selectedUser,
